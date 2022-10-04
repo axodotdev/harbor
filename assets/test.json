@@ -1,0 +1,170 @@
+{
+  "context": null,
+  "conclusion": "fail (vetting)",
+  "failures": [
+    {
+      "name": "atty",
+      "version": "0.2.14",
+      "missing_criteria": ["safe-to-deploy"]
+    },
+    {
+      "name": "clap",
+      "version": "3.2.22",
+      "missing_criteria": ["safe-to-deploy"]
+    },
+    {
+      "name": "clap_lex",
+      "version": "0.2.4",
+      "missing_criteria": ["safe-to-deploy"]
+    },
+    {
+      "name": "hermit-abi",
+      "version": "0.1.19",
+      "missing_criteria": ["safe-to-deploy"]
+    },
+    {
+      "name": "textwrap",
+      "version": "0.15.1",
+      "missing_criteria": ["safe-to-deploy"]
+    }
+  ],
+  "suggest": {
+    "suggestions": [
+      {
+        "name": "clap",
+        "notable_parents": "test-project",
+        "suggested_criteria": ["safe-to-deploy"],
+        "suggested_diff": {
+          "from": "3.1.8",
+          "to": "3.2.22",
+          "diffstat": {
+            "raw": " 176 files changed, 13519 insertions(+), 10188 deletions(-)\n",
+            "count": 23707
+          }
+        }
+      },
+      {
+        "name": "atty",
+        "notable_parents": "clap",
+        "suggested_criteria": ["safe-to-deploy"],
+        "suggested_diff": {
+          "from": null,
+          "to": "0.2.14",
+          "diffstat": {
+            "raw": " 12 files changed, 508 insertions(+)\n",
+            "count": 508
+          }
+        }
+      },
+      {
+        "name": "textwrap",
+        "notable_parents": "clap",
+        "suggested_criteria": ["safe-to-deploy"],
+        "suggested_diff": {
+          "from": "0.15.0",
+          "to": "0.15.1",
+          "diffstat": {
+            "raw": " 8 files changed, 611 insertions(+), 210 deletions(-)\n",
+            "count": 821
+          }
+        }
+      },
+      {
+        "name": "clap_lex",
+        "notable_parents": "clap",
+        "suggested_criteria": ["safe-to-deploy"],
+        "suggested_diff": {
+          "from": null,
+          "to": "0.2.4",
+          "diffstat": {
+            "raw": " 8 files changed, 860 insertions(+)\n",
+            "count": 860
+          }
+        }
+      },
+      {
+        "name": "hermit-abi",
+        "notable_parents": "atty",
+        "suggested_criteria": ["safe-to-deploy"],
+        "suggested_diff": {
+          "from": null,
+          "to": "0.1.19",
+          "diffstat": {
+            "raw": " 11 files changed, 938 insertions(+)\n",
+            "count": 938
+          }
+        }
+      }
+    ],
+    "suggest_by_criteria": {
+      "safe-to-deploy": [
+        {
+          "name": "clap",
+          "notable_parents": "test-project",
+          "suggested_criteria": ["safe-to-deploy"],
+          "suggested_diff": {
+            "from": "3.1.8",
+            "to": "3.2.22",
+            "diffstat": {
+              "raw": " 176 files changed, 13519 insertions(+), 10188 deletions(-)\n",
+              "count": 23707
+            }
+          }
+        },
+        {
+          "name": "atty",
+          "notable_parents": "clap",
+          "suggested_criteria": ["safe-to-deploy"],
+          "suggested_diff": {
+            "from": null,
+            "to": "0.2.14",
+            "diffstat": {
+              "raw": " 12 files changed, 508 insertions(+)\n",
+              "count": 508
+            }
+          }
+        },
+        {
+          "name": "textwrap",
+          "notable_parents": "clap",
+          "suggested_criteria": ["safe-to-deploy"],
+          "suggested_diff": {
+            "from": "0.15.0",
+            "to": "0.15.1",
+            "diffstat": {
+              "raw": " 8 files changed, 611 insertions(+), 210 deletions(-)\n",
+              "count": 821
+            }
+          }
+        },
+        {
+          "name": "clap_lex",
+          "notable_parents": "clap",
+          "suggested_criteria": ["safe-to-deploy"],
+          "suggested_diff": {
+            "from": null,
+            "to": "0.2.4",
+            "diffstat": {
+              "raw": " 8 files changed, 860 insertions(+)\n",
+              "count": 860
+            }
+          }
+        },
+        {
+          "name": "hermit-abi",
+          "notable_parents": "atty",
+          "suggested_criteria": ["safe-to-deploy"],
+          "suggested_diff": {
+            "from": null,
+            "to": "0.1.19",
+            "diffstat": {
+              "raw": " 11 files changed, 938 insertions(+)\n",
+              "count": 938
+            }
+          }
+        }
+      ]
+    },
+    "total_lines": 26834
+  }
+}
