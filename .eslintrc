@@ -1,0 +1,32 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:nuxt/recommended",
+    "plugin:vue/vue3-recommended"
+  ],
+
+  "parserOptions": {
+    "parser": "@babel/eslint-parser",
+    "requireConfigFile": false
+  },
+
+  "rules": {
+    "vue/multi-word-component-names": 0,
+    "vue/singleline-html-element-content-newline": 0
+  },
+  "globals": {
+    "$fetch": true,
+    "useState": true,
+    "useRuntimeConfig": true,
+    "useRouter": true,
+    "useFetch": true,
+    "useRoute": true,
+    "useRequestHeaders": true
+  }
+}
