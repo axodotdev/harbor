@@ -408,7 +408,7 @@
   resolved "https://registry.yarnpkg.com/@nuxt/devalue/-/devalue-2.0.0.tgz#c7bd7e9a516514e612d5d2e511ffc399e0eac322"
   integrity sha512-YBI/6o2EBz02tdEJRBK8xkt3zvOFOWlLBf7WKYGBsSYSRtjjgrqPe2skp6VLLmKx5WbHHDNcW+6oACaurxGzeA==
 
-"@nuxt/kit@3.0.0-rc.11", "@nuxt/kit@^3.0.0-rc.4", "@nuxt/kit@^3.0.0-rc.6", "@nuxt/kit@^3.0.0-rc.9":
+"@nuxt/kit@3.0.0-rc.11", "@nuxt/kit@^3.0.0-rc.10", "@nuxt/kit@^3.0.0-rc.6", "@nuxt/kit@^3.0.0-rc.9":
   version "3.0.0-rc.11"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.0.0-rc.11.tgz#d147ef65509c073f1101fa1a19071e309bcf634f"
   integrity sha512-o0E/k635Lzcxp4K5t0ToHC6WwQ1wyN0EIqMAQEzgiUexoAhzdURr21QI0D6e6U461u4KP7x92wYM87VxhMFXmQ==
@@ -542,10 +542,10 @@
     google-fonts-helper "^3.1.0"
     pathe "^0.3.2"
 
-"@nuxtjs/tailwindcss@^5.3.3":
-  version "5.3.3"
-  resolved "https://registry.yarnpkg.com/@nuxtjs/tailwindcss/-/tailwindcss-5.3.3.tgz#8d03a68915cc4b6e641f40b3b9d80779e12607c2"
-  integrity sha512-1YyDcOJuZue3PtTX7c58FEIieAy0utpRa6s9nJ4BVE/UloRG2mDw4ch7s9O4afdsHiib5e7uxNfY1ZZGKupqaw==
+"@nuxtjs/tailwindcss@^5.3.5":
+  version "5.3.5"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/tailwindcss/-/tailwindcss-5.3.5.tgz#9d1988f0f8433e67df5707eea2ea2e8ac004a10c"
+  integrity sha512-d6noacVfcN88R6Iqd5/kl7YyumE+EIsz6ky26JvidHtkTeAPxZt8XN/KFEMJ6xwSvhsUndrNW94XYPKv7l79jg==
   dependencies:
     "@nuxt/kit" "^3.0.0-rc.9"
     "@nuxt/postcss8" "^1.1.3"
@@ -710,10 +710,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/web-bluetooth@^0.0.14":
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/@types/web-bluetooth/-/web-bluetooth-0.0.14.tgz#94e175b53623384bff1f354cdb3197a8d63cdbe5"
-  integrity sha512-5d2RhCard1nQUC3aHcq/gHzWYO6K0WJmAbjO7mQJgCQKtZpgXxv1rOM6O/dBDhDYYVutk1sciOgNSe+5YyfM8A==
+"@types/web-bluetooth@^0.0.15":
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/@types/web-bluetooth/-/web-bluetooth-0.0.15.tgz#d60330046a6ed8a13b4a53df3813c44942ebdf72"
+  integrity sha512-w7hEHXnPMEZ+4nGKl/KDRVpxkwYxYExuHOYXyzIzCDzEZ9ZCGMAewulr9IqJu2LR4N37fcnb1XVeuZ09qgOxhA==
 
 "@vercel/nft@^0.22.1":
   version "0.22.1"
@@ -862,23 +862,23 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.2.40.tgz#e57799da2a930b975321981fcee3d1e90ed257ae"
   integrity sha512-0PLQ6RUtZM0vO3teRfzGi4ltLUO5aO+kLgwh4Um3THSR03rpQWLTuRCkuO5A41ITzwdWeKdPHtSARuPkoo5pCQ==
 
-"@vueuse/components@^8.2.4":
-  version "8.9.4"
-  resolved "https://registry.yarnpkg.com/@vueuse/components/-/components-8.9.4.tgz#05c2d4b590bb9ab14e05070486faf8bdd41aeccf"
-  integrity sha512-PYbt9DxIvC4kx1vnF6kR/VYq8wou9xBf29rG/5u8vWCtER8uuYUsxBrSTRqNNQaevP70cDrEvDYJSSIphFM2/w==
+"@vueuse/components@^9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/components/-/components-9.3.0.tgz#7f2a8d5697130b84c287dd2f3a6ac012a8beed0a"
+  integrity sha512-16MKXd+kx60qhocbGHhoNGMzNUkyYSY7LTuY/qqdyQik0NnOY4Mw4Lq2CMByvV4ymcnaw5qHGl1LNB94qjgSBA==
   dependencies:
-    "@vueuse/core" "8.9.4"
-    "@vueuse/shared" "8.9.4"
+    "@vueuse/core" "9.3.0"
+    "@vueuse/shared" "9.3.0"
     vue-demi "*"
 
-"@vueuse/core@8.9.4":
-  version "8.9.4"
-  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-8.9.4.tgz#c7db40f19390b3c9f4ff9294a30461497f62ec19"
-  integrity sha512-B/Mdj9TK1peFyWaPof+Zf/mP9XuGAngaJZBwPaXBvU3aCTZlx3ltlrFFFyMV4iGBwsjSCeUCgZrtkEj9dS2Y3Q==
+"@vueuse/core@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-9.3.0.tgz#74d855bd19cb5eadd2edb30c871918fac881e8b8"
+  integrity sha512-64Rna8IQDWpdrJxgitDg7yv1yTp41ZmvV8zlLEylK4QQLWAhz1OFGZDPZ8bU4lwcGgbEJ2sGi2jrdNh4LttUSQ==
   dependencies:
-    "@types/web-bluetooth" "^0.0.14"
-    "@vueuse/metadata" "8.9.4"
-    "@vueuse/shared" "8.9.4"
+    "@types/web-bluetooth" "^0.0.15"
+    "@vueuse/metadata" "9.3.0"
+    "@vueuse/shared" "9.3.0"
     vue-demi "*"
 
 "@vueuse/head@^0.7.12":
@@ -888,30 +888,23 @@
   dependencies:
     "@zhead/schema-vue" "^0.7.3"
 
-"@vueuse/metadata@8.9.4":
-  version "8.9.4"
-  resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-8.9.4.tgz#a4132db33e4c1b1023636acfa20aa7b37ab3d978"
-  integrity sha512-IwSfzH80bnJMzqhaapqJl9JRIiyQU0zsRGEgnxN6jhq7992cPUJIRfV+JHRIZXjYqbwt07E1gTEp0R0zPJ1aqw==
+"@vueuse/metadata@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-9.3.0.tgz#c107fe77a577e1f221536cd1b291039c0c7c4bce"
+  integrity sha512-GnnfjbzIPJIh9ngL9s9oGU1+Hx/h5/KFqTfJykzh/1xjaHkedV9g0MASpdmPZIP+ynNhKAcEfA6g5i8KXwtoMA==
 
-"@vueuse/nuxt@^8.2.4":
-  version "8.9.4"
-  resolved "https://registry.yarnpkg.com/@vueuse/nuxt/-/nuxt-8.9.4.tgz#22f14e23017f406d0bd37e9b4441483a1dd4277f"
-  integrity sha512-iA0/maD70161MYY7HjCGmxMd97LqiaDA5d7pZnuBe3Xanm6xetvbvYCLAlhigbTujfDUQcmD0qiHbNaXaIP5Xg==
+"@vueuse/nuxt@^9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/nuxt/-/nuxt-9.3.0.tgz#595431a6516c86ef9fbcbc54b7c54aa49fc1fcba"
+  integrity sha512-gLIEbzhXggnVXV/cwovqGT8As9oW5TYw2Lnl7g6lEYGnj6jwV+9wIL3HLkktG1dAIeTtxu2Dqt09tsxz6JJPmQ==
   dependencies:
-    "@nuxt/kit" "^3.0.0-rc.4"
-    "@vueuse/core" "8.9.4"
-    "@vueuse/metadata" "8.9.4"
-    local-pkg "^0.4.1"
+    "@nuxt/kit" "^3.0.0-rc.10"
+    "@vueuse/core" "9.3.0"
+    "@vueuse/metadata" "9.3.0"
+    local-pkg "^0.4.2"
     vue-demi "*"
 
-"@vueuse/shared@8.9.4":
-  version "8.9.4"
-  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-8.9.4.tgz#c9741c30ffb666b50d62f0dd80b76119fd47573e"
-  integrity sha512-wt+T30c4K6dGRMVqPddexEVLa28YwxW5OFIPmzUHICjphfAuBFTTdDoyqREZNDOFJZ44ARH1WWQNCUK8koJ+Ag==
-  dependencies:
-    vue-demi "*"
-
-"@vueuse/shared@^9.2.0":
+"@vueuse/shared@9.3.0", "@vueuse/shared@^9.2.0":
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-9.3.0.tgz#40fc138ba4e379c894075830aa2e15404aaa8a5b"
   integrity sha512-caGUWLY0DpPC6l31KxeUy6vPVNA0yKxx81jFYLoMpyP6cF84FG5Dkf69DfSUqL57wX8JcUkJDMnQaQIZPWFEQQ==
@@ -3093,7 +3086,7 @@ loader-utils@^2.0.0:
     emojis-list "^3.0.0"
     json5 "^2.1.2"
 
-local-pkg@^0.4.1, local-pkg@^0.4.2:
+local-pkg@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/local-pkg/-/local-pkg-0.4.2.tgz#13107310b77e74a0e513147a131a2ba288176c2f"
   integrity sha512-mlERgSPrbxU3BP4qBqAvvwlgW4MTg78iwJdGGnv7kibKjWcJksrG3t6LB5lXI93wXRDvG4NpUgJFmTG4T6rdrg==
@@ -4206,7 +4199,7 @@ postcss@^8.1.10, postcss@^8.2.15, postcss@^8.4.14, postcss@^8.4.16:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-prettier@^2.6.2:
+prettier@^2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.7.1.tgz#e235806850d057f97bb08368a4f7d899f7760c64"
   integrity sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==
