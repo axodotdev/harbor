@@ -5,18 +5,27 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@nuxtjs/google-fonts": "^3.0.0-0",
     "@nuxtjs/tailwindcss": "^5.3.3",
     "@vueuse/components": "^8.2.4",
     "@vueuse/nuxt": "^8.2.4",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "nuxt": "3.0.0-rc.11",
     "prettier": "^2.6.2"
   },
   "dependencies": {
     "redis": "^4.3.1",
     "uuid": "^9.0.0"
+  },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "prettier --write \"**/*.{vue,js}\"",
+      "eslint --ext .vue --ext .js"
+    ]
   }
 }
