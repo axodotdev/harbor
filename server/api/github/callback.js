@@ -20,7 +20,7 @@ export default async (req, res) => {
     return sendRedirect(res, REDIRECT_URL);
   }
 
-  setCookie(res, "gh_token", response.access_token, { path: REDIRECT_URL });
+  setCookie(res, "gh_token", response.access_token, { path: "/" });
 
   return sendRedirect(res, REDIRECT_URL);
 };
