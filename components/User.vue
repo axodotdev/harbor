@@ -1,11 +1,19 @@
 <script setup>
+import { useGithubCookie } from "../composables/github";
+import { GH_STATE } from "../utils/constants";
+
 defineProps({
   user: {
     type: Object,
     required: true,
   },
 });
-const logout = githubLogout;
+
+const logout = () => {
+  useGithubCookie().value = null;
+  useState(GH_STATE).value = null;
+  location.reload();
+};
 </script>
 
 <template>
@@ -17,13 +25,10 @@ const logout = githubLogout;
       </p>
     </div>
     <button
-      @click="logout"
       class="border text-black border-gray-600 rounded px-2 hover:border-black"
+      @click="logout"
     >
       Logout
     </button>
-    <pre class="whitespace-pre">
-        {{ JSON.stringify(user, null, 2) }}
-    </pre>
   </div>
 </template>

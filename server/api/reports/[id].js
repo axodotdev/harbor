@@ -23,7 +23,6 @@ export default async (req) => {
       await fetchRepo(parsedData.repo, cookie);
       return parsedData;
     } catch (e) {
-      console.log(e);
       return sendError(req, {
         statusCode: 401,
         fatal: true,

@@ -3,4 +3,4 @@ const { push } = useRouter();
 push({ path: "/login" });
 </script>
 
-<template></template>
+<template><div /></template>

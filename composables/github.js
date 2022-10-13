@@ -1,4 +1,6 @@
-export const useGithubCookie = () => useCookie("gh_token");
+import { GH_STATE, GH_TOKEN, REDIRECT_OATH_URL } from "../utils/constants";
+
+export const useGithubCookie = () => useCookie(GH_TOKEN);
 
 export const githubFetch = (url, fetchOptions = {}) => {
   return $fetch(url, {
@@ -13,7 +15,8 @@ export const githubFetch = (url, fetchOptions = {}) => {
 
 export const useGithubUser = async () => {
   const cookie = useGithubCookie();
-  const user = useState("gh_user");
+  console.log(cookie.value);
+  const user = useState(GH_STATE);
   if (cookie.value && !user.value) {
     user.value = await githubFetch("/user");
   }
@@ -23,13 +26,11 @@ export const useGithubUser = async () => {
 export const githubLogin = () => {
   if (process.client) {
     const { GITHUB_CLIENT_ID } = useRuntimeConfig();
-    window.location.replace(
-      `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=public_repo`
-    );
+    window.location.replace(`${REDIRECT_OATH_URL}${GITHUB_CLIENT_ID}`);
   }
 };
 
 export const githubLogout = async () => {
-  useGithubCookie().value = null;
-  useState("gh_user").value = null;
+  const a = await useCookie(GH_TOKEN);
+  a.value = null;
 };

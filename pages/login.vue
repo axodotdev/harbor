@@ -1,5 +1,6 @@
 <script setup>
-const login = githubLogin;
+import { useGithubUser } from "../composables/github";
+
 const user = await useGithubUser();
 useHead({
   title: "Cargo vet",
@@ -12,7 +13,7 @@ useHead({
     <div class="flex flex-col">
       <User v-if="user" :user="user" />
 
-      <button v-else @click="login" class="border rounded px-2 py-1">
+      <button v-else class="border rounded px-2 py-1" @click="githubLogin">
         Login with GitHub
       </button>
     </div>

@@ -27,6 +27,8 @@
     "useRouter": true,
     "useFetch": true,
     "useRoute": true,
-    "useRequestHeaders": true
+    "useRequestHeaders": true,
+    "useCookie": true,
+    "useHead": true
   }
 }
