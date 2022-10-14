@@ -4,5 +4,10 @@ export const REDIRECT_OATH_URL = `https://github.com/login/oauth/authorize?clien
 export const REDIRECT_COOKIE = "redirect_to";
 
 export const KEYS_TO = {
-  "safe-to-deploy": "Safe to deploy",
+  "safe-to-deploy": "Unsafe to deploy",
+  "safe-to-run": "Unsafe to run",
+  "peer-company::reviewed": "Not peer company reviewed",
+  reviewed: "Not reviewed",
+  "strong-reviewed": "Not string reviewed",
+  fuzzed: "????",
 };
