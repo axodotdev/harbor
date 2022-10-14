@@ -2,7 +2,6 @@
 import SingleLayout from "../../layouts/single.vue";
 import { useGithubUser } from "../../composables/github";
 import { REDIRECT_COOKIE } from "../../utils/constants";
-import ReportList from "../../components/ReportList.vue";
 import { onMounted, ref, watch } from "vue";
 
 const route = useRoute();
@@ -35,12 +34,12 @@ watch(route, () => (selected.value = getPkg()));
 
 <template>
   <SingleLayout>
-    <template #list v-if="report">
-      <ReportList :suggestions="report.suggestions" />
+    <template v-if="report" #list>
+      <report-list :suggestions="report.suggestions" />
     </template>
     <template #main>
       <p v-if="fetchError">You do not have access to this report</p>
-      <pre v-else>{{ selected }}</pre>
+      <single-report v-else :report="selected" />
     </template>
   </SingleLayout>
 </template>

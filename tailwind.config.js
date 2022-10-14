@@ -30,7 +30,12 @@ const colors = {
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: "class",
-  content: ["./components/**/*.vue", "./pages/**/*.vue", "./nuxt.config.js"],
+  content: [
+    "./components/**/*.vue",
+    "./layouts/**/*.vue",
+    "./pages/**/*.vue",
+    "./nuxt.config.js",
+  ],
   theme: {
     colors,
     extend: { sans: ["Comfortaa", ...defaultTheme.fontFamily.sans] },

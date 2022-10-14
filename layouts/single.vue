@@ -1,10 +1,8 @@
 <script setup>
-import { ref } from "vue";
 import Nav from "../components/Nav.vue";
-import { Bars3Icon } from "@heroicons/vue/24/outline";
-const sidebarOpen = ref(false);
+import { useGithubUser } from "../composables/github";
 
-const closeMenu = () => (sidebarOpen.value = false);
+const user = await useGithubUser();
 </script>
 
 <template>
@@ -29,23 +27,23 @@ const closeMenu = () => (sidebarOpen.value = false);
               @click="sidebarOpen = true"
             >
               <span class="sr-only">Open sidebar</span>
-              <Bars3Icon class="h-6 w-6" aria-hidden="true" />
+              <user-menu :user="user" />
             </button>
           </div>
         </div>
       </div>
-      <div class="relative z-0 sm:flex flex-1 overflow-hidden">
-        <main
-          class="relative z-0 flex-1 overflow-y-auto focus:outline-none xl:order-last"
-        >
-          <div class="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
+      <div
+        class="relative z-0 flex flex-col sm:flex-row flex-1 overflow-hidden"
+      >
+        <main class="relative z-0 flex-1 overflow-y-auto order-last">
+          <div class="sm:absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
             <slot name="main"></slot>
           </div>
         </main>
         <aside
-          class="relative w-96 flex-shrink-0 overflow-y-auto border-r border-slate-800 sm:order-first sm:flex sm:flex-col"
+          class="relative sm:w-96 w-full flex-shrink-0 overflow-y-auto border-r border-slate-800 order-first max-h-[40vh]"
         >
-          <div class="absolute inset-0">
+          <div class="sm:absolute inset-0">
             <slot name="list"></slot>
           </div>
         </aside>
