@@ -1,7 +1,4 @@
 <script setup>
-import { useGithubCookie } from "../composables/github";
-import { GH_STATE } from "../utils/constants";
-
 defineProps({
   user: {
     type: Object,
@@ -9,11 +6,7 @@ defineProps({
   },
 });
 
-const logout = () => {
-  useGithubCookie().value = null;
-  useState(GH_STATE).value = null;
-  location.reload();
-};
+const logout = () => navigateTo("/logout");
 </script>
 
 <template>

@@ -15,10 +15,13 @@ export const githubFetch = (url, fetchOptions = {}) => {
 
 export const useGithubUser = async () => {
   const cookie = useGithubCookie();
-  console.log(cookie.value);
   const user = useState(GH_STATE);
   if (cookie.value && !user.value) {
-    user.value = await githubFetch("/user");
+    try {
+      user.value = await githubFetch("/user");
+    } catch (e) {
+      navigateTo("/logout");
+    }
   }
   return user;
 };
@@ -28,9 +31,4 @@ export const githubLogin = () => {
     const { GITHUB_CLIENT_ID } = useRuntimeConfig();
     window.location.replace(`${REDIRECT_OATH_URL}${GITHUB_CLIENT_ID}`);
   }
-};
-
-export const githubLogout = async () => {
-  const a = await useCookie(GH_TOKEN);
-  a.value = null;
 };

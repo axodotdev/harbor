@@ -23,6 +23,8 @@
     "prettier": "^2.7.1"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.3",
+    "@heroicons/vue": "^2.0.12",
     "eslint-plugin-nuxt": "^4.0.0",
     "redis": "^4.3.1",
     "uuid": "^9.0.0"

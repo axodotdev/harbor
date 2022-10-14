@@ -12,4 +12,24 @@ export default defineNuxtConfig({
   tailwindcss: {
     cssPath: "~/assets/css/main.css",
   },
+  app: {
+    head: {
+      viewport: "width=device-width, initial-scale=1",
+      charset: "utf-8",
+      bodyAttrs: {
+        class: "bg-slate-900 h-full overflow-hidden",
+      },
+      htmlAttrs: {
+        class: "dark h-full",
+        lang: "en-us",
+      },
+      script: [
+        {
+          src: "https://plausible.io/js/plausible.js",
+          defer: true,
+          "data-domain": "blog.axo.dev, axo.dev",
+        },
+      ],
+    },
+  },
 });

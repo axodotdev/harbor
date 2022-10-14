@@ -1,8 +1,8 @@
 import { useRedis } from "../../../composables/redis";
 import { sendError, getCookie, isMethod } from "h3";
 
-export const fetchRepo = (repo, cookie) => {
-  return $fetch(`repos/${repo}`, {
+export const fetchGh = (repo, cookie) => {
+  return $fetch(repo, {
     baseURL: "https://api.github.com",
     headers: {
       Authorization: `token ${cookie}`,
@@ -20,9 +20,11 @@ export default async (req) => {
     const parsedData = JSON.parse(data);
 
     try {
-      await fetchRepo(parsedData.repo, cookie);
-      return parsedData;
+      await fetchGh(`/repos/${parsedData.repo}`, cookie);
+
+      return { suggestions: parsedData.suggest.suggest_by_criteria };
     } catch (e) {
+      console.log(e);
       return sendError(req, {
         statusCode: 401,
         fatal: true,

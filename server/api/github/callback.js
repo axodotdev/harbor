@@ -1,6 +1,6 @@
 import { getQuery, sendRedirect, setCookie } from "h3";
 
-const REDIRECT_URL = "/login";
+const REDIRECT_URL = "/";
 
 export default async (req, res) => {
   const { code } = getQuery(req);

@@ -18,7 +18,9 @@
 
   "rules": {
     "vue/multi-word-component-names": 0,
-    "vue/singleline-html-element-content-newline": 0
+    "vue/singleline-html-element-content-newline": 0,
+    "vue/html-self-closing": 0,
+    "vue/max-attributes-per-line": 0
   },
   "globals": {
     "$fetch": true,
@@ -29,6 +31,9 @@
     "useRoute": true,
     "useRequestHeaders": true,
     "useCookie": true,
-    "useHead": true
+    "useHead": true,
+    "navigateTo": true,
+    "defineNuxtConfig": true,
+    "definePageMeta": true
   }
 }
