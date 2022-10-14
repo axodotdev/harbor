@@ -1,4 +1,6 @@
 <script setup>
+import AxoButton from "@axodotdev/fringe/lib/Button.vue";
+
 defineProps({
   user: {
     type: Object,
@@ -17,11 +19,6 @@ const logout = () => navigateTo("/logout");
         Welcome <span class="font-bold">{{ user.login }}</span>
       </p>
     </div>
-    <button
-      class="border text-black border-gray-600 rounded px-2 hover:border-black"
-      @click="logout"
-    >
-      Logout
-    </button>
+    <axo-button @click="logout"> Logout </axo-button>
   </div>
 </template>

@@ -24,6 +24,7 @@
     "prettier": "^2.7.1"
   },
   "dependencies": {
+    "@axodotdev/fringe": "^0.0.1",
     "@headlessui/vue": "^1.7.3",
     "@heroicons/vue": "^2.0.12",
     "eslint-plugin-nuxt": "^4.0.0",

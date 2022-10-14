@@ -1,6 +1,7 @@
 <script setup>
 import { useGithubUser } from "../composables/github";
 import { REDIRECT_COOKIE } from "../utils/constants";
+import AxoButton from "@axodotdev/fringe/lib/Button.vue";
 
 const user = await useGithubUser();
 const title = "Cargo Vet";
@@ -21,15 +22,15 @@ if (redirect && user.value) {
   <div
     class="container mx-auto h-full flex flex-col items-center justify-center"
   >
-    <h1 class="axo-gradient-text text-center text-8xl leading-relaxed">
+    <h1 class="axo-gradient-text text-center text-8xl leading-tight">
       {{ title }}
     </h1>
     <div class="flex flex-col">
       <User v-if="user" :user="user" />
 
-      <button
+      <axo-button
         v-else
-        class="bg-axo-orange text-slate-900 w-full rounded-3xl pointer m-1 py-1 hover:bg-axo-pink transition flex gap-2 items-center p-3"
+        class="flex gap-2 text-base items-center px-2"
         @click="githubLogin"
       >
         <span>Sign in with GitHub</span>
@@ -45,7 +46,7 @@ if (redirect && user.value) {
             clip-rule="evenodd"
           />
         </svg>
-      </button>
+      </axo-button>
     </div>
   </div>
 </template>
