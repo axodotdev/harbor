@@ -1,6 +1,39 @@
+<script setup>
+import { onMounted, ref, watch } from "vue";
+import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
+import { MISSING_CRITERIA_KEYS } from "../utils/constants";
+
+const props = defineProps({
+  suggestions: {
+    type: Object,
+    required: true,
+  },
+});
+const firstPartInList = Object.keys(props.suggestions)[0];
+const selected = ref(props.suggestions[firstPartInList][0]);
+
+onMounted(async () => {
+  await navigateTo({
+    replace: true,
+    query: {
+      name: selected.value.name,
+    },
+  });
+});
+
+watch(selected, async (newSelected) => {
+  await navigateTo({
+    replace: true,
+    query: {
+      name: newSelected.name,
+    },
+  });
+});
+</script>
+
 <template>
   <div v-for="category in Object.keys(suggestions)" :key="category">
-    <h5 class="my-4 px-6">{{ KEYS_TO[category] }}</h5>
+    <h5 class="my-4 px-6">{{ MISSING_CRITERIA_KEYS[category] }}</h5>
     <RadioGroup v-model="selected">
       <RadioGroupLabel class="sr-only"> Server size </RadioGroupLabel>
       <div class="space-y-0 border-t-slate-800 border-t">
@@ -33,35 +66,3 @@
     </RadioGroup>
   </div>
 </template>
-
-<script setup>
-import { onMounted, ref, watch } from "vue";
-import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
-import { KEYS_TO } from "../utils/constants";
-const props = defineProps({
-  suggestions: {
-    type: Object,
-    required: true,
-  },
-});
-const firstPartInList = Object.keys(props.suggestions)[0];
-const selected = ref(props.suggestions[firstPartInList][0]);
-
-onMounted(async () => {
-  await navigateTo({
-    replace: true,
-    query: {
-      name: selected.value.name,
-    },
-  });
-});
-
-watch(selected, async (newSelected) => {
-  await navigateTo({
-    replace: true,
-    query: {
-      name: newSelected.name,
-    },
-  });
-});
-</script>
