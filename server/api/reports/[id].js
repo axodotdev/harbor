@@ -24,7 +24,6 @@ export default async (req) => {
 
       return { suggestions: parsedData.suggest.suggest_by_criteria };
     } catch (e) {
-      console.log(e);
       return sendError(req, {
         statusCode: 401,
         fatal: true,

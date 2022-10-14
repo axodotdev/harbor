@@ -9,7 +9,6 @@ const route = useRoute();
 const selected = ref();
 const user = await useGithubUser();
 if (!user.value) {
-  console.log("HERE");
   useCookie(REDIRECT_COOKIE).value = route.params.id;
   navigateTo({
     path: "/",
@@ -22,8 +21,6 @@ const { data: report, error: fetchError } = await useFetch(
     headers: useRequestHeaders(["cookie"]),
   }
 );
-
-console.log(fetchError);
 
 const getPkg = () =>
   Object.values(report.value?.suggestions)
