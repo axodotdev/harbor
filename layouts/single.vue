@@ -13,7 +13,7 @@ const closeMenu = () => (sidebarOpen.value = false);
     <div class="flex min-w-0 flex-1 flex-col overflow-hidden">
       <div class="lg:hidden">
         <div
-          class="flex items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-1.5"
+          class="flex items-center justify-between border-b border-slate-800 bg-gray-50 px-4 py-1.5"
         >
           <div>
             <img
@@ -43,7 +43,7 @@ const closeMenu = () => (sidebarOpen.value = false);
           </div>
         </main>
         <aside
-          class="relative w-96 flex-shrink-0 overflow-y-auto border-r border-gray-200 sm:order-first sm:flex sm:flex-col"
+          class="relative w-96 flex-shrink-0 overflow-y-auto border-r border-slate-800 sm:order-first sm:flex sm:flex-col"
         >
           <div class="absolute inset-0">
             <slot name="list"></slot>

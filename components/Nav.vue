@@ -84,7 +84,7 @@ const logout = () => {
                 />
               </div>
             </div>
-            <div class="flex flex-shrink-0 border-t border-gray-200 p-4">
+            <div class="flex flex-shrink-0 border-t border-slate-800 p-4">
               <a href="#" class="group block flex-shrink-0">
                 <div class="flex items-center">
                   <div>
@@ -109,7 +109,7 @@ const logout = () => {
   <div class="hidden lg:flex lg:flex-shrink-0">
     <div class="flex w-18 flex-col">
       <div
-        class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-gray-100"
+        class="flex min-h-0 flex-1 flex-col border-r border-slate-800 bg-gray-100"
       >
         <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
           <div class="flex flex-shrink-0 items-center px-4">
@@ -120,7 +120,7 @@ const logout = () => {
             />
           </div>
         </div>
-        <div class="flex flex-shrink-0 border-t border-gray-200 p-4">
+        <div class="flex flex-shrink-0 border-t border-slate-800 p-4">
           <a href="#" class="group block w-full flex-shrink-0">
             <div class="flex items-center">
               <Menu>

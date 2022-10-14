@@ -17,7 +17,7 @@ export default defineNuxtConfig({
       viewport: "width=device-width, initial-scale=1",
       charset: "utf-8",
       bodyAttrs: {
-        class: "bg-slate-900 h-full overflow-hidden",
+        class: "bg-slate-900 h-full overflow-hidden text-slate-300",
       },
       htmlAttrs: {
         class: "dark h-full",

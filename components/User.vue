@@ -11,10 +11,10 @@ const logout = () => navigateTo("/logout");
 
 <template>
   <div class="items-center gap-2 p-5 flex flex-col">
-    <div class="flex gap-5">
-      <img :src="user.avatar_url" class="rounded-full w-10 h-10 mr-2" />
-      <p>
-        Welcome <strong>{{ user.login }}</strong>
+    <div class="flex gap-4 items-center mb-4">
+      <img :src="user.avatar_url" class="rounded-full w-10 h-10" />
+      <p class="m-0">
+        Welcome <span class="font-bold">{{ user.login }}</span>
       </p>
     </div>
     <button
