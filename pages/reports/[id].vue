@@ -1,21 +1,13 @@
 <script setup>
 import SingleLayout from "../../layouts/single.vue";
-import { useGithubUser } from "../../composables/github";
-import { MISSING_CRITERIA_KEYS, REDIRECT_COOKIE } from "../../utils/constants";
-import { onMounted, watch } from "vue";
 import { useInfo } from "../../composables/useInfo";
+import { usePackageInUrl } from "../../composables/usePackageInUrl";
+import { useProtectedPage } from "../../composables/useProtectedPage";
+import { useCurrentDescription } from "../../composables/useCurrentDescription";
 
-const route = useRoute();
-const selected = useState(() => null);
-const currentDescription = useState(() => null);
 const info = useInfo();
-const user = await useGithubUser();
-if (!user.value) {
-  useCookie(REDIRECT_COOKIE).value = route.params.id;
-  navigateTo({
-    path: "/",
-  });
-}
+const route = useRoute();
+useProtectedPage();
 
 const { data: report, error: fetchError } = await useFetch(
   `/api/reports/${route.params.id}`,
@@ -23,39 +15,8 @@ const { data: report, error: fetchError } = await useFetch(
     headers: useRequestHeaders(["cookie"]),
   }
 );
-
-const getPkg = () =>
-  Object.values(report.value?.suggestions)
-    .flat()
-    .find((a) => a.name === route.query.name);
-
-onMounted(() => {
-  if (report) selected.value = getPkg();
-});
-watch(route, () => (selected.value = getPkg()));
-
-watch(info, async (currentInfo) => {
-  if (currentInfo) {
-    const all = currentInfo.split(",");
-    all.map(async (single) => {
-      const defaultCriteria = MISSING_CRITERIA_KEYS[single];
-
-      if (defaultCriteria) {
-        const desc = await $fetch(defaultCriteria["description-url"]);
-        currentDescription.value = desc;
-        return;
-      }
-      const currentInReport = report.value.criteria[single];
-      console.log(currentInReport);
-      if (currentInReport.description) {
-        currentDescription.value = currentInReport.description;
-      } else {
-        const desc = await $fetch(currentInReport["description-url"]);
-        currentDescription.value = desc;
-      }
-    });
-  }
-});
+const currentDescription = useCurrentDescription({ report, info });
+const selected = usePackageInUrl({ report });
 </script>
 
 <template>

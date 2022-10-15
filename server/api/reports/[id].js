@@ -1,5 +1,6 @@
-import { useRedis } from "../../../composables/redis";
+import { useRedis } from "../../../composables/useRedis";
 import { sendError, getCookie, isMethod } from "h3";
+import { GH_TOKEN } from "../../../utils/constants";
 
 export const fetchGh = (repo, cookie) => {
   return $fetch(repo, {
@@ -11,9 +12,10 @@ export const fetchGh = (repo, cookie) => {
 };
 
 export default async (req) => {
-  const cookie = getCookie(req, "gh_token");
+  const cookie = getCookie(req, GH_TOKEN);
   const reportId = req?.context?.params?.id;
   const isGet = isMethod(req, "GET");
+
   if (reportId && isGet) {
     const client = await useRedis();
     const data = await client.get(reportId);
