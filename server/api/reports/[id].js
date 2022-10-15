@@ -22,7 +22,10 @@ export default async (req) => {
     try {
       await fetchGh(`/repos/${parsedData.repo}`, cookie);
 
-      return { suggestions: parsedData.suggest.suggest_by_criteria };
+      return {
+        suggestions: parsedData.suggest.suggest_by_criteria,
+        criteria: parsedData.context.criteria,
+      };
     } catch (e) {
       return sendError(req, {
         statusCode: 401,

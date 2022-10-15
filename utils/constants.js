@@ -4,10 +4,14 @@ export const REDIRECT_OATH_URL = `https://github.com/login/oauth/authorize?clien
 export const REDIRECT_COOKIE = "redirect_to";
 
 export const MISSING_CRITERIA_KEYS = {
-  "safe-to-deploy": "Unsafe to deploy",
-  "safe-to-run": "Unsafe to run",
-  "peer-company::reviewed": "Not peer company reviewed",
-  reviewed: "Not reviewed",
-  "strong-reviewed": "Not string reviewed",
-  fuzzed: "????",
+  "safe-to-deploy": {
+    name: "Unsafe to deploy",
+    "description-url":
+      "https://raw.githubusercontent.com/mozilla/cargo-vet/main/src/criteria/safe-to-deploy.txt",
+  },
+  "safe-to-run": {
+    name: "Unsafe to run",
+    "description-url":
+      "https://raw.githubusercontent.com/mozilla/cargo-vet/main/src/criteria/safe-to-run.txt",
+  },
 };

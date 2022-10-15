@@ -7,7 +7,7 @@ const user = await useGithubUser();
 
 <template>
   <div class="flex h-full">
-    <Nav :open="sidebarOpen" :close-menu="closeMenu" />
+    <Nav />
     <div class="flex min-w-0 flex-1 flex-col overflow-hidden">
       <div class="lg:hidden">
         <div
@@ -41,7 +41,7 @@ const user = await useGithubUser();
           </div>
         </main>
         <aside
-          class="relative sm:w-96 w-full flex-shrink-0 overflow-y-auto border-r border-slate-800 order-first max-h-[40vh]"
+          class="relative sm:w-96 w-full flex-shrink-0 overflow-y-auto border-r border-slate-800 order-first max-h-[40vh] sm:max-h-max"
         >
           <div class="sm:absolute inset-0">
             <slot name="list"></slot>

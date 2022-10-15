@@ -26,21 +26,23 @@ const props = defineProps({
         leave-from-class="transform opacity-100 scale-100"
         leave-to-class="transform opacity-0 scale-95"
       >
-        <MenuItems
-          class="absolute sm:left-2 -left-24 z-10 sm:mb-24 -mb-24 w-32 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hover:bg-slate-800"
-        >
-          <MenuItem v-slot="{ active }">
-            <NuxtLink
-              :class="[
-                active ? 'bg-gray-100' : '',
-                'block px-4 py-2 text-sm text-gray-700 w-full text-left',
-              ]"
-              to="/logout"
-            >
-              Sign out
-            </NuxtLink>
-          </MenuItem>
-        </MenuItems>
+        <div>
+          <MenuItems
+            class="absolute sm:left-2 -left-24 z-10 sm:mb-24 -mb-24 w-32 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hover:bg-slate-800 b-slate-900"
+          >
+            <MenuItem v-slot="{ active }">
+              <NuxtLink
+                :class="[
+                  active ? 'bg-gray-100' : '',
+                  'block px-4 py-2 text-sm text-gray-700 w-full text-left',
+                ]"
+                to="/logout"
+              >
+                Sign out
+              </NuxtLink>
+            </MenuItem>
+          </MenuItems>
+        </div>
       </transition>
     </Menu>
   </div>
