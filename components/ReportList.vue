@@ -1,14 +1,10 @@
 <script setup>
 import { onMounted, watch } from "vue";
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
-import { MISSING_CRITERIA_KEYS } from "../utils/constants";
-import { useInfo } from "../composables/useInfo";
 import { usePackageState } from "../composables/usePackagesState";
-import InfoIcon from "./Icons/InfoIcon.vue";
 import ShieldIcon from "./Icons/ShieldIcon.vue";
 
 const { state } = usePackageState();
-const info = useInfo();
 const props = defineProps({
   suggestions: {
     type: Object,
@@ -38,22 +34,12 @@ watch(selected, async (newSelected) => {
 </script>
 
 <template>
-  <div v-for="category in Object.keys(suggestions)" :key="category">
-    <h5
-      class="my-4 px-6 first-letter:capitalize flex gap-2 items-center justify-between"
-    >
-      {{
-        MISSING_CRITERIA_KEYS[category]?.name || category.split("-").join(" ")
-      }}
-      <button @click="info = category">
-        <info-icon />
-      </button>
-    </h5>
+  <div class="mt-4">
     <RadioGroup v-model="selected">
       <RadioGroupLabel class="sr-only"> Server size </RadioGroupLabel>
       <div class="space-y-0 border-t-slate-800 border-t">
         <RadioGroupOption
-          v-for="dep in suggestions[category]"
+          v-for="dep in suggestions"
           :key="dep.name"
           v-slot="{ checked, active }"
           as="template"
