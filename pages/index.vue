@@ -1,7 +1,7 @@
 <script setup>
 import { useGithubUser } from "../composables/github";
 import { REDIRECT_COOKIE } from "../utils/constants";
-import AxoButton from "@axodotdev/fringe/lib/Button.vue";
+import AxoButton from "../components/Button.vue";
 
 const user = await useGithubUser();
 const title = "Cargo Vet";
