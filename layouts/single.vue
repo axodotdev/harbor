@@ -36,7 +36,7 @@ const user = await useGithubUser();
         class="relative z-0 flex flex-col sm:flex-row flex-1 overflow-hidden"
       >
         <main class="relative z-0 flex-1 overflow-y-auto order-last">
-          <div class="sm:absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
+          <div class="sm:absolute inset-0">
             <slot name="main"></slot>
           </div>
         </main>

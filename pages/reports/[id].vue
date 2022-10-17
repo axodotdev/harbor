@@ -4,6 +4,7 @@ import { useInfo } from "../../composables/useInfo";
 import { usePackageInUrl } from "../../composables/usePackageInUrl";
 import { useProtectedPage } from "../../composables/useProtectedPage";
 import { useCurrentDescription } from "../../composables/useCurrentDescription";
+import CloseIcon from "../../components/Icons/CloseIcon.vue";
 
 const info = useInfo();
 const route = useRoute();
@@ -31,22 +32,9 @@ const selected = usePackageInUrl({ report });
       <report-list :suggestions="report.suggestions" />
     </template>
     <template #main>
-      <div v-if="info" class="relative">
+      <div v-if="info" class="relative py-6 px-4 sm:px-6 lg:px-8">
         <button @click="info = null">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6 absolute right-2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+          <close-icon />
         </button>
 
         <h3>Description</h3>
