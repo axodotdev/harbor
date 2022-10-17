@@ -32,7 +32,7 @@ const criteria = {
   </h2>
   <SingleLayout v-if="!fetchError">
     <template v-if="report" #list>
-      <report-list :suggestions="report.suggestions" :report="selected" />
+      <report-list :suggestions="report.suggestions" />
     </template>
     <template #main>
       <single-report

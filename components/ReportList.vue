@@ -15,13 +15,7 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  report: {
-    required: true,
-    type: Object,
-    default: () => {},
-  },
 });
-console.log(props);
 const firstPartInList = Object.keys(props.suggestions)[0];
 const selected = useState(() => props.suggestions[firstPartInList][0]);
 
@@ -73,7 +67,7 @@ watch(selected, async (newSelected) => {
                     state?.[dep.name]
                       ? 'text-green-300'
                       : dep.confident
-                      ? ' text-slate-200'
+                      ? 'text-slate-200'
                       : 'text-slate-500',
                     ' font-medium flex gap-2 items-center',
                   ]"
