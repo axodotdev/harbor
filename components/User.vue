@@ -1,5 +1,5 @@
 <script setup>
-import AxoButton from "./Button.vue";
+import AxoButton from "@axodotdev/fringe/lib/Button.vue";
 
 defineProps({
   user: {
