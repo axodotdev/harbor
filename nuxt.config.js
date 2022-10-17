@@ -1,4 +1,7 @@
 export default defineNuxtConfig({
+  vite: {
+    devBundler: "legacy",
+  },
   publicRuntimeConfig: {
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
   },
