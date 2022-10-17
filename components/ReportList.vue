@@ -1,6 +1,11 @@
 <script setup>
 import { onMounted, watch } from "vue";
-import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
+import {
+  RadioGroup,
+  RadioGroupLabel,
+  RadioGroupOption,
+  RadioGroupDescription,
+} from "@headlessui/vue";
 import { usePackageState } from "../composables/usePackagesState";
 import ShieldIcon from "./Icons/ShieldIcon.vue";
 
@@ -10,7 +15,13 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  report: {
+    required: true,
+    type: Object,
+    default: () => {},
+  },
 });
+console.log(props);
 const firstPartInList = Object.keys(props.suggestions)[0];
 const selected = useState(() => props.suggestions[firstPartInList][0]);
 
@@ -51,7 +62,7 @@ watch(selected, async (newSelected) => {
                 ? 'bg-slate-800 border-t !border-t-slate-600 !border-b-slate-600 '
                 : '',
 
-              'relative border-t border-t-transparent block cursor-pointer border-b  border-b-slate-800 px-6 py-4 shadow-sm focus:outline-none sm:flex sm:justify-between',
+              'relative border-t border-t-transparent block cursor-pointer border-b  border-b-slate-800 px-6 py-4 shadow-sm focus:outline-none sm:flex sm:justify-between hover:bg-slate-800 hover:border-t ',
             ]"
           >
             <span class="flex items-center">
@@ -59,7 +70,11 @@ watch(selected, async (newSelected) => {
                 <RadioGroupLabel
                   as="span"
                   :class="[
-                    state?.[dep.name] ? 'text-green-300' : ' text-slate-200',
+                    state?.[dep.name]
+                      ? 'text-green-300'
+                      : dep.confident
+                      ? ' text-slate-200'
+                      : 'text-slate-500',
                     ' font-medium flex gap-2 items-center',
                   ]"
                 >
@@ -67,6 +82,18 @@ watch(selected, async (newSelected) => {
 
                   {{ dep.name }}</RadioGroupLabel
                 >
+                <RadioGroupDescription
+                  :class="[
+                    'm-0 text-xs ',
+                    dep.confident ? ' !text-slate-500' : '!text-slate-600',
+                  ]"
+                >
+                  {{
+                    dep?.suggested_diff?.from
+                      ? `changed from v${dep?.suggested_diff?.from} to v${dep?.suggested_diff?.to}`
+                      : `full audit recommended`
+                  }}
+                </RadioGroupDescription>
               </span>
             </span>
           </div>
