@@ -1,4 +1,9 @@
 export default defineNuxtConfig({
+  vite: {
+    optimizeDeps: {
+      include: ["@axodotdev/fringe"],
+    },
+  },
   publicRuntimeConfig: {
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
   },
