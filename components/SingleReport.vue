@@ -2,6 +2,9 @@
 import { usePackageState } from "../composables/usePackagesState";
 import AxoLink from "@axodotdev/fringe/lib/Link";
 import { MISSING_CRITERIA_KEYS } from "../utils/constants";
+import { getVersionChangeText } from "../utils/versions";
+import { useSourceGraphURL } from "../composables/useSourcegraphUrl";
+import { toRef } from "vue";
 
 const props = defineProps({
   report: {
@@ -14,12 +17,10 @@ const props = defineProps({
     required: true,
   },
 });
+const report = toRef(props, "report");
 const { togglePackageApproval, state } = usePackageState();
-const URL_BASE = "https://sourcegraph.com/crates/";
-const url = props.report?.suggested_diff?.from
-  ? `${props.report?.name}/-/compare/v${props.report?.suggested_diff?.from}...v${props.report?.suggested_diff?.to}`
-  : `${props.report?.name}@v${props.report?.suggested_diff?.to}`;
-const final = URL_BASE + url;
+const final = useSourceGraphURL(report);
+
 const get = (criteria) => {
   const defaultCriteria = MISSING_CRITERIA_KEYS[criteria.name];
 
@@ -49,11 +50,7 @@ const get = (criteria) => {
       </div>
       <div>
         <h2 class="!text-axo-pink mb-0">{{ props.report.name }}</h2>
-        <small>{{
-          props.report?.suggested_diff?.from
-            ? `changed from v${props.report?.suggested_diff?.from} to v${props.report?.suggested_diff?.to}`
-            : `full audit recommended`
-        }}</small>
+        <small>{{ getVersionChangeText(props.report?.suggested_diff) }}</small>
         <div
           v-for="c in props.report.suggested_criteria"
           :key="c"

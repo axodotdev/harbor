@@ -8,16 +8,22 @@ import {
 } from "@headlessui/vue";
 import { usePackageState } from "../composables/usePackagesState";
 import ShieldIcon from "./Icons/ShieldIcon.vue";
+import { getVersionChangeText } from "../utils/versions";
 
 const { state } = usePackageState();
+const route = useRoute();
 const props = defineProps({
   suggestions: {
     type: Object,
     required: true,
   },
 });
-const firstPartInList = Object.keys(props.suggestions)[0];
-const selected = useState(() => props.suggestions[firstPartInList][0]);
+
+const selected = useState(() =>
+  route.query.name
+    ? props.suggestions.find((a) => a.name === route.query.name)
+    : props.suggestions[0]
+);
 
 onMounted(async () => {
   await navigateTo({
@@ -64,12 +70,10 @@ watch(selected, async (newSelected) => {
                 <RadioGroupLabel
                   as="span"
                   :class="[
-                    state?.[dep.name]
-                      ? 'text-green-300'
-                      : dep.confident
-                      ? 'text-slate-200'
-                      : 'text-slate-500',
-                    ' font-medium flex gap-2 items-center',
+                    state?.[dep.name] && 'text-green-300',
+                    dep.confident && 'text-slate-200',
+                    !state?.[dep.name] && !dep.confident && 'text-slate-500',
+                    'font-medium flex gap-2 items-center',
                   ]"
                 >
                   <shield-icon v-if="state?.[dep.name]" />
@@ -82,11 +86,7 @@ watch(selected, async (newSelected) => {
                     dep.confident ? ' !text-slate-500' : '!text-slate-600',
                   ]"
                 >
-                  {{
-                    dep?.suggested_diff?.from
-                      ? `changed from v${dep?.suggested_diff?.from} to v${dep?.suggested_diff?.to}`
-                      : `full audit recommended`
-                  }}
+                  {{ getVersionChangeText(dep?.suggested_diff) }}
                 </RadioGroupDescription>
               </span>
             </span>

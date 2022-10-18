@@ -19,7 +19,7 @@ const { data: report, error: fetchError } = await useFetch(
 const selected = usePackageInUrl({ report });
 const criteria = {
   ...MISSING_CRITERIA_KEYS,
-  ...report.value.criteria,
+  ...report.value?.criteria,
 };
 </script>
 
