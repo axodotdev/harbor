@@ -27,32 +27,36 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
 
 <template>
   <div class="flex flex-col justify-between h-full relative">
-    <div class="py-6 px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-end">
-        <AxoLink
-          class="bg-axo-orange p-2 text-slate-900 rounded shadow"
-          target="_blank"
-          :href="final"
-        >
-          Open in Sourcegraph
-        </AxoLink>
-      </div>
+    <div class="py-6 px-4 sm:px-6 lg:px-8 relative">
       <div>
-        <h2 class="!text-axo-pink mb-0">{{ props.report.name }}</h2>
-        <small>{{ getVersionChangeText(props.report?.suggested_diff) }}</small>
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="!text-axo-pink mb-0">{{ props.report.name }}</h2>
+            <small class="text-slate-400">
+              {{ getVersionChangeText(props.report?.suggested_diff) }}</small
+            >
+          </div>
+          <AxoLink
+            class="bg-axo-orange p-2 text-slate-900 rounded shadow"
+            target="_blank"
+            :href="final"
+          >
+            Open in Sourcegraph
+          </AxoLink>
+        </div>
         <div
-          v-for="c in props.report.suggested_criteria"
-          :key="c"
+          v-for="eula in props.report.suggested_criteria"
+          :key="eula"
           class="flex gap-4 mt-6"
         >
-          <Checkbox :eula="c" :name="props.report.name" />
+          <Checkbox :eula="eula" :name="props.report.name" />
 
           <div>
-            <h4>
-              {{ props.criteria[c].name || c }}
+            <h4 class="first-letter:capitalize">
+              {{ props.criteria[eula].name || c.split("-").join(" ") }}
             </h4>
             <p class="whitespace-pre-wrap">
-              {{ criteria[c] }}
+              {{ criteria[eula] }}
             </p>
           </div>
         </div>
