@@ -16,7 +16,7 @@ export const usePackageState = () => {
       ...state.value,
       [pkg]: {
         ...state.value?.[pkg],
-        approved: true,
+        approved: !state.value?.[pkg]?.approved,
       },
     };
   };

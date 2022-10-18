@@ -42,6 +42,17 @@ watch(selected, async (newSelected) => {
     },
   });
 });
+
+const getClasses = (dep) => {
+  const isApproved = state.value?.[dep.name]?.approved;
+  if (isApproved) return "text-green-300";
+
+  if (dep.confident) {
+    return "text-slate-200";
+  } else {
+    return "text-slate-500";
+  }
+};
 </script>
 
 <template>
@@ -70,13 +81,11 @@ watch(selected, async (newSelected) => {
                 <RadioGroupLabel
                   as="span"
                   :class="[
-                    state?.[dep.name] && 'text-green-300',
-                    dep.confident && !state?.[dep.name] && 'text-slate-200',
-                    !state?.[dep.name] && !dep.confident && 'text-slate-500',
+                    getClasses(dep),
                     'font-medium flex gap-2 items-center',
                   ]"
                 >
-                  <shield-icon v-if="state?.[dep.name]" />
+                  <shield-icon v-if="state?.[dep.name]?.approved" />
 
                   {{ dep.name }}</RadioGroupLabel
                 >
