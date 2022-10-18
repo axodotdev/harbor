@@ -13,13 +13,7 @@ const user = await useGithubUser();
         <div
           class="flex items-center justify-between border-b border-slate-800 bg-gray-50 px-4 py-1.5"
         >
-          <div>
-            <img
-              class="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="Your Company"
-            />
-          </div>
+          <div>C</div>
           <div>
             <button
               type="button"
