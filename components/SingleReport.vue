@@ -26,7 +26,7 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
 </script>
 
 <template>
-  <div class="flex flex-col justify-between h-full">
+  <div class="flex flex-col justify-between h-full relative">
     <div class="py-6 px-4 sm:px-6 lg:px-8">
       <div class="flex justify-end">
         <AxoLink
@@ -60,7 +60,7 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
     </div>
 
     <footer
-      class="bg-slate-800 border-t border-t-slate-600 flex w-full justify-between items-end text-slate-50 px-4 pb-6 pt-2 text-xs"
+      class="bg-slate-800 border-t border-t-slate-600 flex w-full justify-between items-end text-slate-50 px-4 pb-6 pt-2 text-xs sticky bottom-0 right-0 z-50"
     >
       <div class="w-3/4">
         <label for="comment" class="sr-only">Add your comment</label>
