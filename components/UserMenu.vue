@@ -1,6 +1,6 @@
 <script setup>
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-const props = defineProps({
+defineProps({
   user: {
     required: true,
     type: Object,
@@ -14,7 +14,7 @@ const props = defineProps({
       <MenuButton>
         <img
           class="inline-block h-9 w-9 rounded-full"
-          :src="props.user?.avatar_url"
+          :src="user?.avatar_url"
           alt=""
         />
       </MenuButton>
@@ -28,7 +28,7 @@ const props = defineProps({
       >
         <div>
           <MenuItems
-            class="absolute sm:left-2 -left-24 z-10 sm:mb-24 -mb-24 w-32 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hover:bg-slate-800 b-slate-900"
+            class="absolute sm:left-2 -left-24 z-10 sm:mb-24 mt-6 w-32 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hover:bg-slate-800 bg-slate-900"
           >
             <MenuItem v-slot="{ active }">
               <NuxtLink

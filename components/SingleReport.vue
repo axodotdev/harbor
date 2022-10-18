@@ -19,10 +19,9 @@ const props = defineProps({
   },
 });
 const report = toRef(props, "report");
-const { togglePackageApproval, state, isPackageAllApproved } =
-  usePackageState();
+const { togglePackageApproval, state } = usePackageState();
 const final = useSourceGraphURL(report);
-const criteria = useCurrentEula({ report, criteria: props.criteria });
+const currentEula = useCurrentEula({ report, criteria: props.criteria });
 </script>
 
 <template>
@@ -31,9 +30,9 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
       <div>
         <div class="flex items-center justify-between">
           <div>
-            <h2 class="!text-axo-pink mb-0">{{ props.report.name }}</h2>
+            <h2 class="!text-axo-pink mb-0">{{ report.name }}</h2>
             <small class="text-slate-400">
-              {{ getVersionChangeText(props.report?.suggested_diff) }}</small
+              {{ getVersionChangeText(report?.suggested_diff) }}</small
             >
           </div>
           <AxoLink
@@ -45,20 +44,20 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
           </AxoLink>
         </div>
         <div
-          v-for="eula in props.report.suggested_criteria"
+          v-for="eula in report.suggested_criteria"
           :key="eula"
-          class="flex gap-4 mt-6"
+          class="gap-4 mt-6"
         >
-          <Checkbox :eula="eula" :name="props.report.name" />
+          <div class="flex gap-4 items-center mb-4">
+            <Checkbox :eula="eula" :name="report.name" />
 
-          <div>
-            <h4 class="first-letter:capitalize">
-              {{ props.criteria[eula].name || eula.split("-").join(" ") }}
+            <h4 class="first-letter:capitalize mb-0">
+              {{ criteria[eula].name || eula.split("-").join(" ") }}
             </h4>
-            <p class="whitespace-pre-wrap">
-              {{ criteria[eula] }}
-            </p>
           </div>
+          <p class="whitespace-pre-wrap">
+            {{ currentEula[eula] }}
+          </p>
         </div>
       </div>
     </div>
@@ -80,19 +79,17 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
       </div>
       <button
         type="button"
-        :disabled="!isPackageAllApproved(report)"
+        :disabled="!state?.[report.name]"
         :class="[
-          !state?.[props.report.name]?.approved
-            ? 'bg-green-600 hover:bg-green-700 focus:ring-green-500'
-            : 'bg-red-600 hover:bg-red-700 focus:ring-red-500',
-          'inline-flex items-center rounded-md border border-transparent  px-4 py-2 text-base font-medium text-white shadow  focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-60 disabled:cursor-default',
+          !state?.[report.name]?.approved
+            ? 'bg-success-600 hover:bg-success-700 focus:ring-success-700'
+            : 'bg-error-600 hover:bg-error-700 focus:ring-error-700',
+          'inline-flex items-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow  focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-default',
         ]"
-        @click="() => togglePackageApproval(props.report.name)"
+        @click="() => togglePackageApproval(report.name)"
       >
         {{
-          state?.[props.report.name]?.approved
-            ? "Revert approval"
-            : "Approve change"
+          state?.[report.name]?.approved ? "Revert approval" : "Approve change"
         }}
       </button>
     </footer>

@@ -4,6 +4,7 @@ import { useInfo } from "../../composables/useInfo";
 import { usePackageInUrl } from "../../composables/usePackageInUrl";
 import { useProtectedPage } from "../../composables/useProtectedPage";
 import { MISSING_CRITERIA_KEYS } from "../../utils/constants";
+import { computed } from "vue";
 
 const info = useInfo();
 const route = useRoute();
@@ -17,10 +18,10 @@ const { data: report, error: fetchError } = await useFetch(
 );
 
 const selected = usePackageInUrl({ report });
-const criteria = {
+const criteria = computed(() => ({
   ...MISSING_CRITERIA_KEYS,
   ...report.value?.criteria,
-};
+}));
 </script>
 
 <template>
@@ -30,7 +31,7 @@ const criteria = {
   >
     You do not have access to this report
   </h2>
-  <SingleLayout v-if="!fetchError">
+  <SingleLayout v-else>
     <template v-if="report" #list>
       <report-list :suggestions="report.suggestions" />
     </template>

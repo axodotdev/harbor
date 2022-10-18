@@ -38,7 +38,7 @@ const onChange = () => toggleEulaPackageApproval(props.name, props.eula);
 }
 
 .button {
-  width: 74px;
+  min-width: 74px;
   height: 36px;
 }
 
@@ -58,7 +58,7 @@ const onChange = () => toggleEulaPackageApproval(props.name, props.eula);
 
 .checkbox:checked + .knobs:before {
   content: "YES";
-  background-color: var(--color-green-600);
+  background-color: var(--color-success-600);
   left: 42px;
 }
 </style>

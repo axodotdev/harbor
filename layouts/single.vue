@@ -14,16 +14,8 @@ const user = await useGithubUser();
           class="flex items-center justify-between border-b border-slate-800 bg-gray-50 px-4 py-1.5"
         >
           <div>C</div>
-          <div>
-            <button
-              type="button"
-              class="-mr-3 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900"
-              @click="sidebarOpen = true"
-            >
-              <span class="sr-only">Open sidebar</span>
-              <user-menu :user="user" />
-            </button>
-          </div>
+
+          <user-menu :user="user" />
         </div>
       </div>
       <div

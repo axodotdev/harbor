@@ -5,10 +5,6 @@ import AxoButton from "@axodotdev/fringe/lib/Button.vue";
 import GithubIcon from "../components/Icons/GithubIcon.vue";
 
 const user = await useGithubUser();
-const title = "Cargo Vet";
-useHead({
-  title,
-});
 
 const redirect = useCookie(REDIRECT_COOKIE).value;
 if (redirect && user.value) {
@@ -24,7 +20,7 @@ if (redirect && user.value) {
     class="container mx-auto h-full flex flex-col items-center justify-center"
   >
     <h1 class="axo-gradient-text text-center text-8xl leading-tight">
-      {{ title }}
+      cargo vet
     </h1>
     <div class="flex flex-col">
       <User v-if="user" :user="user" />

@@ -11,7 +11,9 @@ import ShieldIcon from "./Icons/ShieldIcon.vue";
 import { getVersionChangeText } from "../utils/versions";
 
 const { state } = usePackageState();
-const route = useRoute();
+const {
+  query: { name },
+} = useRoute();
 const props = defineProps({
   suggestions: {
     type: Object,
@@ -20,13 +22,13 @@ const props = defineProps({
 });
 
 const selected = useState(() =>
-  route.query.name
-    ? props.suggestions.find((a) => a.name === route.query.name)
+  name
+    ? props.suggestions.find((suggestion) => suggestion.name === name)
     : props.suggestions[0]
 );
 
-onMounted(async () => {
-  await navigateTo({
+onMounted(() => {
+  navigateTo({
     replace: true,
     query: {
       name: selected.value.name,
@@ -34,8 +36,8 @@ onMounted(async () => {
   });
 });
 
-watch(selected, async (newSelected) => {
-  await navigateTo({
+watch(selected, (newSelected) => {
+  navigateTo({
     replace: true,
     query: {
       name: newSelected.name,
@@ -45,7 +47,7 @@ watch(selected, async (newSelected) => {
 
 const getClasses = (dep) => {
   const isApproved = state.value?.[dep.name]?.approved;
-  if (isApproved) return "text-green-300";
+  if (isApproved) return "text-success-300";
 
   if (dep.confident) {
     return "text-slate-200";
@@ -58,7 +60,7 @@ const getClasses = (dep) => {
 <template>
   <div class="mt-4">
     <RadioGroup v-model="selected">
-      <RadioGroupLabel class="sr-only"> Server size </RadioGroupLabel>
+      <RadioGroupLabel class="sr-only"> Dependencies </RadioGroupLabel>
       <div class="space-y-0 border-t-slate-800 border-t">
         <RadioGroupOption
           v-for="dep in suggestions"
@@ -69,11 +71,9 @@ const getClasses = (dep) => {
         >
           <div
             :class="[
-              checked || active
-                ? 'bg-slate-800 border-t !border-t-slate-600 !border-b-slate-600 '
-                : '',
-
-              'relative border-t border-t-transparent block cursor-pointer border-b  border-b-slate-800 px-6 py-4 shadow-sm focus:outline-none sm:flex sm:justify-between hover:bg-slate-800 hover:border-t ',
+              (checked || active) &&
+                'bg-slate-800 border-t !border-t-slate-600 !border-b-slate-600 ',
+              'relative border-t border-t-transparent block cursor-pointer border-b border-b-slate-800 px-6 py-4 shadow-sm focus:outline-none sm:flex sm:justify-between hover:bg-slate-800 hover:border-t ',
             ]"
           >
             <span class="flex items-center">
@@ -87,8 +87,8 @@ const getClasses = (dep) => {
                 >
                   <shield-icon v-if="state?.[dep.name]?.approved" />
 
-                  {{ dep.name }}</RadioGroupLabel
-                >
+                  {{ dep.name }}
+                </RadioGroupLabel>
                 <RadioGroupDescription
                   :class="[
                     'm-0 text-xs ',
