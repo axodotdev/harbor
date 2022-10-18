@@ -71,7 +71,7 @@ watch(selected, async (newSelected) => {
                   as="span"
                   :class="[
                     state?.[dep.name] && 'text-green-300',
-                    dep.confident && 'text-slate-200',
+                    dep.confident && !state?.[dep.name] && 'text-slate-200',
                     !state?.[dep.name] && !dep.confident && 'text-slate-500',
                     'font-medium flex gap-2 items-center',
                   ]"

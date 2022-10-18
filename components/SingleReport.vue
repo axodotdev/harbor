@@ -5,6 +5,7 @@ import { getVersionChangeText } from "../utils/versions";
 import { useSourceGraphURL } from "../composables/useSourcegraphUrl";
 import { useCurrentEula } from "../composables/useCurrentEula";
 import { toRef } from "vue";
+import Checkbox from "./Checkbox.vue";
 
 const props = defineProps({
   report: {
@@ -18,7 +19,8 @@ const props = defineProps({
   },
 });
 const report = toRef(props, "report");
-const { togglePackageApproval, state } = usePackageState();
+const { togglePackageApproval, state, isPackageAllApproved } =
+  usePackageState();
 const final = useSourceGraphURL(report);
 const criteria = useCurrentEula({ report, criteria: props.criteria });
 </script>
@@ -43,18 +45,13 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
           :key="c"
           class="flex gap-4 mt-6"
         >
-          <input
-            id="comments"
-            aria-describedby="comments-description"
-            name="comments"
-            type="checkbox"
-            class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 mt-2"
-          />
+          <Checkbox :eula="c" :name="props.report.name" />
+
           <div>
             <h4>
               {{ props.criteria[c].name || c }}
             </h4>
-            <p v-if="!isFetching" class="whitespace-pre-wrap">
+            <p class="whitespace-pre-wrap">
               {{ criteria[c] }}
             </p>
           </div>
@@ -79,16 +76,20 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
       </div>
       <button
         type="button"
-        disabled
+        :disabled="!isPackageAllApproved(report)"
         :class="[
-          !state?.[props.report.name]
+          !state?.[props.report.name]?.approved
             ? 'bg-green-600 hover:bg-green-700 focus:ring-green-500'
             : 'bg-red-600 hover:bg-red-700 focus:ring-red-500',
           'inline-flex items-center rounded-md border border-transparent  px-4 py-2 text-base font-medium text-white shadow  focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-60 disabled:cursor-default',
         ]"
         @click="() => togglePackageApproval(props.report.name)"
       >
-        {{ state?.[props.report.name] ? "Revert approval" : "Approve change" }}
+        {{
+          state?.[props.report.name]?.approved
+            ? "Revert approval"
+            : "Approve change"
+        }}
       </button>
     </footer>
   </div>
