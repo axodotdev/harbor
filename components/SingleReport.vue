@@ -1,9 +1,9 @@
 <script setup>
 import { usePackageState } from "../composables/usePackagesState";
 import AxoLink from "@axodotdev/fringe/lib/Link";
-import { MISSING_CRITERIA_KEYS } from "../utils/constants";
 import { getVersionChangeText } from "../utils/versions";
 import { useSourceGraphURL } from "../composables/useSourcegraphUrl";
+import { useCurrentEula } from "../composables/useCurrentEula";
 import { toRef } from "vue";
 
 const props = defineProps({
@@ -20,20 +20,7 @@ const props = defineProps({
 const report = toRef(props, "report");
 const { togglePackageApproval, state } = usePackageState();
 const final = useSourceGraphURL(report);
-
-const get = (criteria) => {
-  const defaultCriteria = MISSING_CRITERIA_KEYS[criteria.name];
-
-  if (defaultCriteria) {
-    return $fetch(defaultCriteria["description-url"]);
-  }
-
-  if (criteria.description) {
-    return criteria.description;
-  } else {
-    return $fetch(criteria["description-url"]);
-  }
-};
+const criteria = useCurrentEula({ report, criteria: props.criteria });
 </script>
 
 <template>
@@ -67,7 +54,9 @@ const get = (criteria) => {
             <h4>
               {{ props.criteria[c].name || c }}
             </h4>
-            <p class="whitespace-pre-wrap">{{ get(props.criteria[c]) }}</p>
+            <p v-if="!isFetching" class="whitespace-pre-wrap">
+              {{ criteria[c] }}
+            </p>
           </div>
         </div>
       </div>
