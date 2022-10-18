@@ -53,7 +53,7 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
 
           <div>
             <h4 class="first-letter:capitalize">
-              {{ props.criteria[eula].name || c.split("-").join(" ") }}
+              {{ props.criteria[eula].name || eula.split("-").join(" ") }}
             </h4>
             <p class="whitespace-pre-wrap">
               {{ criteria[eula] }}

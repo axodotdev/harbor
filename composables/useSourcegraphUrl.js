@@ -1,4 +1,4 @@
-import { watch, onMounted } from "vue";
+import { watchEffect } from "vue";
 
 const URL_BASE = "https://sourcegraph.com/crates/";
 const getUrl = (report) =>
@@ -9,10 +9,7 @@ const getUrl = (report) =>
 export const useSourceGraphURL = (report) => {
   const url = useState(() => null);
 
-  onMounted(() => (url.value = URL_BASE + getUrl(report.value)));
-  watch(report, (newReport) => {
-    url.value = URL_BASE + getUrl(newReport);
-  });
+  watchEffect(() => (url.value = URL_BASE + getUrl(report.value)));
 
   return url;
 };
