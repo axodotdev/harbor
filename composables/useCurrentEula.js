@@ -4,22 +4,25 @@ import { onMounted, watch } from "vue";
 export const useCurrentEula = ({ report, criteria: APICriteria }) => {
   const criteria = useState(() => []);
   const get = (newReport) => {
-    newReport.suggested_criteria.map(async (c) => {
-      if (criteria[c]) return;
-      const defaultCriteria = MISSING_CRITERIA_KEYS[c];
+    newReport.suggested_criteria.map(async (currentCriteria) => {
+      if (criteria[currentCriteria]) return;
+      const defaultCriteria = MISSING_CRITERIA_KEYS[currentCriteria];
 
       if (defaultCriteria) {
         const data = await $fetch(defaultCriteria["description-url"]);
 
-        criteria.value[c] = data;
+        criteria.value[currentCriteria] = data;
         return;
       }
 
-      if (APICriteria[c].description) {
-        criteria.value[c] = APICriteria[c].description;
+      if (APICriteria[currentCriteria].description) {
+        criteria.value[currentCriteria] =
+          APICriteria[currentCriteria].description;
       } else {
-        const data = await $fetch(APICriteria[c]["description-url"]);
-        criteria.value[c] = data;
+        const data = await $fetch(
+          APICriteria[currentCriteria]["description-url"]
+        );
+        criteria.value[currentCriteria] = data;
       }
     });
   };

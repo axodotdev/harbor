@@ -17,6 +17,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
+      title: "axo - cargo vet",
       viewport: "width=device-width, initial-scale=1",
       charset: "utf-8",
       bodyAttrs: {
