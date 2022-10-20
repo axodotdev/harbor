@@ -1,4 +1,6 @@
-export default async (app) => {
+import { createNodeMiddleware, createProbot } from "probot";
+
+const app = async (app) => {
   app.on("issues.opened", async (context) => {
     const response = await context.github.issues.listForRepo(
       context.repo({
@@ -24,3 +26,8 @@ export default async (app) => {
     }
   });
 };
+
+export default createNodeMiddleware(app, {
+  probot: createProbot(),
+  webhooksPath: "/api/github/webhook",
+});
