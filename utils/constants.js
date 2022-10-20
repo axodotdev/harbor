@@ -5,12 +5,12 @@ export const REDIRECT_COOKIE = "redirect_to";
 
 export const MISSING_CRITERIA_KEYS = {
   "safe-to-deploy": {
-    name: "Unsafe to deploy",
+    name: "Safe to deploy",
     "description-url":
       "https://raw.githubusercontent.com/mozilla/cargo-vet/main/src/criteria/safe-to-deploy.txt",
   },
   "safe-to-run": {
-    name: "Unsafe to run",
+    name: "Safe to run",
     "description-url":
       "https://raw.githubusercontent.com/mozilla/cargo-vet/main/src/criteria/safe-to-run.txt",
   },

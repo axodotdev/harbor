@@ -1,22 +1,29 @@
 <script setup>
 import { onMounted, watch } from "vue";
-import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
-import { MISSING_CRITERIA_KEYS } from "../utils/constants";
-import { useInfo } from "../composables/useInfo";
+import {
+  RadioGroup,
+  RadioGroupLabel,
+  RadioGroupOption,
+  RadioGroupDescription,
+} from "@headlessui/vue";
 import { usePackageState } from "../composables/usePackagesState";
-import InfoIcon from "./Icons/InfoIcon.vue";
 import ShieldIcon from "./Icons/ShieldIcon.vue";
+import { getVersionChangeText } from "../utils/versions";
 
 const { state } = usePackageState();
-const info = useInfo();
+const route = useRoute();
 const props = defineProps({
   suggestions: {
     type: Object,
     required: true,
   },
 });
-const firstPartInList = Object.keys(props.suggestions)[0];
-const selected = useState(() => props.suggestions[firstPartInList][0]);
+
+const selected = useState(() =>
+  route.query.name
+    ? props.suggestions.find((a) => a.name === route.query.name)
+    : props.suggestions[0]
+);
 
 onMounted(async () => {
   await navigateTo({
@@ -35,25 +42,26 @@ watch(selected, async (newSelected) => {
     },
   });
 });
+
+const getClasses = (dep) => {
+  const isApproved = state.value?.[dep.name]?.approved;
+  if (isApproved) return "text-green-300";
+
+  if (dep.confident) {
+    return "text-slate-200";
+  } else {
+    return "text-slate-500";
+  }
+};
 </script>
 
 <template>
-  <div v-for="category in Object.keys(suggestions)" :key="category">
-    <h5
-      class="my-4 px-6 first-letter:capitalize flex gap-2 items-center justify-between"
-    >
-      {{
-        MISSING_CRITERIA_KEYS[category]?.name || category.split("-").join(" ")
-      }}
-      <button @click="info = category">
-        <info-icon />
-      </button>
-    </h5>
+  <div class="mt-4">
     <RadioGroup v-model="selected">
       <RadioGroupLabel class="sr-only"> Server size </RadioGroupLabel>
       <div class="space-y-0 border-t-slate-800 border-t">
         <RadioGroupOption
-          v-for="dep in suggestions[category]"
+          v-for="dep in suggestions"
           :key="dep.name"
           v-slot="{ checked, active }"
           as="template"
@@ -65,7 +73,7 @@ watch(selected, async (newSelected) => {
                 ? 'bg-slate-800 border-t !border-t-slate-600 !border-b-slate-600 '
                 : '',
 
-              'relative border-t border-t-transparent block cursor-pointer border-b  border-b-slate-800 px-6 py-4 shadow-sm focus:outline-none sm:flex sm:justify-between',
+              'relative border-t border-t-transparent block cursor-pointer border-b  border-b-slate-800 px-6 py-4 shadow-sm focus:outline-none sm:flex sm:justify-between hover:bg-slate-800 hover:border-t ',
             ]"
           >
             <span class="flex items-center">
@@ -73,14 +81,22 @@ watch(selected, async (newSelected) => {
                 <RadioGroupLabel
                   as="span"
                   :class="[
-                    state?.[dep.name] ? 'text-green-300' : ' text-slate-200',
-                    ' font-medium flex gap-2 items-center',
+                    getClasses(dep),
+                    'font-medium flex gap-2 items-center',
                   ]"
                 >
-                  <shield-icon v-if="state?.[dep.name]" />
+                  <shield-icon v-if="state?.[dep.name]?.approved" />
 
                   {{ dep.name }}</RadioGroupLabel
                 >
+                <RadioGroupDescription
+                  :class="[
+                    'm-0 text-xs ',
+                    dep.confident ? ' !text-slate-500' : '!text-slate-600',
+                  ]"
+                >
+                  {{ getVersionChangeText(dep?.suggested_diff) }}
+                </RadioGroupDescription>
               </span>
             </span>
           </div>

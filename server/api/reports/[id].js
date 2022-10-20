@@ -20,12 +20,10 @@ export default async (req) => {
     const client = await useRedis();
     const data = await client.get(reportId);
     const parsedData = JSON.parse(data);
-
     try {
       await fetchGh(`/repos/${parsedData.repo}`, cookie);
-
       return {
-        suggestions: parsedData.suggest.suggest_by_criteria,
+        suggestions: parsedData.suggest.suggestions,
         criteria: parsedData.context.criteria,
       };
     } catch (e) {
