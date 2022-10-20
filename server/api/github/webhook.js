@@ -1,4 +1,4 @@
-module.exports = (app) => {
+export default async (app) => {
   app.on("issues.opened", async (context) => {
     const response = await context.github.issues.listForRepo(
       context.repo({
