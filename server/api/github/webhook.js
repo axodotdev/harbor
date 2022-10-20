@@ -1,7 +1,9 @@
+// @ts-check
+
 import { createNodeMiddleware, createProbot } from "probot";
 
 function app(app) {
-  app.on("issues.opened", async (context) => {
+  app.on(["pull_request.opened", "pull_request.edited"], async (context) => {
     const issueComment = context.issue({
       body: "Thanks for opening this issue!",
     });
