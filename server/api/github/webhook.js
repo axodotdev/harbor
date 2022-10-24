@@ -3,7 +3,7 @@
 import { createNodeMiddleware, createProbot } from "probot";
 
 function app(app) {
-  app.on(["check_run.completed"], async (context) => {
+  app.on("check_run.completed", async (context) => {
     const issueComment = context.issue({
       body: "Thanks for opening this issue!",
     });
