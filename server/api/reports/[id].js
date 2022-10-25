@@ -20,21 +20,20 @@ export default async (req) => {
     const client = await useRedis();
     const data = await client.get(reportId);
     const parsedData = JSON.parse(data);
-    console.log(parsedData);
-    // try {
-    //   const a = await fetchGh(`/repos/${parsedData.repo}`, cookie);
+    try {
+      await fetchGh(`/repos/${parsedData.repo}`, cookie);
 
-    //   return {
-    //     suggestions: parsedData.suggest.suggestions,
-    //     criteria: parsedData.context.criteria,
-    //   };
-    // } catch (e) {
-    //   return sendError(req, {
-    //     statusCode: 401,
-    //     fatal: true,
-    //     statusMessage: "You do not have access to this repo",
-    //   });
-    // }
+      return {
+        suggestions: parsedData.suggest.suggestions,
+        criteria: parsedData.context.criteria,
+      };
+    } catch (e) {
+      return sendError(req, {
+        statusCode: 401,
+        fatal: true,
+        statusMessage: "You do not have access to this repo",
+      });
+    }
   }
 
   return sendError(req, {
