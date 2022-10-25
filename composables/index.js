@@ -6,4 +6,3 @@ export * from "./usePackagesState";
 export * from "./useProtectedPage";
 export * from "./useSingleReport";
 export * from "./useSourcegraphUrl";
-export * from "./useRedis";

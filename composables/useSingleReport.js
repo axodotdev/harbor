@@ -3,10 +3,10 @@ import { useQuery } from "vue-query";
 export const useSingleReport = () => {
   const route = useRoute();
 
-  const fetcher = async (url) =>
-    await fetch(url, {
+  const fetcher = (url) =>
+    $fetch(url, {
       headers: useRequestHeaders(["cookie"]),
-    }).then((response) => response.json());
+    });
 
   const {
     data: report,
