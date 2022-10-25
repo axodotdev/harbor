@@ -1,16 +1,7 @@
 {
   "name": "cargo-vet-gh-app",
-  "version": "1.0.0",
-  "private": true,
+  "version": "0.0.0",
   "description": "Gihub App for cargo vet",
-  "author": "Sara Vieira",
-  "license": "ISC",
-  "homepage": "https://github.com//",
-  "keywords": [
-    "probot",
-    "github",
-    "probot-app"
-  ],
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -watch",

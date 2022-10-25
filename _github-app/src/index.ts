@@ -1,15 +1,25 @@
 import { Probot } from "probot";
 
-export = (app: Probot) => {
-  app.on("check_run.completed", async (context) => {
-    const params = {
-      owner: context.payload.repository.owner.login,
-      check_run_id: context.payload.check_run.id,
-      repo: context.payload.repository.name
+export default (app: Probot) => {
+  app.on("workflow_run.completed", async ({ pullRequest, payload, octokit }) => {
+    try {
+      console.log(payload.workflow_run.conclusion)
+      if (!pullRequest.length || payload.workflow_run.conclusion !== "failure") return;
+      const params = {
+        owner: payload.repository.owner.login,
+        run_id: payload.workflow_run.id,
+        repo: payload.repository.name
+      }
+      const { data: logs } = await octokit.actions.downloadWorkflowRunLogs(params)
+      // @ts-ignore
+      const dec = new TextDecoder("utf-8").decode(logs)
+      octokit.checks.create({
+
+      })
+      console.log(dec);
+    } catch (e) {
+      console.log(e)
     }
-    const { data: annotations } = await context.octokit.checks.listAnnotations(params)
-    const { data: check } = await context.octokit.checks.get(params)
-    console.log(check, annotations);
   });
 
   // For more information on building apps:
