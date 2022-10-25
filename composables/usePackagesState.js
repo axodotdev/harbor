@@ -1,5 +1,17 @@
+import { watch } from "vue";
+
 export const usePackageState = () => {
+  const route = useRoute();
   const state = useState("packages-state", () => {});
+
+  const init = (initialState) => (state.value = initialState);
+
+  watch(state, (newState) => {
+    $fetch(`/api/reports/${route.params.id}`, {
+      method: "PUT",
+      body: newState,
+    });
+  });
 
   const toggleEulaPackageApproval = (pkg, eula) => {
     state.value = {
@@ -21,17 +33,18 @@ export const usePackageState = () => {
     };
   };
 
-  const isPackageAllApproved = (report) => {
+  const isPackageAnyApproved = (report) => {
     const needsApproval = report.suggested_criteria;
     const approved = state.value?.[report.name] || {};
 
-    return needsApproval.every((criteria) => approved[criteria]);
+    return needsApproval.some((criteria) => approved[criteria]);
   };
 
   return {
+    init,
     state,
     togglePackageApproval,
     toggleEulaPackageApproval,
-    isPackageAllApproved,
+    isPackageAnyApproved,
   };
 };

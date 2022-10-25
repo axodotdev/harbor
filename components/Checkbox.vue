@@ -12,8 +12,9 @@ const props = defineProps({
   },
 });
 
-const { toggleEulaPackageApproval } = usePackageState();
+const { toggleEulaPackageApproval, state } = usePackageState();
 const onChange = () => toggleEulaPackageApproval(props.name, props.eula);
+console.log(props);
 </script>
 <template>
   <div class="button r relative rounded-3xl">
@@ -21,6 +22,7 @@ const onChange = () => toggleEulaPackageApproval(props.name, props.eula);
       type="checkbox"
       class="checkbox relative w-full h-full p-0 m-0 opacity-0 cursor-pointer z-[3]"
       @change="onChange"
+      :checked="state[name]?.[eula]"
     />
     <div
       class="knobs z-[2] before:absolute before:top-1 before:left-1 before:text-slate-100 before:font-bold before:text-center before:text-[9px] before:h-7 before:w-7 before:leading-none before:bg-axo-orange before:rounded-full before:flex before:items-center before:justify-center"

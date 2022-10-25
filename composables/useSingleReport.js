@@ -1,7 +1,10 @@
 import { useQuery } from "vue-query";
+import { usePackageState } from "./usePackagesState";
+import { watch } from "vue";
 
 export const useSingleReport = () => {
   const route = useRoute();
+  const { init } = usePackageState();
 
   const fetcher = (url) =>
     $fetch(url, {
@@ -19,6 +22,12 @@ export const useSingleReport = () => {
       staleTime: 5000,
     }
   );
+
+  watch(report, (newReport) => {
+    if (newReport) {
+      init(newReport.state);
+    }
+  });
 
   return {
     report,

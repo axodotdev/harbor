@@ -3,6 +3,7 @@ import SingleLayout from "../../layouts/single.vue";
 import {
   useProtectedPage,
   useSingleReport,
+  usePackageState,
   usePackageInUrl,
 } from "../../composables";
 import { MISSING_CRITERIA_KEYS } from "../../utils/constants";
@@ -11,6 +12,7 @@ import { computed } from "vue";
 const { report, isLoading, fetchError } = useSingleReport();
 useProtectedPage();
 const selected = usePackageInUrl({ report });
+usePackageState({ initialState: report?.state });
 
 const criteria = computed(() => ({
   ...MISSING_CRITERIA_KEYS,

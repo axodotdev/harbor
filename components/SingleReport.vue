@@ -21,7 +21,7 @@ const props = defineProps({
   },
 });
 const report = toRef(props, "report");
-const { togglePackageApproval, state, isPackageAllApproved } =
+const { togglePackageApproval, state, isPackageAnyApproved } =
   usePackageState();
 const final = useSourceGraphURL(report);
 const criteria = useCurrentEula({ report, criteria: props.criteria });
@@ -78,7 +78,7 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
       </div>
       <button
         type="button"
-        :disabled="!isPackageAllApproved(report)"
+        :disabled="!isPackageAnyApproved(report)"
         :class="[
           !state?.[props.report.name]?.approved
             ? 'bg-green-600 hover:bg-green-700 focus:ring-green-500'

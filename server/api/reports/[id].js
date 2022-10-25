@@ -1,5 +1,5 @@
 import { useRedis } from "../../../composables/useRedis";
-import { sendError, getCookie, isMethod } from "h3";
+import { sendError, getCookie, isMethod, readBody } from "h3";
 import { GH_TOKEN } from "../../../utils/constants";
 
 export const fetchGh = (repo, cookie) => {
@@ -15,24 +15,43 @@ export default async (req) => {
   const cookie = getCookie(req, GH_TOKEN);
   const reportId = req?.context?.params?.id;
   const isGet = isMethod(req, "GET");
+  const isPut = isMethod(req, "PUT");
 
-  if (reportId && isGet) {
+  if (reportId) {
     const client = await useRedis();
     const data = await client.get(reportId);
     const parsedData = JSON.parse(data);
-    try {
-      await fetchGh(`/repos/${parsedData.repo}`, cookie);
+    if (isGet) {
+      try {
+        await fetchGh(`/repos/${parsedData.repo}`, cookie);
 
-      return {
-        suggestions: parsedData.suggest.suggestions,
-        criteria: parsedData.context.criteria,
-      };
-    } catch (e) {
-      return sendError(req, {
-        statusCode: 401,
-        fatal: true,
-        statusMessage: "You do not have access to this repo",
-      });
+        return {
+          suggestions: parsedData.suggest.suggestions,
+          criteria: parsedData.context.criteria,
+          state: parsedData.state || {},
+        };
+      } catch (e) {
+        return sendError(req, {
+          statusCode: 401,
+          fatal: true,
+          statusMessage: "You do not have access to this repo",
+        });
+      }
+    }
+
+    if (isPut) {
+      const body = await readBody(req);
+      await client.set(
+        reportId,
+        JSON.stringify({
+          ...parsedData,
+          state: body,
+        })
+      );
+
+      const newData = await client.get(reportId);
+
+      return newData;
     }
   }
 
