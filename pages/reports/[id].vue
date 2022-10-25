@@ -1,26 +1,21 @@
 <script setup>
 import SingleLayout from "../../layouts/single.vue";
-import { useInfo } from "../../composables/useInfo";
-import { usePackageInUrl } from "../../composables/usePackageInUrl";
-import { useProtectedPage } from "../../composables/useProtectedPage";
+import {
+  useProtectedPage,
+  useSingleReport,
+  usePackageInUrl,
+} from "../../composables";
 import { MISSING_CRITERIA_KEYS } from "../../utils/constants";
 
-const info = useInfo();
-const route = useRoute();
+import { computed } from "vue";
+const { report, isLoading, fetchError } = useSingleReport();
 useProtectedPage();
-
-const { data: report, error: fetchError } = await useFetch(
-  `/api/reports/${route.params.id}`,
-  {
-    headers: useRequestHeaders(["cookie"]),
-  }
-);
-
 const selected = usePackageInUrl({ report });
-const criteria = {
+
+const criteria = computed(() => ({
   ...MISSING_CRITERIA_KEYS,
-  ...report.value?.criteria,
-};
+  ...report?.value?.criteria,
+}));
 </script>
 
 <template>
@@ -30,16 +25,12 @@ const criteria = {
   >
     You do not have access to this report
   </h2>
-  <SingleLayout v-if="!fetchError">
+  <SingleLayout v-if="!fetchError && !isLoading">
     <template v-if="report" #list>
       <report-list :suggestions="report.suggestions" />
     </template>
-    <template #main>
-      <single-report
-        v-if="selected && !info"
-        :report="selected"
-        :criteria="criteria"
-      />
+    <template v-if="selected" #main>
+      <single-report :report="selected" :criteria="criteria" />
     </template>
   </SingleLayout>
 </template>

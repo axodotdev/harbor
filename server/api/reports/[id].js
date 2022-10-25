@@ -1,4 +1,4 @@
-import { useRedis } from "../../../composables/useRedis";
+import { useRedis } from "../../../composables";
 import { sendError, getCookie, isMethod } from "h3";
 import { GH_TOKEN } from "../../../utils/constants";
 

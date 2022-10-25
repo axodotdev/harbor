@@ -14,8 +14,8 @@ export const useCurrentEula = ({ report, criteria: APICriteria }) => {
         criteria.value[c] = data;
         return;
       }
-
-      if (APICriteria[c].description) {
+      console.log(APICriteria, [c]);
+      if (APICriteria[c]?.description) {
         criteria.value[c] = APICriteria[c].description;
       } else {
         const data = await $fetch(APICriteria[c]["description-url"]);

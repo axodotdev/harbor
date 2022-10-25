@@ -1,6 +1,6 @@
 <script setup>
 import Nav from "../components/Nav.vue";
-import { useGithubUser } from "../composables/github";
+import { useGithubUser } from "../composables";
 
 const user = await useGithubUser();
 </script>

@@ -9,7 +9,7 @@ export const usePackageInUrl = ({ report }) => {
   onMounted(() => {
     if (report) selected.value = getPkg();
   });
-  watch(route, () => (selected.value = getPkg()));
+  watch([route, report], () => (selected.value = getPkg()));
 
   return selected;
 };

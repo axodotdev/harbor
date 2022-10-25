@@ -1,9 +1,11 @@
 <script setup>
-import { usePackageState } from "../composables/usePackagesState";
 import AxoLink from "@axodotdev/fringe/lib/Link";
 import { getVersionChangeText } from "../utils/versions";
-import { useSourceGraphURL } from "../composables/useSourcegraphUrl";
-import { useCurrentEula } from "../composables/useCurrentEula";
+import {
+  useSourceGraphURL,
+  usePackageState,
+  useCurrentEula,
+} from "../composables";
 import { toRef } from "vue";
 import Checkbox from "./Checkbox.vue";
 
@@ -49,7 +51,7 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
 
           <div>
             <h4>
-              {{ props.criteria[c].name || c }}
+              {{ props.criteria[c]?.name || c }}
             </h4>
             <p class="whitespace-pre-wrap">
               {{ criteria[c] }}

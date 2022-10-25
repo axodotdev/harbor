@@ -6,7 +6,7 @@ import {
   RadioGroupOption,
   RadioGroupDescription,
 } from "@headlessui/vue";
-import { usePackageState } from "../composables/usePackagesState";
+import { usePackageState } from "../composables";
 import ShieldIcon from "./Icons/ShieldIcon.vue";
 import { getVersionChangeText } from "../utils/versions";
 
