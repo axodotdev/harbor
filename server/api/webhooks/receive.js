@@ -13,10 +13,8 @@ export default async (req) => {
       const id = uuidv4();
       const parsedData = JSON.parse(Object.keys(body));
       await client.set(id, JSON.stringify(parsedData));
-      const data = await client.get(id);
       return {
         id,
-        ...JSON.parse(data),
       };
     }
 
