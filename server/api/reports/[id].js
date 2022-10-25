@@ -20,7 +20,7 @@ export default async (req) => {
     const client = await useRedis();
     const data = await client.get(reportId);
     const parsedData = JSON.parse(data);
-    console.log(data);
+    console.log(parsedData);
     // try {
     //   const a = await fetchGh(`/repos/${parsedData.repo}`, cookie);
 

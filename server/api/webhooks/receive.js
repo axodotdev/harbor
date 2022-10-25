@@ -11,9 +11,9 @@ export default async (req) => {
   if (body && isPost) {
     const client = await useRedis();
     const id = uuidv4();
-    await client.set(id, JSON.stringify(body));
+    const parsedData = JSON.parse(Object.keys(body));
+    await client.set(id, JSON.stringify(parsedData));
     const data = await client.get(id);
-    console.log(body, typeof body);
     return {
       id,
       ...JSON.parse(data),
