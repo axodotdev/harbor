@@ -6,12 +6,12 @@ import { postGh, fetchGh } from "@/utils/github";
 export default async (req) => {
   const cookie = getCookie(req, GH_TOKEN);
   const reportId = req?.context?.params?.id;
-  const isGet = isMethod(req, "GET");
+  const isPost = isMethod(req, "POST");
   if (reportId) {
     const client = await useRedis();
     const data = await client.get(reportId);
     const parsedData = JSON.parse(data);
-    if (isGet) {
+    if (isPost) {
       try {
         const { name: userName, email } = await fetchGh({
           url: "/user",

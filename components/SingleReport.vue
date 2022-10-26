@@ -1,11 +1,7 @@
 <script setup>
 import AxoLink from "@axodotdev/fringe/lib/Link";
 import { getVersionChangeText } from "../utils/versions";
-import {
-  useSourceGraphURL,
-  usePackageState,
-  useCurrentEula,
-} from "../composables";
+import { useSourceGraphURL, useCurrentEula } from "../composables";
 import { toRef } from "vue";
 import Checkbox from "./Checkbox.vue";
 
@@ -21,8 +17,7 @@ const props = defineProps({
   },
 });
 const report = toRef(props, "report");
-const { togglePackageApproval, state, isPackageAnyApproved } =
-  usePackageState();
+
 const final = useSourceGraphURL(report);
 const criteria = useCurrentEula({ report, criteria: props.criteria });
 </script>
@@ -62,37 +57,18 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
     </div>
 
     <footer
-      class="bg-slate-800 border-t border-t-slate-600 flex w-full justify-between items-end text-slate-50 px-4 pb-6 pt-2 text-xs"
+      class="bg-slate-800 border-t border-t-slate-600 flex w-full justify-between items-end text-slate-50 px-4 pb-6 pt-2 text-xs sticky bottom-0"
     >
-      <div class="w-3/4">
-        <label for="comment" class="sr-only">Add your comment</label>
-        <div class="flex w-full">
-          <textarea
-            id="comment"
-            placeholder="Add a comment"
-            rows="1"
-            name="comment"
-            class="bg-transparent outline-none border-0 w-full p-4 border-b-axo-orange border-b active:border-b-axo-pink focus:border-b-axo-pink focus:border-b-2 focus:outline-none focus:ring-0 placeholder:text-slate-400"
-          />
-        </div>
+      <label for="comment" class="sr-only">Add your comment</label>
+      <div class="flex w-full">
+        <textarea
+          id="comment"
+          placeholder="Add a comment"
+          rows="1"
+          name="comment"
+          class="bg-transparent outline-none border-0 w-full p-4 border-b-axo-orange border-b active:border-b-axo-pink focus:border-b-axo-pink focus:border-b-2 focus:outline-none focus:ring-0 placeholder:text-slate-400"
+        />
       </div>
-      <button
-        type="button"
-        :disabled="!isPackageAnyApproved(report)"
-        :class="[
-          !state?.[props.report.name]?.approved
-            ? 'bg-green-600 hover:bg-green-700 focus:ring-green-500'
-            : 'bg-red-600 hover:bg-red-700 focus:ring-red-500',
-          'inline-flex items-center rounded-md border border-transparent  px-4 py-2 text-base font-medium text-white shadow  focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-60 disabled:cursor-default',
-        ]"
-        @click="() => togglePackageApproval(props.report.name)"
-      >
-        {{
-          state?.[props.report.name]?.approved
-            ? "Revert approval"
-            : "Approve change"
-        }}
-      </button>
     </footer>
   </div>
 </template>

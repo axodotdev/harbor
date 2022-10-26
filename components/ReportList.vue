@@ -9,8 +9,8 @@ import {
 import { usePackageState } from "../composables";
 import ShieldIcon from "./Icons/ShieldIcon.vue";
 import { getVersionChangeText } from "../utils/versions";
-
 const { state } = usePackageState();
+const isLoading = useState(() => false);
 const route = useRoute();
 const props = defineProps({
   suggestions: {
@@ -52,6 +52,14 @@ const getClasses = (dep) => {
   } else {
     return "text-slate-500";
   }
+};
+
+const onCommit = async () => {
+  isLoading.value = true;
+  await $fetch(`/api/reports/${route.params.id}/commit`, {
+    method: "POST",
+  });
+  isLoading.value = false;
 };
 </script>
 
@@ -104,4 +112,15 @@ const getClasses = (dep) => {
       </div>
     </RadioGroup>
   </div>
+  <button
+    type="button"
+    :disabled="isLoading"
+    :class="[
+      'bg-green-600 hover:bg-green-700 focus:ring-green-500',
+      'inline-flex items-center border border-transparent  px-4 py-2 text-lg font-medium text-white shadow  focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-60 disabled:cursor-default absolute bottom-0 w-full justify-center',
+    ]"
+    @click="onCommit"
+  >
+    Commit changes
+  </button>
 </template>
