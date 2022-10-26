@@ -120,11 +120,10 @@ const onCommit = async () => {
     type="button"
     :disabled="isLoading"
     :class="[
-      'bg-green-600 hover:bg-green-700 focus:ring-green-500',
-      'inline-flex items-center border border-transparent  px-4 py-2 text-lg font-medium text-white shadow  focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-60 disabled:cursor-default absolute bottom-0 w-full justify-center',
+      'inline-flex items-center border border-transparent py-4 text-lg font-medium text-slate-50 disabled:opacity-60 disabled:cursor-default absolute bottom-0 w-full justify-center bg-green-600 hover:bg-green-700',
     ]"
     @click="onCommit"
   >
-    Commit changes
+    {{ isLoading ? "Committing" : "Commit changes" }}
   </button>
 </template>

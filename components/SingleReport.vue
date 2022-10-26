@@ -65,7 +65,7 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
     <footer
       class="bg-slate-800 border-t border-t-slate-600 flex w-full justify-between gap-4 text-slate-50 px-4 pb-6 pt-2 text-xs sticky bottom-0"
     >
-      <div class="w-3/4">
+      <div class="w-4/5">
         <label for="comment" class="sr-only">add a note</label>
         <div class="flex w-full">
           <textarea
@@ -79,7 +79,7 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
         </div>
       </div>
       <axo-button
-        class="rounded-md w-1/4 text-base"
+        class="rounded-md w-1/5 text-base"
         @click="() => addNote(props.report.name, note)"
         >Submit</axo-button
       >
