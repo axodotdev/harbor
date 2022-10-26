@@ -49,7 +49,7 @@ export default async (req) => {
           body: {
             ref: pull.head.ref,
             inputs: {
-              data: Buffer.from(JSON.stringify(returnedData)).toString(
+              audits: Buffer.from(JSON.stringify(returnedData)).toString(
                 "base64"
               ),
             },

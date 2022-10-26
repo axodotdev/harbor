@@ -1,16 +1,27 @@
 <script setup>
 import SingleLayout from "@/layouts/single.vue";
 import {
-  useProtectedPage,
   useSingleReport,
   usePackageState,
   usePackageInUrl,
+  useGithubUser,
 } from "@/composables";
 import { MISSING_CRITERIA_KEYS } from "@/utils/constants";
 import { computed } from "vue";
+import { REDIRECT_COOKIE } from "../../utils/constants";
+
+const route = useRoute();
+const user = await useGithubUser();
+
+if (!user.value) {
+  useCookie(REDIRECT_COOKIE).value = route.params.id;
+  navigateTo({
+    path: "/",
+  });
+}
 
 const { report, isLoading, fetchError } = useSingleReport();
-useProtectedPage();
+
 const selected = usePackageInUrl({ report });
 usePackageState({ initialState: report?.state });
 

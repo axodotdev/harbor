@@ -4,7 +4,7 @@ export const usePackageState = () => {
   const route = useRoute();
   const state = useState("packages-state", () => {});
 
-  const init = (initialState) => (state.value = initialState);
+  const setState = (initialState) => (state.value = initialState);
 
   watch(state, (newState) => {
     $fetch(`/api/reports/${route.params.id}`, {
@@ -41,7 +41,7 @@ export const usePackageState = () => {
   };
 
   return {
-    init,
+    setState,
     state,
     togglePackageApproval,
     toggleEulaPackageApproval,

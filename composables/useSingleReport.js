@@ -1,15 +1,14 @@
 import { useQuery } from "vue-query";
 import { usePackageState } from "./usePackagesState";
 import { watch } from "vue";
+const fetcher = (url) =>
+  $fetch(url, {
+    headers: useRequestHeaders(["cookie"]),
+  });
 
 export const useSingleReport = () => {
   const route = useRoute();
-  const { init } = usePackageState();
-
-  const fetcher = (url) =>
-    $fetch(url, {
-      headers: useRequestHeaders(["cookie"]),
-    });
+  const { setState } = usePackageState();
 
   const {
     data: report,
@@ -24,9 +23,7 @@ export const useSingleReport = () => {
   );
 
   watch(report, (newReport) => {
-    if (newReport) {
-      init(newReport.state);
-    }
+    if (newReport) setState(newReport.state);
   });
 
   return {
