@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { useRedis } from "../../../composables/useRedis";
+import { useRedis } from "@/composables/useRedis";
 import { readBody, isMethod, sendError } from "h3";
 
 export default async (req) => {

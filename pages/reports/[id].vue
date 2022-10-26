@@ -1,14 +1,14 @@
 <script setup>
-import SingleLayout from "../../layouts/single.vue";
+import SingleLayout from "@/layouts/single.vue";
 import {
   useProtectedPage,
   useSingleReport,
   usePackageState,
   usePackageInUrl,
-} from "../../composables";
-import { MISSING_CRITERIA_KEYS } from "../../utils/constants";
-
+} from "@/composables";
+import { MISSING_CRITERIA_KEYS } from "@/utils/constants";
 import { computed } from "vue";
+
 const { report, isLoading, fetchError } = useSingleReport();
 useProtectedPage();
 const selected = usePackageInUrl({ report });

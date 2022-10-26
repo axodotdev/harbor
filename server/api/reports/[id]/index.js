@@ -1,15 +1,7 @@
-import { useRedis } from "../../../composables/useRedis";
+import { useRedis } from "@/composables/useRedis";
 import { sendError, getCookie, isMethod, readBody } from "h3";
-import { GH_TOKEN } from "../../../utils/constants";
-
-export const fetchGh = (repo, cookie) => {
-  return $fetch(repo, {
-    baseURL: "https://api.github.com",
-    headers: {
-      Authorization: `token ${cookie}`,
-    },
-  });
-};
+import { GH_TOKEN } from "@/utils/constants";
+import { fetchGh } from "@/utils/github";
 
 export default async (req) => {
   const cookie = getCookie(req, GH_TOKEN);
@@ -23,7 +15,10 @@ export default async (req) => {
     const parsedData = JSON.parse(data);
     if (isGet) {
       try {
-        await fetchGh(`/repos/${parsedData.repo}`, cookie);
+        await fetchGh({
+          url: `/repos/${parsedData.repo}`,
+          cookie,
+        });
 
         return {
           suggestions: parsedData.suggest.suggestions,

@@ -14,7 +14,6 @@ export const useCurrentEula = ({ report, criteria: APICriteria }) => {
         criteria.value[c] = data;
         return;
       }
-      console.log(APICriteria, [c]);
       if (APICriteria[c]?.description) {
         criteria.value[c] = APICriteria[c].description;
       } else {
