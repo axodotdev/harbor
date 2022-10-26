@@ -1,7 +1,12 @@
 <script setup>
 import AxoLink from "@axodotdev/fringe/lib/Link";
+import AxoButton from "@axodotdev/fringe/lib/Button";
 import { getVersionChangeText } from "../utils/versions";
-import { useSourceGraphURL, useCurrentEula } from "../composables";
+import {
+  useSourceGraphURL,
+  useCurrentEula,
+  usePackageState,
+} from "../composables";
 import { toRef } from "vue";
 import Checkbox from "./Checkbox.vue";
 
@@ -17,9 +22,11 @@ const props = defineProps({
   },
 });
 const report = toRef(props, "report");
-
+const note = useState(() => "");
 const final = useSourceGraphURL(report);
 const criteria = useCurrentEula({ report, criteria: props.criteria });
+
+const { addNote } = usePackageState();
 </script>
 
 <template>
@@ -57,18 +64,26 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
     </div>
 
     <footer
-      class="bg-slate-800 border-t border-t-slate-600 flex w-full justify-between items-end text-slate-50 px-4 pb-6 pt-2 text-xs sticky bottom-0"
+      class="bg-slate-800 border-t border-t-slate-600 flex w-full justify-between gap-4 text-slate-50 px-4 pb-6 pt-2 text-xs sticky bottom-0"
     >
-      <label for="comment" class="sr-only">Add your comment</label>
-      <div class="flex w-full">
-        <textarea
-          id="comment"
-          placeholder="Add a comment"
-          rows="1"
-          name="comment"
-          class="bg-transparent outline-none border-0 w-full p-4 border-b-axo-orange border-b active:border-b-axo-pink focus:border-b-axo-pink focus:border-b-2 focus:outline-none focus:ring-0 placeholder:text-slate-400"
-        />
+      <div class="w-3/4">
+        <label for="comment" class="sr-only">add a note</label>
+        <div class="flex w-full">
+          <textarea
+            id="comment"
+            v-model="note"
+            placeholder="Add a note"
+            rows="1"
+            name="comment"
+            class="bg-transparent outline-none border-0 w-full p-4 border-b-axo-orange border-b active:border-b-axo-pink focus:border-b-axo-pink focus:border-b-2 focus:outline-none focus:ring-0 placeholder:text-slate-400"
+          />
+        </div>
       </div>
+      <axo-button
+        class="rounded-md w-1/4 text-base"
+        @click="() => addNote(props.report.name, note)"
+        >Submit</axo-button
+      >
     </footer>
   </div>
 </template>

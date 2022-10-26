@@ -32,13 +32,12 @@ export default async (req) => {
             ...(suggested_diff.from ? { version2: suggested_diff.to } : {}),
             criteria: Object.keys(parsedData.state[name]).filter(
               (criteria) =>
-                parsedData.state[name][criteria] && criteria !== "approved"
+                parsedData.state[name][criteria] && criteria !== "note"
             ),
             // not implemented
-            notes: "",
+            notes: parsedData.state[name].note,
             dependency_criteria: [],
           }));
-
         const pull = await fetchGh({
           url: `repos/${parsedData.repo}/pulls/${parsedData.pr}`,
           cookie,

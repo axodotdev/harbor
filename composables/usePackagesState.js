@@ -7,6 +7,7 @@ export const usePackageState = () => {
   const setState = (initialState) => (state.value = initialState);
 
   watch(state, (newState) => {
+    console.log(newState);
     $fetch(`/api/reports/${route.params.id}`, {
       method: "PUT",
       body: newState,
@@ -23,12 +24,12 @@ export const usePackageState = () => {
     };
   };
 
-  const togglePackageApproval = (pkg) => {
+  const addNote = (pkg, note) => {
     state.value = {
       ...state.value,
       [pkg]: {
         ...state.value?.[pkg],
-        approved: !state.value?.[pkg]?.approved,
+        note,
       },
     };
   };
@@ -43,7 +44,7 @@ export const usePackageState = () => {
   return {
     setState,
     state,
-    togglePackageApproval,
+    addNote,
     toggleEulaPackageApproval,
     isPackageAnyApproved,
   };
