@@ -19,6 +19,7 @@ export const useSingleReport = () => {
     () => fetcher(`/api/reports/${route.params.id}`),
     {
       staleTime: 5000,
+      retry: 0,
     }
   );
 
