@@ -40,7 +40,7 @@ const criteria = computed(() => ({
   </h2>
   <SingleLayout v-if="!fetchError && !isLoading">
     <template v-if="report" #list>
-      <report-list :suggestions="report.suggestions" />
+      <report-list :report="report" />
     </template>
     <template v-if="selected" #main>
       <single-report :report="selected" :criteria="criteria" />

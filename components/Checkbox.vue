@@ -14,7 +14,6 @@ const props = defineProps({
 
 const { toggleEulaPackageApproval, state } = usePackageState();
 const onChange = () => toggleEulaPackageApproval(props.name, props.eula);
-console.log(props);
 </script>
 <template>
   <div class="button r relative rounded-3xl">

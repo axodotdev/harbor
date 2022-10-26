@@ -7,7 +7,6 @@ export const usePackageState = () => {
   const setState = (initialState) => (state.value = initialState);
 
   watch(state, (newState) => {
-    console.log(newState);
     $fetch(`/api/reports/${route.params.id}`, {
       method: "PUT",
       body: newState,
@@ -34,11 +33,11 @@ export const usePackageState = () => {
     };
   };
 
-  const isPackageAnyApproved = (report) => {
+  const areAllEulasApproved = (report) => {
     const needsApproval = report.suggested_criteria;
     const approved = state.value?.[report.name] || {};
 
-    return needsApproval.some((criteria) => approved[criteria]);
+    return needsApproval.every((criteria) => approved[criteria]);
   };
 
   return {
@@ -46,6 +45,6 @@ export const usePackageState = () => {
     state,
     addNote,
     toggleEulaPackageApproval,
-    isPackageAnyApproved,
+    areAllEulasApproved,
   };
 };

@@ -7,9 +7,10 @@ import {
   useCurrentEula,
   usePackageState,
 } from "../composables";
-import { toRef } from "vue";
+import { toRef, ref } from "vue";
 import Checkbox from "./Checkbox.vue";
 
+const { addNote, state } = usePackageState();
 const props = defineProps({
   report: {
     required: true,
@@ -22,11 +23,9 @@ const props = defineProps({
   },
 });
 const report = toRef(props, "report");
-const note = useState(() => "");
+const note = ref(state.value[props.report.name]?.note);
 const final = useSourceGraphURL(report);
 const criteria = useCurrentEula({ report, criteria: props.criteria });
-
-const { addNote } = usePackageState();
 </script>
 
 <template>
