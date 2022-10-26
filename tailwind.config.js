@@ -11,5 +11,5 @@ module.exports = {
       red: defaultColors.red,
     },
   },
-  content: [...tailwindConfigs.content, "nuxt.config.js"],
+  content: [...tailwindConfigs.content, "nuxt.config.ts"],
 };
