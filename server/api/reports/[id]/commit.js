@@ -34,19 +34,19 @@ export default async (req) => {
               (criteria) =>
                 parsedData.state[name][criteria] && criteria !== "note"
             ),
-            notes: parsedData.state[name].note,
+            notes: parsedData.state[name].note || "",
             // not implemented
             dependency_criteria: [],
           }));
-        const pull = await fetchGh({
+        const { head } = await fetchGh({
           url: `repos/${parsedData.repo}/pulls/${parsedData.pr}`,
           cookie,
         });
         await postGh({
-          url: `/repos/${parsedData.repo}/actions/workflows/cargo-vet-certify.yml/dispatches`,
+          url: `/repos/${head.user.login}/${head.repo.name}/actions/workflows/cargo-vet-certify.yml/dispatches`,
           cookie,
           body: {
-            ref: pull.head.ref,
+            ref: head.ref,
             inputs: {
               audits: Buffer.from(JSON.stringify(returnedData)).toString(
                 "base64"

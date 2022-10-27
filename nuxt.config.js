@@ -17,6 +17,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
+      title: "Cargo Vet",
       viewport: "width=device-width, initial-scale=1",
       charset: "utf-8",
       bodyAttrs: {
@@ -30,7 +31,7 @@ export default defineNuxtConfig({
         {
           src: "https://plausible.io/js/plausible.js",
           defer: true,
-          "data-domain": "blog.axo.dev, axo.dev",
+          "data-domain": "cargo-vet.axo.dev, axo.dev",
         },
       ],
     },
