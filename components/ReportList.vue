@@ -9,9 +9,14 @@ import {
 import { usePackageState } from "../composables";
 import ShieldIcon from "./Icons/ShieldIcon.vue";
 import { getVersionChangeText } from "../utils/versions";
+import { useMutation } from "vue-query";
 const { areAllEulasApproved } = usePackageState();
-const isLoading = useState(() => false);
 const { query, params } = useRoute();
+const { mutate: commit, isLoading } = useMutation(() =>
+  $fetch(`/api/reports/${params.id}/commit`, {
+    method: "POST",
+  })
+);
 const props = defineProps({
   report: {
     type: Object,
@@ -58,14 +63,6 @@ const getClasses = (dep) => {
   } else {
     return "text-slate-500";
   }
-};
-
-const onCommit = async () => {
-  isLoading.value = true;
-  await $fetch(`/api/reports/${params.id}/commit`, {
-    method: "POST",
-  });
-  isLoading.value = false;
 };
 </script>
 
@@ -124,7 +121,7 @@ const onCommit = async () => {
     :class="[
       'inline-flex items-center border border-transparent py-4 text-lg font-medium text-slate-50 disabled:opacity-60 disabled:cursor-default absolute bottom-0 w-full justify-center bg-green-600 hover:bg-green-700',
     ]"
-    @click="onCommit"
+    @click="commit"
   >
     {{ isLoading ? "Committing" : "Commit changes" }}
   </button>
