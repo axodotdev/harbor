@@ -34,8 +34,8 @@ export default async (req) => {
               (criteria) =>
                 parsedData.state[name][criteria] && criteria !== "note"
             ),
-            // not implemented
             notes: parsedData.state[name].note,
+            // not implemented
             dependency_criteria: [],
           }));
         const pull = await fetchGh({
