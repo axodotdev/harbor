@@ -11,7 +11,7 @@ import ShieldIcon from "./Icons/ShieldIcon.vue";
 import { getVersionChangeText } from "../utils/versions";
 const { areAllEulasApproved } = usePackageState();
 const isLoading = useState(() => false);
-const route = useRoute();
+const { query, params } = useRoute();
 const props = defineProps({
   report: {
     type: Object,
@@ -20,8 +20,10 @@ const props = defineProps({
 });
 
 const selected = useState(() =>
-  route.query.name
-    ? props.report.suggestions.find((a) => a.name === route.query.name)
+  query.name
+    ? props.report.suggestions.find(
+        (suggestion) => suggestion.name === query.name
+      )
     : props.report.suggestions[0]
 );
 
@@ -45,7 +47,7 @@ watch(selected, async (newSelected) => {
 
 const isAllApproved = (dep) =>
   areAllEulasApproved(
-    props.report.suggestions.find((s) => s.name === dep.name)
+    props.report.suggestions.find((suggestion) => suggestion.name === dep.name)
   );
 
 const getClasses = (dep) => {
@@ -60,7 +62,7 @@ const getClasses = (dep) => {
 
 const onCommit = async () => {
   isLoading.value = true;
-  await $fetch(`/api/reports/${route.params.id}/commit`, {
+  await $fetch(`/api/reports/${params.id}/commit`, {
     method: "POST",
   });
   isLoading.value = false;

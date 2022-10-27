@@ -13,7 +13,7 @@ export const usePackageState = () => {
     });
   });
 
-  const toggleEulaPackageApproval = (pkg, eula) => {
+  const toggleEulaPackageApproval = ({ pkg, eula }) => {
     state.value = {
       ...state.value,
       [pkg]: {
@@ -23,7 +23,7 @@ export const usePackageState = () => {
     };
   };
 
-  const addNote = (pkg, note) => {
+  const addNote = ({ pkg, note }) => {
     state.value = {
       ...state.value,
       [pkg]: {

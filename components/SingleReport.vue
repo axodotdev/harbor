@@ -80,7 +80,7 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
       </div>
       <axo-button
         class="rounded-md w-1/5 text-base"
-        @click="() => addNote(props.report.name, note)"
+        @click="() => addNote({ pkg: props.report.name, note })"
         >Submit</axo-button
       >
     </footer>
