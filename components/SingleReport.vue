@@ -1,6 +1,5 @@
 <script setup>
 import AxoLink from "@axodotdev/fringe/lib/Link";
-import AxoButton from "@axodotdev/fringe/lib/Button";
 import { getVersionChangeText } from "../utils/versions";
 import {
   useSourceGraphURL,
@@ -33,29 +32,28 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
     <div class="py-6 px-4 sm:px-6 lg:px-8">
       <div class="flex justify-end">
         <AxoLink
-          class="bg-axo-orange p-2 text-slate-900 rounded shadow"
+          class="bg-axo-orange p-2 rounded shadow"
           target="_blank"
           :href="final"
-        >
-          Open in Sourcegraph
+          ><span class="text-slate-900"> Open in Sourcegraph</span>
         </AxoLink>
       </div>
       <div>
         <h2 class="!text-axo-pink mb-0">{{ props.report.name }}</h2>
         <small>{{ getVersionChangeText(props.report?.suggested_diff) }}</small>
         <div
-          v-for="c in props.report.suggested_criteria"
-          :key="c"
+          v-for="currentCriteria in props.report.suggested_criteria"
+          :key="currentCriteria"
           class="flex gap-4 mt-6"
         >
           <Checkbox :eula="c" :name="props.report.name" />
 
           <div>
             <h4>
-              {{ props.criteria[c]?.name || c }}
+              {{ props.criteria[currentCriteria]?.name || c }}
             </h4>
             <p class="whitespace-pre-wrap">
-              {{ criteria[c] }}
+              {{ criteria[currentCriteria] }}
             </p>
           </div>
         </div>
@@ -65,7 +63,7 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
     <footer
       class="bg-slate-800 border-t border-t-slate-600 flex w-full justify-between gap-4 text-slate-50 px-4 pb-6 pt-2 text-xs sticky bottom-0"
     >
-      <div class="w-4/5">
+      <div class="w-full">
         <label for="comment" class="sr-only">add a note</label>
         <div class="flex w-full">
           <textarea
@@ -75,14 +73,10 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
             rows="1"
             name="comment"
             class="bg-transparent outline-none border-0 w-full p-4 border-b-axo-orange border-b active:border-b-axo-pink focus:border-b-axo-pink focus:border-b-2 focus:outline-none focus:ring-0 placeholder:text-slate-400"
+            @change="(e) => addNote({ pkg: props.report.name, note })"
           />
         </div>
       </div>
-      <axo-button
-        class="rounded-md w-1/5 text-base"
-        @click="() => addNote({ pkg: props.report.name, note })"
-        >Submit</axo-button
-      >
     </footer>
   </div>
 </template>
