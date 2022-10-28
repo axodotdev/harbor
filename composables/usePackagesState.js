@@ -36,7 +36,6 @@ export const usePackageState = () => {
   const areAllEulasApproved = (report) => {
     const needsApproval = report.suggested_criteria;
     const approved = state.value?.[report.name] || {};
-
     return needsApproval.every((criteria) => approved[criteria]);
   };
 

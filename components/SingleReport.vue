@@ -6,10 +6,11 @@ import {
   useCurrentEula,
   usePackageState,
 } from "../composables";
-import { toRef, ref } from "vue";
+import { toRef } from "vue";
 import Checkbox from "./Checkbox.vue";
+import AddANote from "./AddANote.vue";
 
-const { addNote, state } = usePackageState();
+const { state } = usePackageState();
 const props = defineProps({
   report: {
     required: true,
@@ -23,8 +24,8 @@ const props = defineProps({
 });
 
 const report = toRef(props, "report");
-const note = ref(state.value[props.report.name]?.note);
-const final = useSourceGraphURL(report);
+
+const sourcegraphUrl = useSourceGraphURL(report);
 const criteria = useCurrentEula({ report, criteria: props.criteria });
 </script>
 
@@ -35,7 +36,7 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
         <AxoLink
           class="bg-axo-orange p-2 rounded shadow"
           target="_blank"
-          :href="final"
+          :href="sourcegraphUrl"
           ><span class="text-slate-900"> Open in Sourcegraph</span>
         </AxoLink>
       </div>
@@ -47,11 +48,11 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
           :key="currentCriteria"
           class="flex gap-4 mt-6"
         >
-          <Checkbox :eula="c" :name="props.report.name" />
+          <Checkbox :eula="currentCriteria" :name="props.report.name" />
 
           <div>
             <h4>
-              {{ props.criteria[currentCriteria]?.name || c }}
+              {{ props.criteria[currentCriteria]?.name || currentCriteria }}
             </h4>
             <p class="whitespace-pre-wrap">
               {{ criteria[currentCriteria] }}
@@ -61,23 +62,9 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
       </div>
     </div>
 
-    <footer
-      class="bg-slate-800 border-t border-t-slate-600 flex w-full justify-between gap-4 text-slate-50 px-4 pb-6 pt-2 text-xs sticky bottom-0"
-    >
-      <div class="w-full">
-        <label for="comment" class="sr-only">add a note</label>
-        <div class="flex w-full">
-          <textarea
-            id="comment"
-            v-model="note"
-            placeholder="Add a note"
-            rows="1"
-            name="comment"
-            class="bg-transparent outline-none border-0 w-full p-4 border-b-axo-orange border-b active:border-b-axo-pink focus:border-b-axo-pink focus:border-b-2 focus:outline-none focus:ring-0 placeholder:text-slate-400"
-            @change="(e) => addNote({ pkg: props.report.name, note })"
-          />
-        </div>
-      </div>
-    </footer>
+    <AddANote
+      :name="report.name"
+      :default-note="state[props.report.name]?.note"
+    />
   </div>
 </template>
