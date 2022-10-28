@@ -11,4 +11,6 @@ export const useProtectedPage = async () => {
       path: "/",
     });
   }
+
+  return user;
 };

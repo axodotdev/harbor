@@ -1,26 +1,34 @@
 <script setup>
-import SingleLayout from "../../layouts/single.vue";
-import { useInfo } from "../../composables/useInfo";
-import { usePackageInUrl } from "../../composables/usePackageInUrl";
-import { useProtectedPage } from "../../composables/useProtectedPage";
-import { MISSING_CRITERIA_KEYS } from "../../utils/constants";
+import SingleLayout from "@/layouts/single.vue";
+import {
+  useSingleReport,
+  usePackageState,
+  usePackageInUrl,
+  useGithubUser,
+} from "@/composables";
+import { MISSING_CRITERIA_KEYS } from "@/utils/constants";
+import { computed } from "vue";
+import { REDIRECT_COOKIE } from "../../utils/constants";
 
-const info = useInfo();
 const route = useRoute();
-useProtectedPage();
+const user = await useGithubUser();
 
-const { data: report, error: fetchError } = await useFetch(
-  `/api/reports/${route.params.id}`,
-  {
-    headers: useRequestHeaders(["cookie"]),
-  }
-);
+if (!user.value) {
+  useCookie(REDIRECT_COOKIE).value = route.params.id;
+  navigateTo({
+    path: "/",
+  });
+}
+
+const { report, isLoading, fetchError } = useSingleReport();
 
 const selected = usePackageInUrl({ report });
-const criteria = {
+usePackageState({ initialState: report?.state });
+
+const criteria = computed(() => ({
   ...MISSING_CRITERIA_KEYS,
-  ...report.value?.criteria,
-};
+  ...report?.value?.criteria,
+}));
 </script>
 
 <template>
@@ -30,16 +38,12 @@ const criteria = {
   >
     You do not have access to this report
   </h2>
-  <SingleLayout v-if="!fetchError">
+  <SingleLayout v-if="!fetchError && !isLoading">
     <template v-if="report" #list>
-      <report-list :suggestions="report.suggestions" />
+      <report-list :report="report" />
     </template>
-    <template #main>
-      <single-report
-        v-if="selected && !info"
-        :report="selected"
-        :criteria="criteria"
-      />
+    <template v-if="selected" #main>
+      <single-report :report="selected" :criteria="criteria" />
     </template>
   </SingleLayout>
 </template>

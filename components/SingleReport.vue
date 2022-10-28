@@ -1,12 +1,15 @@
 <script setup>
-import { usePackageState } from "../composables/usePackagesState";
 import AxoLink from "@axodotdev/fringe/lib/Link";
 import { getVersionChangeText } from "../utils/versions";
-import { useSourceGraphURL } from "../composables/useSourcegraphUrl";
-import { useCurrentEula } from "../composables/useCurrentEula";
-import { toRef } from "vue";
+import {
+  useSourceGraphURL,
+  useCurrentEula,
+  usePackageState,
+} from "../composables";
+import { toRef, ref } from "vue";
 import Checkbox from "./Checkbox.vue";
 
+const { addNote, state } = usePackageState();
 const props = defineProps({
   report: {
     required: true,
@@ -18,9 +21,9 @@ const props = defineProps({
     required: true,
   },
 });
+
 const report = toRef(props, "report");
-const { togglePackageApproval, state, isPackageAllApproved } =
-  usePackageState();
+const note = ref(state.value[props.report.name]?.note);
 const final = useSourceGraphURL(report);
 const criteria = useCurrentEula({ report, criteria: props.criteria });
 </script>
@@ -30,29 +33,28 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
     <div class="py-6 px-4 sm:px-6 lg:px-8">
       <div class="flex justify-end">
         <AxoLink
-          class="bg-axo-orange p-2 text-slate-900 rounded shadow"
+          class="bg-axo-orange p-2 rounded shadow"
           target="_blank"
           :href="final"
-        >
-          Open in Sourcegraph
+          ><span class="text-slate-900"> Open in Sourcegraph</span>
         </AxoLink>
       </div>
       <div>
         <h2 class="!text-axo-pink mb-0">{{ props.report.name }}</h2>
         <small>{{ getVersionChangeText(props.report?.suggested_diff) }}</small>
         <div
-          v-for="c in props.report.suggested_criteria"
-          :key="c"
+          v-for="currentCriteria in props.report.suggested_criteria"
+          :key="currentCriteria"
           class="flex gap-4 mt-6"
         >
           <Checkbox :eula="c" :name="props.report.name" />
 
           <div>
             <h4>
-              {{ props.criteria[c].name || c }}
+              {{ props.criteria[currentCriteria]?.name || c }}
             </h4>
             <p class="whitespace-pre-wrap">
-              {{ criteria[c] }}
+              {{ criteria[currentCriteria] }}
             </p>
           </div>
         </div>
@@ -60,37 +62,22 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
     </div>
 
     <footer
-      class="bg-slate-800 border-t border-t-slate-600 flex w-full justify-between items-end text-slate-50 px-4 pb-6 pt-2 text-xs"
+      class="bg-slate-800 border-t border-t-slate-600 flex w-full justify-between gap-4 text-slate-50 px-4 pb-6 pt-2 text-xs sticky bottom-0"
     >
-      <div class="w-3/4">
-        <label for="comment" class="sr-only">Add your comment</label>
+      <div class="w-full">
+        <label for="comment" class="sr-only">add a note</label>
         <div class="flex w-full">
           <textarea
             id="comment"
-            placeholder="Add a comment"
+            v-model="note"
+            placeholder="Add a note"
             rows="1"
             name="comment"
             class="bg-transparent outline-none border-0 w-full p-4 border-b-axo-orange border-b active:border-b-axo-pink focus:border-b-axo-pink focus:border-b-2 focus:outline-none focus:ring-0 placeholder:text-slate-400"
+            @change="(e) => addNote({ pkg: props.report.name, note })"
           />
         </div>
       </div>
-      <button
-        type="button"
-        :disabled="!isPackageAllApproved(report)"
-        :class="[
-          !state?.[props.report.name]?.approved
-            ? 'bg-green-600 hover:bg-green-700 focus:ring-green-500'
-            : 'bg-red-600 hover:bg-red-700 focus:ring-red-500',
-          'inline-flex items-center rounded-md border border-transparent  px-4 py-2 text-base font-medium text-white shadow  focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-60 disabled:cursor-default',
-        ]"
-        @click="() => togglePackageApproval(props.report.name)"
-      >
-        {{
-          state?.[props.report.name]?.approved
-            ? "Revert approval"
-            : "Approve change"
-        }}
-      </button>
     </footer>
   </div>
 </template>

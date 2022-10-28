@@ -1,6 +1,7 @@
 <script setup>
 import Nav from "../components/Nav.vue";
-import { useGithubUser } from "../composables/github";
+import { useGithubUser } from "../composables";
+import "mosha-vue-toastify/dist/style.css";
 
 const user = await useGithubUser();
 </script>

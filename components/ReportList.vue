@@ -6,23 +6,32 @@ import {
   RadioGroupOption,
   RadioGroupDescription,
 } from "@headlessui/vue";
-import { usePackageState } from "../composables/usePackagesState";
+import { usePackageState } from "../composables";
 import ShieldIcon from "./Icons/ShieldIcon.vue";
 import { getVersionChangeText } from "../utils/versions";
+import { useMutation } from "vue-query";
+import { createToast } from "mosha-vue-toastify";
 
-const { state } = usePackageState();
-const route = useRoute();
+const { areAllEulasApproved } = usePackageState();
+const { query, params } = useRoute();
+const { mutateAsync, isLoading, isError } = useMutation(() =>
+  $fetch(`/api/reports/${params.id}/commit`, {
+    method: "POST",
+  })
+);
 const props = defineProps({
-  suggestions: {
+  report: {
     type: Object,
     required: true,
   },
 });
 
 const selected = useState(() =>
-  route.query.name
-    ? props.suggestions.find((a) => a.name === route.query.name)
-    : props.suggestions[0]
+  query.name
+    ? props.report.suggestions.find(
+        (suggestion) => suggestion.name === query.name
+      )
+    : props.report.suggestions[0]
 );
 
 onMounted(async () => {
@@ -43,14 +52,33 @@ watch(selected, async (newSelected) => {
   });
 });
 
+const isAllApproved = (dep) =>
+  areAllEulasApproved(
+    props.report.suggestions.find((suggestion) => suggestion.name === dep.name)
+  );
+
 const getClasses = (dep) => {
-  const isApproved = state.value?.[dep.name]?.approved;
-  if (isApproved) return "text-green-300";
+  if (isAllApproved(dep)) return "text-green-300";
 
   if (dep.confident) {
     return "text-slate-200";
   } else {
     return "text-slate-500";
+  }
+};
+
+const commit = async () => {
+  await mutateAsync();
+  if (isError.value) {
+    createToast("There has been an error", {
+      type: "danger",
+      hideProgressBar: true,
+    });
+  } else {
+    createToast("Commit triggered!", {
+      type: "success",
+      hideProgressBar: true,
+    });
   }
 };
 </script>
@@ -61,7 +89,7 @@ const getClasses = (dep) => {
       <RadioGroupLabel class="sr-only"> Server size </RadioGroupLabel>
       <div class="space-y-0 border-t-slate-800 border-t">
         <RadioGroupOption
-          v-for="dep in suggestions"
+          v-for="dep in report.suggestions"
           :key="dep.name"
           v-slot="{ checked, active }"
           as="template"
@@ -85,7 +113,7 @@ const getClasses = (dep) => {
                     'font-medium flex gap-2 items-center',
                   ]"
                 >
-                  <shield-icon v-if="state?.[dep.name]?.approved" />
+                  <shield-icon v-if="isAllApproved(dep)" />
 
                   {{ dep.name }}</RadioGroupLabel
                 >
@@ -104,4 +132,14 @@ const getClasses = (dep) => {
       </div>
     </RadioGroup>
   </div>
+  <button
+    type="button"
+    :disabled="isLoading"
+    :class="[
+      'inline-flex items-center border border-transparent py-4 text-lg font-medium text-slate-50 disabled:opacity-60 disabled:cursor-default absolute bottom-0 w-full justify-center bg-green-600 hover:bg-green-700',
+    ]"
+    @click="commit"
+  >
+    {{ isLoading ? "Committing" : "Commit changes" }}
+  </button>
 </template>

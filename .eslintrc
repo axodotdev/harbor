@@ -1,27 +1,6 @@
 {
   "root": true,
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "node": true
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:nuxt/recommended",
-    "plugin:vue/vue3-recommended"
-  ],
-
-  "parserOptions": {
-    "parser": "@babel/eslint-parser",
-    "requireConfigFile": false
-  },
-
-  "rules": {
-    "vue/multi-word-component-names": 0,
-    "vue/singleline-html-element-content-newline": 0,
-    "vue/html-self-closing": 0,
-    "vue/max-attributes-per-line": 0
-  },
+  "extends": "@axodotdev/eslint-config",
   "globals": {
     "$fetch": true,
     "useState": true,
@@ -34,6 +13,7 @@
     "useHead": true,
     "navigateTo": true,
     "defineNuxtConfig": true,
-    "definePageMeta": true
+    "definePageMeta": true,
+    "defineNuxtPlugin": true
   }
 }

@@ -1,7 +1,19 @@
+import { watch } from "vue";
+
 export const usePackageState = () => {
+  const route = useRoute();
   const state = useState("packages-state", () => {});
 
-  const toggleEulaPackageApproval = (pkg, eula) => {
+  const setState = (initialState) => (state.value = initialState);
+
+  watch(state, (newState) => {
+    $fetch(`/api/reports/${route.params.id}`, {
+      method: "PUT",
+      body: newState,
+    });
+  });
+
+  const toggleEulaPackageApproval = ({ pkg, eula }) => {
     state.value = {
       ...state.value,
       [pkg]: {
@@ -11,17 +23,17 @@ export const usePackageState = () => {
     };
   };
 
-  const togglePackageApproval = (pkg) => {
+  const addNote = ({ pkg, note }) => {
     state.value = {
       ...state.value,
       [pkg]: {
         ...state.value?.[pkg],
-        approved: !state.value?.[pkg]?.approved,
+        note,
       },
     };
   };
 
-  const isPackageAllApproved = (report) => {
+  const areAllEulasApproved = (report) => {
     const needsApproval = report.suggested_criteria;
     const approved = state.value?.[report.name] || {};
 
@@ -29,9 +41,10 @@ export const usePackageState = () => {
   };
 
   return {
+    setState,
     state,
-    togglePackageApproval,
+    addNote,
     toggleEulaPackageApproval,
-    isPackageAllApproved,
+    areAllEulasApproved,
   };
 };
