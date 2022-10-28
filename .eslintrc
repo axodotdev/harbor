@@ -13,6 +13,7 @@
     "useHead": true,
     "navigateTo": true,
     "defineNuxtConfig": true,
-    "definePageMeta": true
+    "definePageMeta": true,
+    "defineNuxtPlugin": true
   }
 }

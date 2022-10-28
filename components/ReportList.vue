@@ -10,9 +10,11 @@ import { usePackageState } from "../composables";
 import ShieldIcon from "./Icons/ShieldIcon.vue";
 import { getVersionChangeText } from "../utils/versions";
 import { useMutation } from "vue-query";
+import { createToast } from "mosha-vue-toastify";
+
 const { areAllEulasApproved } = usePackageState();
 const { query, params } = useRoute();
-const { mutate: commit, isLoading } = useMutation(() =>
+const { mutateAsync, isLoading, isError } = useMutation(() =>
   $fetch(`/api/reports/${params.id}/commit`, {
     method: "POST",
   })
@@ -62,6 +64,21 @@ const getClasses = (dep) => {
     return "text-slate-200";
   } else {
     return "text-slate-500";
+  }
+};
+
+const commit = async () => {
+  await mutateAsync();
+  if (isError.value) {
+    createToast("There has been an error", {
+      type: "danger",
+      hideProgressBar: true,
+    });
+  } else {
+    createToast("Commit triggered!", {
+      type: "success",
+      hideProgressBar: true,
+    });
   }
 };
 </script>

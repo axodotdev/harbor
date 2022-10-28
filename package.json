@@ -27,6 +27,7 @@
     "@heroicons/vue": "^2.0.12",
     "@nuxtjs/google-fonts": "^3.0.0-1",
     "@nuxtjs/tailwindcss": "^5.3.5",
+    "mosha-vue-toastify": "^1.0.23",
     "nuxt": "3.0.0-rc.11",
     "redis": "^4.3.1",
     "uuid": "^9.0.0",

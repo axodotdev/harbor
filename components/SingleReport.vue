@@ -21,6 +21,7 @@ const props = defineProps({
     required: true,
   },
 });
+
 const report = toRef(props, "report");
 const note = ref(state.value[props.report.name]?.note);
 const final = useSourceGraphURL(report);

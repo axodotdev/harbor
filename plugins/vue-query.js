@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { VueQueryPlugin, QueryClient, hydrate } from "vue-query";
 
 export default defineNuxtPlugin((nuxtApp) => {
