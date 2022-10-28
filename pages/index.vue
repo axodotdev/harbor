@@ -5,7 +5,7 @@ import AxoButton from "@axodotdev/fringe/lib/Button.vue";
 import GithubIcon from "@/components/Icons/GithubIcon.vue";
 
 const user = await useGithubUser();
-const title = "Cargo Vet";
+const title = "harbor";
 useHead({
   title,
 });

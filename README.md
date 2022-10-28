@@ -1,4 +1,6 @@
-# Cargo Vet Webapp
+# Harbor
+
+## rust supply chain security github integration, via cargo-vet
 
 ## Setup
 
