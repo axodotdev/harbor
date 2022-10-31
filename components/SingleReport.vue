@@ -41,7 +41,7 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
         </AxoLink>
       </div>
       <div>
-        <h2 class="!text-axo-pink mb-0">{{ props.report.name }}</h2>
+        <h1 class="mb-0">{{ props.report.name }}</h1>
         <small>{{ getVersionChangeText(props.report?.suggested_diff) }}</small>
         <div
           v-for="currentCriteria in props.report.suggested_criteria"
