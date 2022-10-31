@@ -16,21 +16,14 @@ yarn install
 Start the development server on http://localhost:3000
 
 ```bash
-npm run dev
+yarn dev
 ```
 
-## Production
+## Environment Variables
 
-Build the application for production:
-
-```bash
-yarn build
 ```
-
-Locally preview production build:
-
-```bash
-yarn preview
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+REDIS_LINK=
+REDIS_PASSWORD=
 ```
-
-Checkout the [deployment documentation](https://v3.nuxtjs.org/docs/deployment) for more information.
