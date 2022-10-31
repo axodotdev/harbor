@@ -1,19 +1,18 @@
 <script setup>
-import { ref } from "vue";
+import { toRef } from "vue";
 import { usePackageState } from "../composables";
 
 const props = defineProps({
   defaultNote: {
     type: String,
-    required: true,
+    default: "",
   },
   name: {
     type: String,
     required: true,
   },
 });
-const note = ref(props.defaultNote);
-
+const note = toRef(props, "defaultNote");
 const { addNote } = usePackageState();
 </script>
 

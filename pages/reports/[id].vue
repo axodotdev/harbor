@@ -32,18 +32,20 @@ const criteria = computed(() => ({
 </script>
 
 <template>
-  <h2
-    v-if="fetchError"
-    class="text-center flex items-center h-screen w-screen justify-center"
-  >
-    You do not have access to this report
-  </h2>
-  <SingleLayout v-if="!fetchError && !isLoading">
-    <template v-if="report" #list>
-      <report-list :report="report" />
-    </template>
-    <template v-if="selected" #main>
-      <single-report :report="selected" :criteria="criteria" />
-    </template>
-  </SingleLayout>
+  <div class="h-full w-full">
+    <h2
+      v-if="fetchError"
+      class="text-center flex items-center h-screen w-screen justify-center"
+    >
+      You do not have access to this report
+    </h2>
+    <SingleLayout v-if="!fetchError && !isLoading">
+      <template v-if="report" #list>
+        <report-list :report="report" />
+      </template>
+      <template v-if="selected" #main>
+        <single-report :report="selected" :criteria="criteria" />
+      </template>
+    </SingleLayout>
+  </div>
 </template>
