@@ -7,19 +7,26 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "prepare": "husky install",
-    "lint": "eslint --ext .vue --ext .js"
+    "lint": "eslint . --ext .vue --ext .js",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@axodotdev/eslint-config": "^0.1.0",
     "@babel/eslint-parser": "^7.19.1",
+    "@nuxt/test-utils-edge": "^3.0.0-rc.13-27781436.1f6b3be",
+    "@testing-library/vue": "^6.6.1",
+    "@vitest/ui": "^0.24.4",
     "babel-preset-vue": "^2.0.2",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vitest-globals": "^1.2.0",
     "eslint-plugin-vue": "^9.6.0",
+    "happy-dom": "^7.6.6",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "vitest": "^0.24.4"
   },
   "dependencies": {
     "@axodotdev/fringe": "^0.0.2",

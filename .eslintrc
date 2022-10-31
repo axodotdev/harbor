@@ -1,6 +1,9 @@
 {
   "root": true,
-  "extends": "@axodotdev/eslint-config",
+  "extends": ["@axodotdev/eslint-config", "plugin:vitest-globals/recommended"],
+  "env": {
+    "vitest-globals/env": true
+  },
   "globals": {
     "$fetch": true,
     "useState": true,
