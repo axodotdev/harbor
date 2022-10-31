@@ -5,7 +5,6 @@ export const usePackageState = () => {
   const state = useState("packages-state", () => {});
 
   const setState = (initialState) => (state.value = initialState);
-
   watch(state, (newState) => {
     $fetch(`/api/reports/${route.params.id}`, {
       method: "PUT",
