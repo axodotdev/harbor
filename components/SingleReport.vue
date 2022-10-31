@@ -8,7 +8,7 @@ import {
   useCurrentEula,
   usePackageState,
 } from "../composables";
-import { toRef } from "vue";
+import { ref, toRef } from "vue";
 import AddANote from "./AddANote.vue";
 
 const { state } = usePackageState();
@@ -25,6 +25,7 @@ const props = defineProps({
 });
 
 const report = toRef(props, "report");
+const toggled = ref(false);
 
 const sourcegraphUrl = useSourceGraphURL(report);
 const criteria = useCurrentEula({ report, criteria: props.criteria });
@@ -32,6 +33,11 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
 const createLabelsFromCriteria = (currentCriterion) => {
   const criterion = props.criteria[currentCriterion]?.name || currentCriterion;
   return [criterion, criterion];
+};
+
+const { toggleEulaPackageApproval } = usePackageState();
+const onToggleChange = (eula) => {
+  toggleEulaPackageApproval({ pkg: props.report.name, eula });
 };
 </script>
 
@@ -57,10 +63,13 @@ const createLabelsFromCriteria = (currentCriterion) => {
           <div>
             <AxoSwitch
               as="h4"
-              v-model:toggled="toggleOn"
+              v-model:toggled="toggled"
               :labels="createLabelsFromCriteria(currentCriteria)"
               :name="props.report.name"
               inversion-color="bg-violet-600"
+              @update:toggled="
+                (...args) => onToggleChange(currentCriteria, ...args)
+              "
             />
             <p class="whitespace-pre-wrap">
               {{ criteria[currentCriteria] }}
