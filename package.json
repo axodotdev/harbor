@@ -8,7 +8,7 @@
     "postinstall": "nuxt prepare",
     "prepare": "husky install",
     "lint": "eslint . --ext .vue --ext .js",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "devDependencies": {
     "@axodotdev/eslint-config": "^0.1.0",
