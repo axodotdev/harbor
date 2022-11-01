@@ -1,6 +1,5 @@
 <script setup>
 import AxoLink from "@axodotdev/fringe/lib/Link";
-import AxoSwitch from "@axodotdev/fringe/lib/Switch";
 
 import { getVersionChangeText } from "../utils/versions";
 import {
@@ -8,8 +7,9 @@ import {
   useCurrentEula,
   usePackageState,
 } from "../composables";
-import { ref, toRef } from "vue";
+import { toRef } from "vue";
 import AddANote from "./AddANote.vue";
+import ReportSwitch from "./ReportSwitch";
 
 const { state } = usePackageState();
 const props = defineProps({
@@ -25,7 +25,6 @@ const props = defineProps({
 });
 
 const report = toRef(props, "report");
-const toggled = ref(false);
 
 const sourcegraphUrl = useSourceGraphURL(report);
 const criteria = useCurrentEula({ report, criteria: props.criteria });
@@ -33,11 +32,6 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
 const createLabelsFromCriteria = (currentCriterion) => {
   const criterion = props.criteria[currentCriterion]?.name || currentCriterion;
   return [criterion, criterion];
-};
-
-const { toggleEulaPackageApproval } = usePackageState();
-const onToggleChange = (eula) => {
-  toggleEulaPackageApproval({ pkg: props.report.name, eula });
 };
 </script>
 
@@ -61,15 +55,10 @@ const onToggleChange = (eula) => {
           class="gap-4 mt-12"
         >
           <div>
-            <AxoSwitch
-              as="h4"
-              v-model:toggled="toggled"
-              :labels="createLabelsFromCriteria(currentCriteria)"
+            <ReportSwitch
+              :criterion="currentCriteria"
               :name="props.report.name"
-              inversion-color="bg-violet-600"
-              @update:toggled="
-                (...args) => onToggleChange(currentCriteria, ...args)
-              "
+              :labels="createLabelsFromCriteria(currentCriteria)"
             />
             <p class="whitespace-pre-wrap">
               {{ criteria[currentCriteria] }}
