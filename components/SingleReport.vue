@@ -1,5 +1,6 @@
 <script setup>
 import AxoLink from "@axodotdev/fringe/lib/Link";
+
 import { getVersionChangeText } from "../utils/versions";
 import {
   useSourceGraphURL,
@@ -7,8 +8,8 @@ import {
   usePackageState,
 } from "../composables";
 import { toRef } from "vue";
-import Checkbox from "./Checkbox.vue";
 import AddANote from "./AddANote.vue";
+import ReportSwitch from "./ReportSwitch";
 
 const { state } = usePackageState();
 const props = defineProps({
@@ -27,6 +28,11 @@ const report = toRef(props, "report");
 
 const sourcegraphUrl = useSourceGraphURL(report);
 const criteria = useCurrentEula({ report, criteria: props.criteria });
+
+const createLabelsFromCriteria = (currentCriterion) => {
+  const criterion = props.criteria[currentCriterion]?.name || currentCriterion;
+  return [criterion, criterion];
+};
 </script>
 
 <template>
@@ -46,14 +52,14 @@ const criteria = useCurrentEula({ report, criteria: props.criteria });
         <div
           v-for="currentCriteria in props.report.suggested_criteria"
           :key="currentCriteria"
-          class="flex gap-4 mt-6"
+          class="gap-4 mt-12"
         >
-          <Checkbox :eula="currentCriteria" :name="props.report.name" />
-
           <div>
-            <h4>
-              {{ props.criteria[currentCriteria]?.name || currentCriteria }}
-            </h4>
+            <ReportSwitch
+              :criterion="currentCriteria"
+              :name="props.report.name"
+              :labels="createLabelsFromCriteria(currentCriteria)"
+            />
             <p class="whitespace-pre-wrap">
               {{ criteria[currentCriteria] }}
             </p>
