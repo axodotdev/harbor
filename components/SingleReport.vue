@@ -36,7 +36,7 @@ const createLabelsFromCriteria = (currentCriterion) => {
 </script>
 
 <template>
-  <div class="flex flex-col justify-between h-full mt-8">
+  <div class="flex flex-col justify-between h-full mt-12">
     <div class="py-6 px-4 sm:px-6 lg:px-8">
       <div>
         <div class="flex justify-between items-center">
@@ -52,6 +52,7 @@ const createLabelsFromCriteria = (currentCriterion) => {
         <AddANote
           :name="report.name"
           :default-note="state[props.report.name]?.note"
+          class="mb-24"
         />
         <div
           v-for="currentCriteria in props.report.suggested_criteria"
