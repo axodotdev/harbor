@@ -49,6 +49,10 @@ const createLabelsFromCriteria = (currentCriterion) => {
       <div>
         <h1 class="mb-0">{{ props.report.name }}</h1>
         <small>{{ getVersionChangeText(props.report?.suggested_diff) }}</small>
+        <AddANote
+          :name="report.name"
+          :default-note="state[props.report.name]?.note"
+        />
         <div
           v-for="currentCriteria in props.report.suggested_criteria"
           :key="currentCriteria"
@@ -67,10 +71,5 @@ const createLabelsFromCriteria = (currentCriterion) => {
         </div>
       </div>
     </div>
-
-    <AddANote
-      :name="report.name"
-      :default-note="state[props.report.name]?.note"
-    />
   </div>
 </template>
