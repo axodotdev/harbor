@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { usePackageState } from "../composables";
 
 const props = defineProps({
@@ -12,13 +12,12 @@ const props = defineProps({
     required: true,
   },
 });
-const note = ref(props.defaultNote);
+
+const noteRef = ref(props.defaultNote);
 const { addNote } = usePackageState();
 
 const noteText = computed(() =>
-  note.value
-    ? "update note for this library"
-    : "add a note note for this library"
+  noteRef.value ? "update note for this library" : "add a note for this library"
 );
 const notePlaceholder = "add note";
 const buttonText = ref("+");
@@ -29,9 +28,24 @@ const buttonText = ref("+");
 */
 const saveNote = () => {
   buttonText.value = "...";
-  addNote({ pkg: props.name, note });
+  addNote({ pkg: props.name, note: noteRef.value });
   setTimeout(() => (buttonText.value = "+"), 500);
 };
+
+/*
+  This makes it so that the noteRef resets when
+  the component is updated for a new criterion. I'm
+  not sure if there is a better way in the composition API
+  to deal with this, but given where we are now, I am
+  going to leave improving this as a TODO.
+*/
+watch(
+  () => props.name,
+  () => {
+    noteRef.value = props.defaultNote;
+    return;
+  }
+);
 </script>
 
 <template>
@@ -46,7 +60,7 @@ const saveNote = () => {
         <div class="flex gap-4 items-end">
           <textarea
             id="comment"
-            v-model="note"
+            :value="noteRef"
             :placeholder="notePlaceholder"
             rows="1"
             name="comment"
