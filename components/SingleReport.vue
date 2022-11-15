@@ -42,7 +42,7 @@ const createLabelsFromCriteria = (currentCriterion) => {
         <div class="flex justify-between items-center">
           <h1 class="mb-0">{{ props.report.name }}</h1>
           <AxoLink
-            class="bg-axo-orange block h-10 p-2 rounded shadow"
+            class="bg-axo-orange text-sm md:text-base block text-center p-2 rounded shadow"
             target="_blank"
             :href="sourcegraphUrl"
             ><span class="text-slate-900"> Review diff in Sourcegraph</span>
