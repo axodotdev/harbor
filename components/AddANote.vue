@@ -20,14 +20,16 @@ export default {
   data() {
     return {
       tempFormValue: "",
-      noteRef: this.state[this.name]?.note,
       buttonText: "+",
     };
   },
   notePlaceholder: "add note",
   computed: {
+    noteRef() {
+      return this.state[this.name]?.note;
+    },
     eitherOr() {
-      return this.tempFormValue || this.state[this.name]?.note;
+      return this.tempFormValue || this.noteRef;
     },
     noteText() {
       return this.noteRef
