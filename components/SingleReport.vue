@@ -2,16 +2,11 @@
 import AxoLink from "@axodotdev/fringe/lib/Link";
 
 import { getVersionChangeText } from "../utils/versions";
-import {
-  useSourceGraphURL,
-  useCurrentEula,
-  usePackageState,
-} from "../composables";
+import { useSourceGraphURL, useCurrentEula } from "../composables";
 import { toRef } from "vue";
 import AddANote from "./AddANote.vue";
 import ReportSwitch from "./ReportSwitch";
 
-const { state } = usePackageState();
 const props = defineProps({
   report: {
     required: true,
@@ -49,11 +44,7 @@ const createLabelsFromCriteria = (currentCriterion) => {
           </AxoLink>
         </div>
         <small>{{ getVersionChangeText(props.report?.suggested_diff) }}</small>
-        <AddANote
-          :name="report.name"
-          :default-note="state[props.report.name]?.note"
-          class="mb-24"
-        />
+        <AddANote :name="report.name" class="mb-24" />
         <div
           v-for="currentCriteria in props.report.suggested_criteria"
           :key="currentCriteria"
