@@ -7,5 +7,8 @@ export default defineConfig({
     globals: true,
     environment: "happy-dom",
   },
+  resolve: {
+    dedupe: ["vue"],
+  },
   root: ".",
 });
