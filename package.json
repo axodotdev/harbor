@@ -39,7 +39,9 @@
     "nuxt": "3.0.0",
     "redis": "^4.5.1",
     "uuid": "^9.0.0",
-    "vue-query": "^1.26.0"
+    "vue": "^3.2.45",
+    "vue-query": "^1.26.0",
+    "vue-router": "^4.1.6"
   },
   "lint-staged": {
     "*.{js,vue}": [
