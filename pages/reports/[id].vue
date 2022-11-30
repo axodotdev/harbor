@@ -39,13 +39,13 @@ const criteria = computed(() => ({
     >
       You do not have access to this report
     </h2>
-    <SingleLayout v-if="!fetchError && !isLoading">
+    <single-layout v-if="!fetchError && !isLoading">
       <template v-if="report" #list>
         <report-list :report="report" />
       </template>
       <template v-if="selected" #main>
         <single-report :report="selected" :criteria="criteria" />
       </template>
-    </SingleLayout>
+    </single-layout>
   </div>
 </template>

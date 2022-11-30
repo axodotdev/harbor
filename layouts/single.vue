@@ -36,7 +36,7 @@ const user = await useGithubUser();
           </div>
         </main>
         <aside
-          class="relative sm:w-96 w-full flex-shrink-0 overflow-y-auto border-r border-slate-800 order-first max-h-[40vh] sm:max-h-max"
+          class="relative sm:w-96 w-full flex-shrink-0 border-r border-slate-800 order-first max-h-[40vh] sm:max-h-max"
         >
           <div class="sm:absolute inset-0">
             <slot name="list"></slot>

@@ -11,5 +11,9 @@ module.exports = {
       red: defaultColors.red,
     },
   },
-  content: [...tailwindConfigs.content, "nuxt.config.js"],
+  content: [
+    ...tailwindConfigs.content,
+    "./node_modules/@axodotdev/fringe/lib/*.vue",
+    "nuxt.config.js",
+  ],
 };
