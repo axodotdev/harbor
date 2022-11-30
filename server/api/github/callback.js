@@ -1,14 +1,14 @@
 import { getQuery, sendRedirect, setCookie } from "h3";
+import { GH_ACCESS_TOKEN_URL } from "../../../utils/constants";
 
 const REDIRECT_URL = "/";
 
-export default async (req, res) => {
-  const { code } = getQuery(req);
-
+export default defineEventHandler(async (event) => {
+  const { code } = getQuery(event);
   if (!code) {
-    return sendRedirect(res, REDIRECT_URL);
+    return sendRedirect(event, REDIRECT_URL);
   }
-  const response = await $fetch("https://github.com/login/oauth/access_token", {
+  const response = await $fetch(GH_ACCESS_TOKEN_URL, {
     method: "POST",
     body: {
       client_id: process.env.GITHUB_CLIENT_ID,
@@ -17,10 +17,8 @@ export default async (req, res) => {
     },
   });
   if (response.error) {
-    return sendRedirect(res, REDIRECT_URL);
+    return sendRedirect(event, REDIRECT_URL);
   }
-
-  setCookie(res, "gh_token", response.access_token, { path: "/" });
-
-  return sendRedirect(res, REDIRECT_URL);
-};
+  setCookie(event, "gh_token", response.access_token, { path: "/" });
+  return sendRedirect(event, REDIRECT_URL);
+});

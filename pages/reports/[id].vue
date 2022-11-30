@@ -1,25 +1,17 @@
 <script setup>
-import SingleLayout from "@/layouts/single.vue";
 import {
   useSingleReport,
   usePackageState,
   usePackageInUrl,
-  useGithubUser,
+  useProtectedPage,
 } from "@/composables";
 import { MISSING_CRITERIA_KEYS } from "@/utils/constants";
 import { computed } from "vue";
-import { REDIRECT_COOKIE } from "../../utils/constants";
 
-const route = useRoute();
-const user = await useGithubUser();
-
-if (!user.value) {
-  useCookie(REDIRECT_COOKIE).value = route.params.id;
-  navigateTo({
-    path: "/",
-  });
-}
-
+definePageMeta({
+  layout: false,
+});
+useProtectedPage();
 const { report, isLoading, fetchError } = useSingleReport();
 
 const selected = usePackageInUrl({ report });
@@ -39,13 +31,13 @@ const criteria = computed(() => ({
     >
       You do not have access to this report
     </h2>
-    <single-layout v-if="!fetchError && !isLoading">
+    <NuxtLayout v-if="!fetchError && !isLoading" name="single">
       <template v-if="report" #list>
         <report-list :report="report" />
       </template>
       <template v-if="selected" #main>
         <single-report :report="selected" :criteria="criteria" />
       </template>
-    </single-layout>
+    </NuxtLayout>
   </div>
 </template>
