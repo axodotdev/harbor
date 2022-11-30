@@ -29,7 +29,7 @@ export const useSingleReport = () => {
       $fetch(`/api/reports/${route.params.id}`, {
         method: "PUT",
         body: {
-          ...report.value,
+          ...report.value.state,
           [pkg]: {
             ...report.value?.state?.[pkg],
             [eula]: report.value?.state?.[pkg]?.[eula] ? false : true,
@@ -46,7 +46,7 @@ export const useSingleReport = () => {
       $fetch(`/api/reports/${route.params.id}`, {
         method: "PUT",
         body: {
-          ...report.value,
+          ...report.value.state,
           [pkg]: {
             ...report.value?.state?.[pkg],
             note,

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import AxoSwitch from "@axodotdev/fringe/lib/Switch";
 import { useSingleReport } from "../composables";
 
@@ -18,9 +18,13 @@ const props = defineProps({
   },
 });
 const { report, toggleEulaPackageApproval } = useSingleReport();
-const currentlyActive = (eula) => report.value.state?.[props.name]?.[eula];
 
-const toggled = ref(currentlyActive(props.criterion));
+const toggled = ref(report.value.state?.[props.name]?.[props.criterion]);
+
+watchEffect(() => {
+  toggled.value = report.value.state?.[props.name]?.[props.criterion];
+});
+
 const onToggleChange = () => {
   toggleEulaPackageApproval({ pkg: props.name, eula: props.criterion });
 };
@@ -28,7 +32,8 @@ const onToggleChange = () => {
 
 <template>
   <AxoSwitch
-    v-model:toggled="toggled"
+    :key="props.name"
+    :toggled="toggled"
     as="h4"
     :labels="props.labels"
     :name="props.name"

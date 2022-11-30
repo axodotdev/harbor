@@ -9,20 +9,27 @@ import {
 import { useSingleReport } from "../composables";
 import ShieldIcon from "./Icons/ShieldIcon.vue";
 import { getVersionChangeText } from "../utils/versions";
-import { useMutation, useQueryClient } from "@tanstack/vue-query";
+import { useMutation } from "@tanstack/vue-query";
 import { createToast } from "mosha-vue-toastify";
 
 const { areAllEulasApproved } = useSingleReport();
 const { query, params } = useRoute();
 
-const { mutateAsync, isLoading, isError } = useMutation({
-  mutationFn: $fetch(`/api/reports/${params.id}/commit`, {
-    method: "POST",
-  }),
-  onSuccess: () => {
-    const queryClient = useQueryClient();
-    queryClient.invalidateQueries({ queryKey: ["report", params.id] });
-  },
+const { mutateAsync: commit, isLoading } = useMutation({
+  mutationFn: () =>
+    $fetch(`/api/reports/${params.id}/commit`, {
+      method: "POST",
+    }),
+  onSuccess: () =>
+    createToast("Commit triggered!", {
+      type: "success",
+      hideProgressBar: true,
+    }),
+  onError: () =>
+    createToast("There has been an error", {
+      type: "danger",
+      hideProgressBar: true,
+    }),
 });
 
 const { report } = useSingleReport();
@@ -65,21 +72,6 @@ const getClasses = (dep) => {
     return "text-slate-200";
   } else {
     return "text-slate-500";
-  }
-};
-
-const commit = async () => {
-  await mutateAsync();
-  if (isError.value) {
-    createToast("There has been an error", {
-      type: "danger",
-      hideProgressBar: true,
-    });
-  } else {
-    createToast("Commit triggered!", {
-      type: "success",
-      hideProgressBar: true,
-    });
   }
 };
 </script>
