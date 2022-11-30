@@ -5,3 +5,4 @@ export * from "./usePackageInUrl";
 export * from "./useProtectedPage";
 export * from "./useSingleReport";
 export * from "./useSourcegraphUrl";
+export * from "./useCommit";

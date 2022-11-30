@@ -1,37 +1,18 @@
 <script setup>
-import { onMounted, watch } from "vue";
+import { watchEffect } from "vue";
 import {
   RadioGroup,
   RadioGroupLabel,
   RadioGroupOption,
   RadioGroupDescription,
 } from "@headlessui/vue";
-import { useSingleReport } from "../composables";
+import { useSingleReport, useCommit } from "../composables";
 import ShieldIcon from "./Icons/ShieldIcon.vue";
 import { getVersionChangeText } from "../utils/versions";
-import { useMutation } from "@tanstack/vue-query";
-import { createToast } from "mosha-vue-toastify";
 
 const { areAllEulasApproved } = useSingleReport();
-const { query, params } = useRoute();
-
-const { mutateAsync: commit, isLoading } = useMutation({
-  mutationFn: () =>
-    $fetch(`/api/reports/${params.id}/commit`, {
-      method: "POST",
-    }),
-  onSuccess: () =>
-    createToast("Commit triggered!", {
-      type: "success",
-      hideProgressBar: true,
-    }),
-  onError: () =>
-    createToast("There has been an error", {
-      type: "danger",
-      hideProgressBar: true,
-    }),
-});
-
+const { query } = useRoute();
+const { commit, isLoading } = useCommit();
 const { report } = useSingleReport();
 
 const selected = useState(() =>
@@ -42,20 +23,11 @@ const selected = useState(() =>
     : report.value.suggestions[0]
 );
 
-onMounted(async () => {
+watchEffect(async () => {
   await navigateTo({
     replace: true,
     query: {
       name: selected.value.name,
-    },
-  });
-});
-
-watch(selected, async (newSelected) => {
-  await navigateTo({
-    replace: true,
-    query: {
-      name: newSelected.name,
     },
   });
 });
