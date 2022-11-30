@@ -30,7 +30,7 @@ const criteria = computed(() => ({
     </h2>
     <NuxtLayout v-if="!fetchError && !isLoading" name="single">
       <template v-if="report" #list>
-        <report-list :report="report" />
+        <report-list />
       </template>
       <template v-if="selected" #main>
         <single-report :report="selected" :criteria="criteria" />

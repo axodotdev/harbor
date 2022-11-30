@@ -1,5 +1,5 @@
 import { MISSING_CRITERIA_KEYS } from "../utils/constants";
-import { onMounted, watch } from "vue";
+import { watchEffect } from "vue";
 
 export const useCurrentEula = ({ report, criteria: APICriteria }) => {
   const criteria = useState(() => []);
@@ -26,8 +26,7 @@ export const useCurrentEula = ({ report, criteria: APICriteria }) => {
     });
   };
 
-  onMounted(() => get(report));
-  watch(report, get);
+  watchEffect(() => get(report));
 
   return criteria;
 };
