@@ -31,7 +31,7 @@ const criteria = computed(() => ({
     >
       You do not have access to this report
     </h2>
-    <NuxtLayout v-if="!fetchError && !isLoading" name="custom">
+    <NuxtLayout v-if="!fetchError && !isLoading" name="single">
       <template v-if="report" #list>
         <report-list :report="report" />
       </template>
