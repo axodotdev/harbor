@@ -1,5 +1,4 @@
 <script setup>
-import { createToast } from "mosha-vue-toastify";
 import { computed, ref, watchEffect } from "vue";
 import { useSingleReport } from "../composables";
 
@@ -31,10 +30,6 @@ const saveNote = async () => {
   await addNote({ pkg: props.name, note: tempFormValue.value });
 
   setTimeout(() => (buttonText.value = "+"), 500);
-  createToast("Note updated", {
-    type: "success",
-    hideProgressBar: true,
-  });
 };
 </script>
 

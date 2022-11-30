@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/vue-query";
+import { createToast } from "mosha-vue-toastify";
 
 const fetcher = (url) =>
   $fetch(url, {
@@ -55,6 +56,16 @@ export const useSingleReport = () => {
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["report", route.params.id] });
+      createToast("Note updated", {
+        type: "success",
+        hideProgressBar: true,
+      });
+    },
+    onError: () => {
+      createToast("There was an issue updating the note", {
+        type: "danger",
+        hideProgressBar: true,
+      });
     },
   });
 
