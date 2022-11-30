@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import AxoSwitch from "@axodotdev/fringe/lib/Switch";
-import { usePackageState } from "../composables";
+import { useSingleReport } from "../composables";
 
 const props = defineProps({
   criterion: {
@@ -17,11 +17,8 @@ const props = defineProps({
     required: true,
   },
 });
-
-const { state: packageState, toggleEulaPackageApproval } = usePackageState();
-const currentlyActive = (eula) => {
-  return packageState.value?.[props.name]?.[eula];
-};
+const { report, toggleEulaPackageApproval } = useSingleReport();
+const currentlyActive = (eula) => report.value.state?.[props.name]?.[eula];
 
 const toggled = ref(currentlyActive(props.criterion));
 const onToggleChange = () => {

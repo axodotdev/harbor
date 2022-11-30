@@ -6,32 +6,33 @@ import {
   RadioGroupOption,
   RadioGroupDescription,
 } from "@headlessui/vue";
-import { usePackageState } from "../composables";
+import { useSingleReport } from "../composables";
 import ShieldIcon from "./Icons/ShieldIcon.vue";
 import { getVersionChangeText } from "../utils/versions";
-import { useMutation } from "vue-query";
+import { useMutation, useQueryClient } from "@tanstack/vue-query";
 import { createToast } from "mosha-vue-toastify";
 
-const { areAllEulasApproved } = usePackageState();
+const { areAllEulasApproved } = useSingleReport();
 const { query, params } = useRoute();
-const { mutateAsync, isLoading, isError } = useMutation(() =>
-  $fetch(`/api/reports/${params.id}/commit`, {
+
+const { mutateAsync, isLoading, isError } = useMutation({
+  mutationFn: $fetch(`/api/reports/${params.id}/commit`, {
     method: "POST",
-  })
-);
-const props = defineProps({
-  report: {
-    type: Object,
-    required: true,
+  }),
+  onSuccess: () => {
+    const queryClient = useQueryClient();
+    queryClient.invalidateQueries({ queryKey: ["report", params.id] });
   },
 });
 
+const { report } = useSingleReport();
+
 const selected = useState(() =>
   query.name
-    ? props.report.suggestions.find(
+    ? report.value.suggestions.find(
         (suggestion) => suggestion.name === query.name
       )
-    : props.report.suggestions[0]
+    : report.value.suggestions[0]
 );
 
 onMounted(async () => {
@@ -54,7 +55,7 @@ watch(selected, async (newSelected) => {
 
 const isAllApproved = (dep) =>
   areAllEulasApproved(
-    props.report.suggestions.find((suggestion) => suggestion.name === dep.name)
+    report.value.suggestions.find((suggestion) => suggestion.name === dep.name)
   );
 
 const getClasses = (dep) => {

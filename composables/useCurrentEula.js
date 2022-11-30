@@ -26,7 +26,7 @@ export const useCurrentEula = ({ report, criteria: APICriteria }) => {
     });
   };
 
-  onMounted(() => get(report.value));
+  onMounted(() => get(report));
   watch(report, get);
 
   return criteria;

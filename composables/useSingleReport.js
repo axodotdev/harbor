@@ -1,6 +1,5 @@
-import { useQuery } from "vue-query";
-import { usePackageState } from "./usePackagesState";
-import { watch } from "vue";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/vue-query";
+
 const fetcher = (url) =>
   $fetch(url, {
     headers: useRequestHeaders(["cookie"]),
@@ -8,28 +7,67 @@ const fetcher = (url) =>
 
 export const useSingleReport = () => {
   const route = useRoute();
-  const { setState } = usePackageState();
-
+  const queryClient = useQueryClient();
   const {
-    data: report,
-    error: fetchError,
     isLoading,
-  } = useQuery(
-    [`report`, route.params.id],
-    () => fetcher(`/api/reports/${route.params.id}`),
-    {
-      staleTime: 5000,
-      retry: 0,
-    }
-  );
-
-  watch(report, (newReport) => {
-    if (newReport) setState(newReport.state);
+    data: report,
+    isError,
+  } = useQuery({
+    queryKey: [`report`, route.params.id],
+    queryFn: () => fetcher(`/api/reports/${route.params.id}`),
+    retry: 0,
   });
+
+  const areAllEulasApproved = ({ name, suggested_criteria }) => {
+    return suggested_criteria.every(
+      (criteria) => report.value?.state?.[name]?.[criteria]
+    );
+  };
+
+  const { mutateAsync: mutateApproval } = useMutation({
+    mutationFn: ({ pkg, eula }) =>
+      $fetch(`/api/reports/${route.params.id}`, {
+        method: "PUT",
+        body: {
+          ...report.value,
+          [pkg]: {
+            ...report.value?.state?.[pkg],
+            [eula]: report.value?.state?.[pkg]?.[eula] ? false : true,
+          },
+        },
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["report", route.params.id] });
+    },
+  });
+
+  const { mutateAsync: mutateNote } = useMutation({
+    mutationFn: ({ pkg, note }) =>
+      $fetch(`/api/reports/${route.params.id}`, {
+        method: "PUT",
+        body: {
+          ...report.value,
+          [pkg]: {
+            ...report.value?.state?.[pkg],
+            note,
+          },
+        },
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["report", route.params.id] });
+    },
+  });
+
+  const toggleEulaPackageApproval = mutateApproval;
+
+  const addNote = mutateNote;
 
   return {
     report,
     isLoading,
-    fetchError,
+    fetchError: isError,
+    areAllEulasApproved,
+    toggleEulaPackageApproval,
+    addNote,
   };
 };
