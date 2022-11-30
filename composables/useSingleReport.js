@@ -19,11 +19,10 @@ export const useSingleReport = () => {
     retry: 0,
   });
 
-  const areAllEulasApproved = ({ name, suggested_criteria }) => {
-    return suggested_criteria.every(
+  const areAllEulasApproved = ({ name, suggested_criteria }) =>
+    suggested_criteria.every(
       (criteria) => report.value?.state?.[name]?.[criteria]
     );
-  };
 
   const { mutateAsync: mutateApproval } = useMutation({
     mutationFn: ({ pkg, eula }) =>
@@ -37,9 +36,8 @@ export const useSingleReport = () => {
           },
         },
       }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["report", route.params.id] });
-    },
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["report", route.params.id] }),
   });
 
   const { mutateAsync: mutateNote } = useMutation({
@@ -61,24 +59,19 @@ export const useSingleReport = () => {
         hideProgressBar: true,
       });
     },
-    onError: () => {
+    onError: () =>
       createToast("There was an issue updating the note", {
         type: "danger",
         hideProgressBar: true,
-      });
-    },
+      }),
   });
-
-  const toggleEulaPackageApproval = mutateApproval;
-
-  const addNote = mutateNote;
 
   return {
     report,
     isLoading,
     fetchError: isError,
     areAllEulasApproved,
-    toggleEulaPackageApproval,
-    addNote,
+    toggleEulaPackageApproval: mutateApproval,
+    addNote: mutateNote,
   };
 };
