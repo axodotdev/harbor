@@ -2,14 +2,14 @@ import { v4 as uuidv4 } from "uuid";
 import { useRedis } from "@/composables/useRedis";
 import { readBody, isMethod, sendError, getRequestHeaders } from "h3";
 
-export default async (req) => {
-  const headers = await getRequestHeaders(req);
-  const body = await readBody(req);
-  const isPost = isMethod(req, "POST");
+export default defineEventHandler(async (event) => {
+  const headers = await getRequestHeaders(event);
+  const body = await readBody(event);
+  const isPost = isMethod(event, "POST");
 
   try {
     if (!headers["user-agent"].includes("actions/github-script")) {
-      return sendError(req, {
+      return sendError(event, {
         statusCode: 401,
         fatal: true,
         statusMessage: "Unauthorized",
@@ -25,17 +25,17 @@ export default async (req) => {
       };
     }
 
-    return sendError(req, {
+    return sendError(event, {
       statusCode: 500,
       fatal: true,
       statusMessage: "No data received",
     });
   } catch (e) {
     console.log(e);
-    return sendError(req, {
+    return sendError(event, {
       statusCode: 500,
       fatal: true,
       statusMessage: "There has been an issue reading your data",
     });
   }
-};
+});

@@ -3,10 +3,10 @@ import { sendError, getCookie, isMethod } from "h3";
 import { GH_TOKEN } from "@/utils/constants";
 import { postGh, fetchGh } from "@/utils/github";
 
-export default async (req) => {
-  const cookie = getCookie(req, GH_TOKEN);
-  const reportId = req?.context?.params?.id;
-  const isPost = isMethod(req, "POST");
+export default defineEventHandler(async (event) => {
+  const cookie = getCookie(event, GH_TOKEN);
+  const reportId = event?.context?.params?.id;
+  const isPost = isMethod(event, "POST");
   if (reportId) {
     const client = await useRedis();
     const data = await client.get(reportId);
@@ -58,7 +58,7 @@ export default async (req) => {
         return returnedData;
       } catch (e) {
         console.log(e);
-        return sendError(req, {
+        return sendError(event, {
           statusCode: 401,
           fatal: true,
           statusMessage: "You do not have access to this repo",
@@ -67,9 +67,9 @@ export default async (req) => {
     }
   }
 
-  return sendError(req, {
+  return sendError(event, {
     statusCode: 500,
     fatal: true,
     statusMessage: "No report id was passed",
   });
-};
+});

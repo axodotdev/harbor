@@ -5,6 +5,7 @@
     "vitest-globals/env": true
   },
   "globals": {
+    "defineEventHandler": true,
     "$fetch": true,
     "useState": true,
     "useRuntimeConfig": true,

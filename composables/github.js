@@ -27,8 +27,8 @@ export const useGithubUser = async () => {
 };
 
 export const githubLogin = () => {
-  if (process.client) {
-    const { GITHUB_CLIENT_ID } = useRuntimeConfig();
-    window.location.replace(`${REDIRECT_OATH_URL}${GITHUB_CLIENT_ID}`);
-  }
+  const {
+    public: { GITHUB_CLIENT_ID },
+  } = useRuntimeConfig();
+  window.location.replace(`${REDIRECT_OATH_URL}${GITHUB_CLIENT_ID}`);
 };
