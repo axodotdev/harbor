@@ -20,7 +20,7 @@ export const useSingleReport = () => {
   });
 
   const areAllEulasApproved = ({ name, suggested_criteria }) => {
-    suggested_criteria.every(
+    return suggested_criteria.every(
       (criteria) => report.value?.state?.[name]?.[criteria]
     );
   };

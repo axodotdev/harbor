@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watchEffect } from "vue";
+import { computed } from "vue";
 import AxoSwitch from "@axodotdev/fringe/lib/Switch";
 import { useSingleReport } from "../composables";
 
@@ -18,12 +18,7 @@ const props = defineProps({
   },
 });
 const { report, toggleEulaPackageApproval } = useSingleReport();
-
-const toggled = ref(report.value.state?.[props.name]?.[props.criterion]);
-
-watchEffect(() => {
-  toggled.value = report.value.state?.[props.name]?.[props.criterion];
-});
+const currentPackage = computed(() => report.value.state?.[props.name] || {});
 
 const onToggleChange = () => {
   toggleEulaPackageApproval({ pkg: props.name, eula: props.criterion });
@@ -31,12 +26,13 @@ const onToggleChange = () => {
 </script>
 
 <template>
+  {{ currentPackage }}
   <AxoSwitch
-    :key="props.name"
-    :toggled="toggled"
+    :key="name"
+    v-model:toggled="currentPackage[criterion]"
     as="h4"
-    :labels="props.labels"
-    :name="props.name"
+    :labels="labels"
+    :name="name"
     inversion-color="bg-violet-600"
     @update:toggled="onToggleChange"
   />
