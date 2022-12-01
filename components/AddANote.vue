@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref } from "vue";
 import { useSingleReport } from "../composables";
 
 const props = defineProps({
@@ -11,13 +11,18 @@ const props = defineProps({
 
 const tempFormValue = ref("");
 const { addNote, report, isLoadingNote } = useSingleReport();
+const currentPackage = computed(() => report.value.state?.[props.name] || {});
 
-watchEffect(() => {
-  tempFormValue.value = report.value?.state?.[props.name]?.note;
+const updateFormText = (evt) => {
+  tempFormValue.value = evt.target.value;
+};
+
+const noteInnerText = computed(() => {
+  return tempFormValue.value || currentPackage.value.note;
 });
 
 const noteText = computed(() =>
-  tempFormValue.value
+  currentPackage.value.note
     ? "update note for this library"
     : "add a note for this library"
 );
@@ -36,15 +41,16 @@ const notePlaceholder = "add note";
         <div class="flex gap-4 items-end">
           <textarea
             id="comment"
-            v-model="tempFormValue"
+            :value="noteInnerText"
             :placeholder="notePlaceholder"
             rows="1"
             name="comment"
             class="bg-transparent outline-none border-0 w-full p-4 border-b-axo-orange border-b active:border-b-axo-pink focus:border-b-axo-pink focus:border-b-2 focus:outline-none focus:ring-0 placeholder:text-slate-400"
+            @input="updateFormText"
           />
           <button
             class="min-w-max bg-axo-orange text-xl hover:bg-axo-pink px-4 py-2 rounded-md"
-            @click="addNote({ pkg: props.name, note: tempFormValue.value })"
+            @click="addNote({ pkg: props.name, note: tempFormValue })"
           >
             {{ isLoadingNote ? "..." : "+" }}
           </button>

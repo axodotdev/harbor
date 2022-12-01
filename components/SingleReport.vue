@@ -46,7 +46,7 @@ const createLabelsFromCriteria = (currentCriterion) => {
           </AxoLink>
         </div>
         <small>{{ getVersionChangeText(props.report?.suggested_diff) }}</small>
-        <AddANote :name="report.name" class="mb-24" />
+        <AddANote :name="report.name" />
         <div
           v-for="currentCriteria in props.report.suggested_criteria"
           :key="currentCriteria"
