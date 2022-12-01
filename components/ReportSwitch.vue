@@ -26,7 +26,6 @@ const onToggleChange = () => {
 </script>
 
 <template>
-  {{ currentPackage }}
   <AxoSwitch
     :key="name"
     v-model:toggled="currentPackage[criterion]"
