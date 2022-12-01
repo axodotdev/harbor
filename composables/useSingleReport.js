@@ -19,10 +19,11 @@ export const useSingleReport = () => {
     retry: 0,
   });
 
-  const areAllEulasApproved = ({ name, suggested_criteria }) =>
+  const areAllEulasApproved = ({ name, suggested_criteria }) => {
     suggested_criteria.every(
       (criteria) => report.value?.state?.[name]?.[criteria]
     );
+  };
 
   const { mutateAsync: mutateApproval } = useMutation({
     mutationFn: ({ pkg, eula }) =>
@@ -38,9 +39,14 @@ export const useSingleReport = () => {
       }),
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ["report", route.params.id] }),
+    onError: () =>
+      createToast("There has been an issue toggling approval", {
+        type: "danger",
+        hideProgressBar: true,
+      }),
   });
 
-  const { mutateAsync: mutateNote } = useMutation({
+  const { mutateAsync: mutateNote, isLoading: isLoadingNote } = useMutation({
     mutationFn: ({ pkg, note }) =>
       $fetch(`/api/reports/${route.params.id}`, {
         method: "PUT",
@@ -73,5 +79,6 @@ export const useSingleReport = () => {
     areAllEulasApproved,
     toggleEulaPackageApproval: mutateApproval,
     addNote: mutateNote,
+    isLoadingNote,
   };
 };

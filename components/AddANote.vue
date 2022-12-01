@@ -10,7 +10,7 @@ const props = defineProps({
 });
 
 const tempFormValue = ref("");
-const { addNote, report } = useSingleReport();
+const { addNote, report, isLoadingNote } = useSingleReport();
 
 watchEffect(() => {
   tempFormValue.value = report.value?.state?.[props.name]?.note;
@@ -23,14 +23,6 @@ const noteText = computed(() =>
 );
 
 const notePlaceholder = "add note";
-const buttonText = ref("+");
-
-const saveNote = async () => {
-  buttonText.value = "...";
-  await addNote({ pkg: props.name, note: tempFormValue.value });
-
-  setTimeout(() => (buttonText.value = "+"), 500);
-};
 </script>
 
 <template>
@@ -52,9 +44,9 @@ const saveNote = async () => {
           />
           <button
             class="min-w-max bg-axo-orange text-xl hover:bg-axo-pink px-4 py-2 rounded-md"
-            @click="saveNote"
+            @click="addNote({ pkg: props.name, note: tempFormValue.value })"
           >
-            {{ buttonText }}
+            {{ isLoadingNote ? "..." : "+" }}
           </button>
         </div>
       </div>

@@ -10,10 +10,9 @@ import { useSingleReport, useCommit } from "../composables";
 import ShieldIcon from "./Icons/ShieldIcon.vue";
 import { getVersionChangeText } from "../utils/versions";
 
-const { areAllEulasApproved } = useSingleReport();
+const { areAllEulasApproved, report } = useSingleReport();
 const { query } = useRoute();
 const { commit, isLoading } = useCommit();
-const { report } = useSingleReport();
 
 const selected = useState(() =>
   query.name
