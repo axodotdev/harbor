@@ -28,6 +28,7 @@ const noteText = computed(() =>
 );
 
 const notePlaceholder = "add note";
+const buttonText = computed(() => (isLoadingNote ? "..." : "+"));
 </script>
 
 <template>
@@ -52,7 +53,7 @@ const notePlaceholder = "add note";
             class="min-w-max bg-axo-orange text-xl hover:bg-axo-pink px-4 py-2 rounded-md"
             @click="addNote({ pkg: props.name, note: tempFormValue })"
           >
-            {{ isLoadingNote ? "..." : "+" }}
+            {{ buttonText }}
           </button>
         </div>
       </div>
