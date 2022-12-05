@@ -4,6 +4,7 @@ export default defineNuxtConfig({
       GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
     },
   },
+  ssr: false,
   buildModules: ["@nuxtjs/google-fonts"],
   modules: ["@nuxtjs/tailwindcss"],
   googleFonts: {
