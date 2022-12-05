@@ -1,6 +1,5 @@
-import { useQuery } from "vue-query";
-import { usePackageState } from "./usePackagesState";
-import { watch } from "vue";
+import { useQuery } from "@tanstack/vue-query";
+
 const fetcher = (url) =>
   $fetch(url, {
     headers: useRequestHeaders(["cookie"]),
@@ -8,28 +7,26 @@ const fetcher = (url) =>
 
 export const useSingleReport = () => {
   const route = useRoute();
-  const { setState } = usePackageState();
-
   const {
-    data: report,
-    error: fetchError,
     isLoading,
-  } = useQuery(
-    [`report`, route.params.id],
-    () => fetcher(`/api/reports/${route.params.id}`),
-    {
-      staleTime: 5000,
-      retry: 0,
-    }
-  );
-
-  watch(report, (newReport) => {
-    if (newReport) setState(newReport.state);
+    data: report,
+    isError,
+  } = useQuery({
+    queryKey: [`report`, route.params.id],
+    queryFn: () => fetcher(`/api/reports/${route.params.id}`),
+    retry: 0,
   });
+
+  const areAllEulasApproved = ({ name, suggested_criteria }) => {
+    return suggested_criteria.every(
+      (criteria) => report.value?.state?.[name]?.[criteria]
+    );
+  };
 
   return {
     report,
     isLoading,
-    fetchError,
+    fetchError: isError,
+    areAllEulasApproved,
   };
 };

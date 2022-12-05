@@ -1,7 +1,6 @@
 <script setup>
 import {
   useSingleReport,
-  usePackageState,
   usePackageInUrl,
   useProtectedPage,
 } from "@/composables";
@@ -13,9 +12,7 @@ definePageMeta({
 });
 useProtectedPage();
 const { report, isLoading, fetchError } = useSingleReport();
-
 const selected = usePackageInUrl({ report });
-usePackageState({ initialState: report?.state });
 
 const criteria = computed(() => ({
   ...MISSING_CRITERIA_KEYS,
@@ -33,7 +30,7 @@ const criteria = computed(() => ({
     </h2>
     <NuxtLayout v-if="!fetchError && !isLoading" name="single">
       <template v-if="report" #list>
-        <report-list :report="report" />
+        <report-list />
       </template>
       <template v-if="selected" #main>
         <single-report :report="selected" :criteria="criteria" />

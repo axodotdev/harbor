@@ -1,55 +1,41 @@
 <script setup>
 import { computed, ref } from "vue";
-import { usePackageState } from "../composables";
+import { useSingleReport } from "../composables";
+import { useNote } from "../composables/useNote";
 
 const props = defineProps({
-  defaultNote: {
-    type: String,
-    required: false,
-    default: "",
-  },
   name: {
     type: String,
     required: true,
   },
 });
 
-const tempFormValue = ref("");
-const { addNote } = usePackageState();
+const tempFormValue = ref({});
+const { mutateNote, isLoadingNote } = useNote();
+const { report } = useSingleReport();
+const currentPackage = computed(() => report.value.state?.[props.name] || {});
+
+const updateFormText = (evt) => {
+  tempFormValue.value[props.name] = evt.target.value;
+};
 
 const noteInnerText = computed(() => {
-  return tempFormValue.value || props.defaultNote;
+  return tempFormValue.value[props.name] || currentPackage.value.note;
 });
 
 const noteText = computed(() =>
-  props.defaultNote
+  currentPackage.value.note
     ? "update note for this library"
     : "add a note for this library"
 );
 
-const updateFormText = (evt) => {
-  tempFormValue.value = evt.target.value;
-};
-
 const notePlaceholder = "add note";
-const buttonText = ref("+");
-
-/*
-  Right now this just updates state —
-  we should make it actually save and give feedback
-*/
-const saveNote = () => {
-  buttonText.value = "...";
-  addNote({ pkg: props.name, note: tempFormValue.value });
-  setTimeout(() => (buttonText.value = "+"), 500);
-  tempFormValue.value = "";
-};
+const buttonText = computed(() => (isLoadingNote.value ? "..." : "+"));
 </script>
 
 <template>
   <details class="mt-8 cursor-pointer text-axo-orange text-xl">
     <summary class="">{{ noteText }}</summary>
-
     <div
       class="mt-8 w-4/5 bg-slate-800 border-t border-t-slate-600 flex justify-between gap-4 text-slate-50 px-4 pb-6 pt-2 text-xs"
     >
@@ -67,7 +53,7 @@ const saveNote = () => {
           />
           <button
             class="min-w-max bg-axo-orange text-xl hover:bg-axo-pink px-4 py-2 rounded-md"
-            @click="saveNote"
+            @click="mutateNote({ pkg: props.name, note: tempFormValue })"
           >
             {{ buttonText }}
           </button>

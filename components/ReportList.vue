@@ -1,40 +1,28 @@
 <script setup>
-import { onMounted, watch } from "vue";
+import { watchEffect } from "vue";
 import {
   RadioGroup,
   RadioGroupLabel,
   RadioGroupOption,
   RadioGroupDescription,
 } from "@headlessui/vue";
-import { usePackageState } from "../composables";
+import { useSingleReport, useCommit } from "../composables";
 import ShieldIcon from "./Icons/ShieldIcon.vue";
 import { getVersionChangeText } from "../utils/versions";
-import { useMutation } from "vue-query";
-import { createToast } from "mosha-vue-toastify";
 
-const { areAllEulasApproved } = usePackageState();
-const { query, params } = useRoute();
-const { mutateAsync, isLoading, isError } = useMutation(() =>
-  $fetch(`/api/reports/${params.id}/commit`, {
-    method: "POST",
-  })
-);
-const props = defineProps({
-  report: {
-    type: Object,
-    required: true,
-  },
-});
+const { areAllEulasApproved, report } = useSingleReport();
+const { query } = useRoute();
+const { commit, isLoading } = useCommit();
 
 const selected = useState(() =>
   query.name
-    ? props.report.suggestions.find(
+    ? report.value.suggestions.find(
         (suggestion) => suggestion.name === query.name
       )
-    : props.report.suggestions[0]
+    : report.value.suggestions[0]
 );
 
-onMounted(async () => {
+watchEffect(async () => {
   await navigateTo({
     replace: true,
     query: {
@@ -43,18 +31,9 @@ onMounted(async () => {
   });
 });
 
-watch(selected, async (newSelected) => {
-  await navigateTo({
-    replace: true,
-    query: {
-      name: newSelected.name,
-    },
-  });
-});
-
 const isAllApproved = (dep) =>
   areAllEulasApproved(
-    props.report.suggestions.find((suggestion) => suggestion.name === dep.name)
+    report.value.suggestions.find((suggestion) => suggestion.name === dep.name)
   );
 
 const getClasses = (dep) => {
@@ -64,21 +43,6 @@ const getClasses = (dep) => {
     return "text-slate-200";
   } else {
     return "text-slate-500";
-  }
-};
-
-const commit = async () => {
-  await mutateAsync();
-  if (isError.value) {
-    createToast("There has been an error", {
-      type: "danger",
-      hideProgressBar: true,
-    });
-  } else {
-    createToast("Commit triggered!", {
-      type: "success",
-      hideProgressBar: true,
-    });
   }
 };
 </script>

@@ -2,16 +2,11 @@
 import AxoLink from "@axodotdev/fringe/lib/Link";
 
 import { getVersionChangeText } from "../utils/versions";
-import {
-  useSourceGraphURL,
-  useCurrentEula,
-  usePackageState,
-} from "../composables";
+import { useSourceGraphURL, useCurrentEula } from "../composables";
 import { toRef } from "vue";
 import AddANote from "./AddANote.vue";
 import ReportSwitch from "./ReportSwitch";
 
-const { state } = usePackageState();
 const props = defineProps({
   report: {
     required: true,
@@ -25,9 +20,11 @@ const props = defineProps({
 });
 
 const report = toRef(props, "report");
-
 const sourcegraphUrl = useSourceGraphURL(report);
-const criteria = useCurrentEula({ report, criteria: props.criteria });
+const criteria = useCurrentEula({
+  report: report.value,
+  criteria: props.criteria,
+});
 
 const createLabelsFromCriteria = (currentCriterion) => {
   const criterion = props.criteria[currentCriterion]?.name || currentCriterion;
@@ -39,21 +36,17 @@ const createLabelsFromCriteria = (currentCriterion) => {
   <div class="flex flex-col justify-between h-full mt-12">
     <div class="py-6 px-4 sm:px-6 lg:px-8">
       <div>
-        <div class="flex justify-between items-center">
-          <h1 class="mb-0">{{ props.report.name }}</h1>
+        <div class="flex justify-between items-center gap-6">
+          <h1 class="mb-0 break-all">{{ props.report.name }}</h1>
           <AxoLink
-            class="bg-axo-orange text-sm md:text-base block text-center p-2 rounded shadow"
+            class="bg-axo-orange text-sm md:text-base block text-center p-2 rounded shadow min-w-max"
             target="_blank"
             :href="sourcegraphUrl"
             ><span class="text-slate-900"> Review diff in Sourcegraph</span>
           </AxoLink>
         </div>
         <small>{{ getVersionChangeText(props.report?.suggested_diff) }}</small>
-        <AddANote
-          :name="report.name"
-          :default-note="state[props.report.name]?.note"
-          class="mb-24"
-        />
+        <AddANote :name="report.name" />
         <div
           v-for="currentCriteria in props.report.suggested_criteria"
           :key="currentCriteria"
