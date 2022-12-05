@@ -8,8 +8,6 @@ mocks();
 let wrapper;
 
 const createComponent = ({ props = {}, shallow = false } = {}) => {
-  console.log("&&", props);
-
   wrapper = mount(ReportSwitch, {
     props,
     shallow,

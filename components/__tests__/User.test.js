@@ -26,14 +26,6 @@ describe("User component", () => {
     createComponent({ props: { user } });
   });
 
-  // I think we can remove this given that the more detailed
-  // checks also checks it mounts and snapshots can be difficult,
-  // but I wanted to show what the transformation looks like before
-  // just deleting it
-  it("renders component", () => {
-    expect(wrapper.html()).toMatchSnapshot();
-  });
-
   it("renders the user's name", () => {
     expect(wrapper.find("p").text()).toBe(`Welcome ${user.login}`);
   });
