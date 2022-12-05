@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from "vue";
-import AxoSwitch from "@axodotdev/fringe/lib/Switch";
+import AxoSwitch from "@axodotdev/fringe/lib/Switch.vue";
 import { useSingleReport } from "../composables";
 
 const props = defineProps({

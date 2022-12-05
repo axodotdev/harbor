@@ -5,6 +5,7 @@ const fetcher = (url) =>
   $fetch(url, {
     headers: useRequestHeaders(["cookie"]),
   });
+console.log("🥩🥩🥩");
 
 export const useSingleReport = () => {
   const route = useRoute();
