@@ -1,35 +1,9 @@
 // Vitest Snapshot v1
 
-exports[`mounts component 1`] = `
-<div>
-  <div
-    class="items-center gap-2 p-5 flex flex-col"
-  >
-    <div
-      class="flex gap-4 items-center mb-4"
-    >
-      <img
-        class="rounded-full w-10 h-10"
-        src="https://test.com"
-      />
-      <p
-        class="m-0"
-      >
-         Welcome 
-        <span
-          class="font-bold"
-        >
-          sara
-        </span>
-      </p>
-    </div>
-    <button
-      class="bg-axo-orange text-slate-900 w-full rounded-3xl pointer m-1 text-2xl py-1 hover:bg-axo-pink transition"
-    >
-      
-       Logout 
-      
-    </button>
-  </div>
-</div>
+exports[`User component > renders component 1`] = `
+"<div class=\\"items-center gap-2 p-5 flex flex-col\\">
+  <div class=\\"flex gap-4 items-center mb-4\\"><img src=\\"https://test.com\\" class=\\"rounded-full w-10 h-10\\">
+    <p class=\\"m-0\\"> Welcome <span class=\\"font-bold\\">sara</span></p>
+  </div><button class=\\"bg-axo-orange text-slate-900 w-full rounded-3xl pointer m-1 text-2xl py-1 hover:bg-axo-pink transition\\"> Logout </button>
+</div>"
 `;
