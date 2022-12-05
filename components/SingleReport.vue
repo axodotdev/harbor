@@ -44,7 +44,9 @@ const getMarkdownContent = (content) => {
   <div class="flex flex-col justify-between h-full mt-12">
     <div class="py-6 px-4 sm:px-6 lg:px-8">
       <div>
-        <div class="flex justify-between items-center gap-6">
+        <div
+          class="flex sm:flex-row flex-col-reverse justify-between sm:items-center sm:gap-6 gap-4"
+        >
           <h1 class="mb-0 break-all">{{ props.report.name }}</h1>
           <AxoLink target="_blank" :href="sourcegraphUrl"
             ><business-button> Review diff in Sourcegraph</business-button>

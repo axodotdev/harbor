@@ -14,7 +14,7 @@ const user = await useGithubUser();
         <div
           class="flex items-center justify-between border-b border-slate-800 bg-gray-50 px-4 py-1.5"
         >
-          <div>C</div>
+          <div class="axo-gradient-text font-bold text-lg">H</div>
           <div>
             <button
               type="button"
@@ -36,7 +36,7 @@ const user = await useGithubUser();
           </div>
         </main>
         <aside
-          class="relative sm:w-96 w-full flex-shrink-0 border-r border-slate-800 order-first max-h-[40vh] sm:max-h-max"
+          class="relative sm:w-96 w-full flex-shrink-0 border-r border-slate-800 order-first max-h-[30vh] sm:max-h-max overflow-y-scroll sm:overflow-visible"
         >
           <div class="sm:absolute inset-0">
             <slot name="list"></slot>
