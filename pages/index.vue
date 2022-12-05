@@ -30,7 +30,7 @@ if (redirect && user.value) {
 
       <business-button
         v-else
-        class="flex gap-2 text-base items-center px-2"
+        class="flex gap-2 items-center"
         @click="githubLogin"
       >
         <span>Sign in with GitHub</span>
