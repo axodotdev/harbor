@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useSingleReport } from "../composables";
 
 const props = defineProps({
@@ -9,19 +9,17 @@ const props = defineProps({
   },
 });
 
-const tempFormValue = ref("");
+const tempFormValue = ref({});
 const { addNote, report, isLoadingNote } = useSingleReport();
 const currentPackage = computed(() => report.value.state?.[props.name] || {});
-const route = useRoute();
+
 const updateFormText = (evt) => {
-  tempFormValue.value = evt.target.value;
+  tempFormValue.value[props.name] = evt.target.value;
 };
 
 const noteInnerText = computed(() => {
-  return tempFormValue.value || currentPackage.value.note;
+  return tempFormValue.value[props.name] || currentPackage.value.note;
 });
-
-watch(route, () => (tempFormValue.value = ""));
 
 const noteText = computed(() =>
   currentPackage.value.note
