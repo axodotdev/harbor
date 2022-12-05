@@ -98,7 +98,6 @@ const getClasses = (dep) => {
       </RadioGroup>
     </div>
     <business-button
-      type="button"
       :disabled="isLoading"
       class="sticky bottom-0 bg-green-600 hover:bg-green-700 w-full"
       @click="commit"
