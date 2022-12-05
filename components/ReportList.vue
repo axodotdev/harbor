@@ -7,7 +7,7 @@ import {
   RadioGroupDescription,
 } from "@headlessui/vue";
 import { useSingleReport, useCommit } from "../composables";
-import ShieldIcon from "./Icons/ShieldIcon.vue";
+import { ShieldIcon } from "@axodotdev/fringe/lib";
 import { getVersionChangeText } from "../utils/versions";
 
 const { areAllEulasApproved, report } = useSingleReport();

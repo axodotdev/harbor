@@ -2,7 +2,7 @@
 import { useGithubUser } from "@/composables";
 import { REDIRECT_COOKIE } from "@/utils/constants";
 import AxoButton from "@axodotdev/fringe/lib/Button.vue";
-import GithubIcon from "@/components/Icons/GithubIcon.vue";
+import { GithubIcon } from "@axodotdev/fringe/lib";
 
 const user = await useGithubUser();
 const title = "harbor";
