@@ -34,7 +34,6 @@ const buttonText = computed(() => (isLoadingNote.value ? "..." : "+"));
 </script>
 
 <template>
-  {{ tempFormValue }}
   <details class="mt-8 cursor-pointer text-axo-orange text-xl">
     <summary class="">{{ noteText }}</summary>
     <div
