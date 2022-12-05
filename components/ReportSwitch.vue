@@ -1,7 +1,8 @@
 <script setup>
-import { computed } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import AxoSwitch from "@axodotdev/fringe/lib/Switch";
 import { useSingleReport } from "../composables";
+import { useToggleApproval } from "../composables/useToggleApprovall";
 
 const props = defineProps({
   criterion: {
@@ -17,8 +18,14 @@ const props = defineProps({
     required: true,
   },
 });
-const { report, toggleEulaPackageApproval } = useSingleReport();
+const { toggleEulaPackageApproval } = useToggleApproval();
+const { report } = useSingleReport();
 const currentPackage = computed(() => report.value.state?.[props.name] || {});
+const checked = ref(currentPackage.value[props.criterion]);
+
+watchEffect(() => {
+  checked.value = currentPackage.value[props.criterion];
+});
 
 const onToggleChange = () => {
   toggleEulaPackageApproval({ pkg: props.name, eula: props.criterion });
@@ -28,7 +35,7 @@ const onToggleChange = () => {
 <template>
   <AxoSwitch
     :key="name"
-    v-model:toggled="currentPackage[criterion]"
+    v-model:toggled="checked"
     as="h4"
     :labels="labels"
     :name="name"

@@ -1,5 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/vue-query";
-import { createToast } from "mosha-vue-toastify";
+import { useQuery } from "@tanstack/vue-query";
 
 const fetcher = (url) =>
   $fetch(url, {
@@ -8,7 +7,6 @@ const fetcher = (url) =>
 
 export const useSingleReport = () => {
   const route = useRoute();
-  const queryClient = useQueryClient();
   const {
     isLoading,
     data: report,
@@ -25,60 +23,10 @@ export const useSingleReport = () => {
     );
   };
 
-  const { mutateAsync: mutateApproval } = useMutation({
-    mutationFn: ({ pkg, eula }) =>
-      $fetch(`/api/reports/${route.params.id}`, {
-        method: "PUT",
-        body: {
-          ...report.value.state,
-          [pkg]: {
-            ...report.value?.state?.[pkg],
-            [eula]: report.value?.state?.[pkg]?.[eula] ? false : true,
-          },
-        },
-      }),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["report", route.params.id] }),
-    onError: () =>
-      createToast("There has been an issue toggling approval", {
-        type: "danger",
-        hideProgressBar: true,
-      }),
-  });
-
-  const { mutateAsync: mutateNote, isLoading: isLoadingNote } = useMutation({
-    mutationFn: ({ pkg, note }) =>
-      $fetch(`/api/reports/${route.params.id}`, {
-        method: "PUT",
-        body: {
-          ...report.value.state,
-          [pkg]: {
-            ...report.value?.state?.[pkg],
-            note,
-          },
-        },
-      }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["report", route.params.id] });
-      createToast("Note updated", {
-        type: "success",
-        hideProgressBar: true,
-      });
-    },
-    onError: () =>
-      createToast("There was an issue updating the note", {
-        type: "danger",
-        hideProgressBar: true,
-      }),
-  });
-
   return {
     report,
     isLoading,
     fetchError: isError,
     areAllEulasApproved,
-    toggleEulaPackageApproval: mutateApproval,
-    addNote: mutateNote,
-    isLoadingNote,
   };
 };

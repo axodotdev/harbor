@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useSingleReport } from "../composables";
+import { useNote } from "../composables/useNote";
 
 const props = defineProps({
   name: {
@@ -10,7 +11,8 @@ const props = defineProps({
 });
 
 const tempFormValue = ref({});
-const { addNote, report, isLoadingNote } = useSingleReport();
+const { mutateNote, isLoadingNote } = useNote();
+const { report } = useSingleReport();
 const currentPackage = computed(() => report.value.state?.[props.name] || {});
 
 const updateFormText = (evt) => {
@@ -51,7 +53,7 @@ const buttonText = computed(() => (isLoadingNote.value ? "..." : "+"));
           />
           <button
             class="min-w-max bg-axo-orange text-xl hover:bg-axo-pink px-4 py-2 rounded-md"
-            @click="addNote({ pkg: props.name, note: tempFormValue })"
+            @click="mutateNote({ pkg: props.name, note: tempFormValue })"
           >
             {{ buttonText }}
           </button>
