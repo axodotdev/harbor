@@ -5,6 +5,7 @@ import { toRef } from "vue";
 import AddANote from "./AddANote.vue";
 import ReportSwitch from "./ReportSwitch";
 import { BusinessButton, AxoLink } from "@axodotdev/fringe/lib";
+import { marked } from "marked";
 
 const props = defineProps({
   report: {
@@ -28,6 +29,14 @@ const criteria = useCurrentEula({
 const createLabelsFromCriteria = (currentCriterion) => {
   const criterion = props.criteria[currentCriterion]?.name || currentCriterion;
   return [criterion, criterion];
+};
+
+const getMarkdownContent = (content) => {
+  try {
+    return marked.parse(content);
+  } catch {
+    return content;
+  }
 };
 </script>
 
@@ -54,9 +63,7 @@ const createLabelsFromCriteria = (currentCriterion) => {
               :name="props.report.name"
               :labels="createLabelsFromCriteria(currentCriteria)"
             />
-            <p class="whitespace-pre-wrap">
-              {{ criteria[currentCriteria] }}
-            </p>
+            <div v-html="getMarkdownContent(criteria[currentCriteria])" />
           </div>
         </div>
       </div>
