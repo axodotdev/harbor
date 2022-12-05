@@ -7,7 +7,7 @@ import {
   RadioGroupDescription,
 } from "@headlessui/vue";
 import { useSingleReport, useCommit } from "../composables";
-import { ShieldIcon } from "@axodotdev/fringe/lib";
+import { BusinessButton, ShieldIcon } from "@axodotdev/fringe/lib";
 import { getVersionChangeText } from "../utils/versions";
 
 const { areAllEulasApproved, report } = useSingleReport();
@@ -97,15 +97,13 @@ const getClasses = (dep) => {
         </div>
       </RadioGroup>
     </div>
-    <button
+    <business-button
       type="button"
       :disabled="isLoading"
-      :class="[
-        'inline-flex items-center border border-transparent py-4 text-lg font-medium text-slate-50 disabled:opacity-60 disabled:cursor-default sticky bottom-0 w-full justify-center bg-green-600 hover:bg-green-700',
-      ]"
+      class="sticky bottom-0 bg-green-600 hover:bg-green-700 w-full"
       @click="commit"
     >
       {{ isLoading ? "Committing" : "Commit all changes" }}
-    </button>
+    </business-button>
   </div>
 </template>
