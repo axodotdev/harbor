@@ -5,6 +5,7 @@ export const useRedis = async () => {
     url: process.env.REDIS_LINK,
     password: process.env.REDIS_PASSWORD,
   });
+  // eslint-disable-next-line no-console
   client.on("error", (err) => console.log("Redis Client Error", err));
 
   await client.connect();

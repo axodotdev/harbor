@@ -6,10 +6,10 @@ import { ref } from "vue";
 const emptyReturn = (req, res, ctx) => res(ctx.status(200), ctx.json({}));
 
 const server = setupServer(
-  rest.get("///api/reports/678-s", (req, res, ctx) => {
+  rest.get("///api/reports/678", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(SINGLE_REPORT_MOCK));
   }),
-  rest.put("///api/reports/678-s", emptyReturn),
+  rest.put("///api/reports/678", emptyReturn),
   rest.get(
     "///mozilla/cargo-vet/main/src/criteria/safe-to-deploy.txt",
     (req, res, ctx) =>
@@ -22,7 +22,7 @@ const server = setupServer(
 
 beforeAll(() => {
   const useRoute = vi.fn(() => ({
-    params: { id: "678-s" },
+    params: { id: "678" },
     query: { name: "clap" },
   }));
 

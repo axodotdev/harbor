@@ -39,6 +39,6 @@ watchEffect(() => {
     :labels="labels"
     :name="name"
     inversion-color="bg-violet-600"
-    @update:toggled="(value) => toggleEulaPackageApproval(value)"
+    @update:toggled="toggleEulaPackageApproval"
   />
 </template>
