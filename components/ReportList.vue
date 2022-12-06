@@ -10,7 +10,7 @@ import { useSingleReport, useCommit } from "../composables";
 import { BusinessButton, ShieldIcon } from "@axodotdev/fringe/lib";
 import { getVersionChangeText } from "../utils/versions";
 
-const { areAllEulasApproved, report } = useSingleReport();
+const { report } = useSingleReport();
 const { query } = useRoute();
 const { commit, isLoading } = useCommit();
 
@@ -31,10 +31,15 @@ watchEffect(async () => {
   });
 });
 
-const isAllApproved = (dep) =>
-  areAllEulasApproved(
-    report.value.suggestions.find((suggestion) => suggestion.name === dep.name)
+const isAllApproved = (dep) => {
+  const currentReport = report.value.suggestions.find(
+    (suggestion) => suggestion.name === dep.name
   );
+
+  return currentReport.suggested_criteria.every(
+    (criteria) => report.value?.state?.[currentReport.name]?.[criteria]
+  );
+};
 
 const getClasses = (dep) => {
   if (isAllApproved(dep)) return "text-green-300";
@@ -51,7 +56,7 @@ const getClasses = (dep) => {
   <div class="relative h-full">
     <div class="mt-4 h-full overflow-y-auto">
       <RadioGroup v-model="selected">
-        <RadioGroupLabel class="sr-only"> Server size </RadioGroupLabel>
+        <RadioGroupLabel class="sr-only"> Dependencies </RadioGroupLabel>
         <div class="space-y-0 border-t-slate-800 border-t">
           <RadioGroupOption
             v-for="dep in report.suggestions"

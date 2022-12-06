@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/vue-query";
+import axios from "axios";
 
 const fetcher = (url) =>
-  $fetch(url, {
-    headers: useRequestHeaders(["cookie"]),
-  });
+  axios
+    .get(url, {
+      headers: useRequestHeaders(["cookie"]),
+    })
+    .then((rsp) => rsp.data);
 
 export const useSingleReport = () => {
   const route = useRoute();
@@ -17,16 +20,9 @@ export const useSingleReport = () => {
     retry: 0,
   });
 
-  const areAllEulasApproved = ({ name, suggested_criteria }) => {
-    return suggested_criteria.every(
-      (criteria) => report.value?.state?.[name]?.[criteria]
-    );
-  };
-
   return {
     report,
     isLoading,
     fetchError: isError,
-    areAllEulasApproved,
   };
 };
