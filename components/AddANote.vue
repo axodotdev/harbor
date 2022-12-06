@@ -53,7 +53,7 @@ const buttonText = computed(() => (isLoadingNote.value ? "..." : "+"));
           />
           <button
             class="min-w-max bg-axo-orange text-xl hover:bg-axo-pink px-4 py-2 rounded-md"
-            @click="mutateNote({ pkg: props.name, note: tempFormValue })"
+            @click="mutateNote({ pkg: name, note: tempFormValue[name] })"
           >
             {{ buttonText }}
           </button>
