@@ -1,5 +1,5 @@
 <script setup>
-import { watchEffect } from "vue";
+import { ref, watchEffect } from "vue";
 import {
   RadioGroup,
   RadioGroupLabel,
@@ -14,19 +14,19 @@ const { report } = useSingleReport();
 const { query } = useRoute();
 const { commit, isLoading } = useCommit();
 
-const selected = useState(() =>
+const selected = ref(
   query.name
-    ? report.value.suggestions.find(
+    ? report.value?.suggestions.find(
         (suggestion) => suggestion.name === query.name
       )
-    : report.value.suggestions[0]
+    : report.value?.suggestions[0]
 );
 
 watchEffect(async () => {
   await navigateTo({
     replace: true,
     query: {
-      name: selected.value.name,
+      name: selected.value?.name,
     },
   });
 });
@@ -59,13 +59,14 @@ const getClasses = (dep) => {
         <RadioGroupLabel class="sr-only"> Dependencies </RadioGroupLabel>
         <div class="space-y-0 border-t-slate-800 border-t">
           <RadioGroupOption
-            v-for="dep in report.suggestions"
+            v-for="dep in report?.suggestions"
             :key="dep.name"
             v-slot="{ checked, active }"
             as="template"
             :value="dep"
           >
             <div
+              data-test="dependency-option"
               :class="[
                 checked || active
                   ? 'bg-slate-800 border-t !border-t-slate-600 !border-b-slate-600 '

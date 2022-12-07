@@ -30,11 +30,16 @@ beforeAll(() => {
 
   const useRequestHeaders = vi.fn(() => {});
 
+  vi.stubGlobal("useRequestHeaders", useRequestHeaders);
+
+  const navigateTo = vi.fn(() => {});
+
+  vi.stubGlobal("navigateTo", navigateTo);
+
   const useState = vi.fn((_, value) => ref(value));
 
   vi.stubGlobal("useState", useState);
 
-  vi.stubGlobal("useRequestHeaders", useRequestHeaders);
   server.listen({ onUnhandledRequest: "error" });
 });
 
