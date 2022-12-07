@@ -16,11 +16,13 @@ const createComponent = ({ props = {}, shallow = false } = {}) => {
   });
 };
 
+const currentPkg = SINGLE_REPORT_MOCK.suggestions[0];
+
 describe("SingleReport component", () => {
   beforeEach(async () => {
     createComponent({
       props: {
-        report: SINGLE_REPORT_MOCK.suggestions[0],
+        report: currentPkg,
         criteria: SINGLE_REPORT_MOCK.criteria,
       },
     });
@@ -33,8 +35,10 @@ describe("SingleReport component", () => {
   });
 
   it("mounts and shows package correctly", async () => {
-    expect(wrapper.text()).toContain("clap");
-    expect(wrapper.text()).toContain("changed from v4.0.15 to v4.0.29");
+    expect(wrapper.text()).toContain(currentPkg.name);
+    expect(wrapper.text()).toContain(
+      `changed from v${currentPkg.suggested_diff.from} to v${currentPkg.suggested_diff.to}`
+    );
   });
 
   it("shows correct criteria", async () => {
@@ -44,8 +48,8 @@ describe("SingleReport component", () => {
   });
 
   it("sourcegraph button has correct link", async () => {
-    expect(wrapper.findAll("a")[0].attributes("href")).toBe(
-      "https://sourcegraph.com/crates/clap/-/compare/v4.0.15...v4.0.29"
+    expect(wrapper.find("a").attributes("href")).toBe(
+      `https://sourcegraph.com/crates/${currentPkg.name}/-/compare/v${currentPkg.suggested_diff.from}...v${currentPkg.suggested_diff.to}`
     );
   });
 });
