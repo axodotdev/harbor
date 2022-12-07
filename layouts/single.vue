@@ -28,17 +28,17 @@ const user = await useGithubUser();
         </div>
       </div>
       <div
-        class="relative z-0 flex flex-col sm:flex-row flex-1 overflow-hidden"
+        class="relative z-0 flex flex-col md:flex-row flex-1 overflow-hidden"
       >
         <main class="relative z-0 flex-1 overflow-y-auto order-last">
-          <div class="sm:absolute inset-0">
+          <div class="md:absolute inset-0">
             <slot name="main"></slot>
           </div>
         </main>
         <aside
-          class="relative sm:w-96 w-full flex-shrink-0 border-r border-slate-800 order-first max-h-[30vh] sm:max-h-max overflow-y-scroll sm:overflow-visible"
+          class="relative md:w-96 w-full flex-shrink-0 border-r border-slate-800 order-first max-h-[30vh] md:max-h-max overflow-y-scroll md:overflow-visible"
         >
-          <div class="sm:absolute inset-0">
+          <div class="md:absolute inset-0">
             <slot name="list"></slot>
           </div>
         </aside>
