@@ -1,9 +1,13 @@
 import { VueQueryPlugin, QueryClient, hydrate } from "@tanstack/vue-query";
 
 export default defineNuxtPlugin((nuxtApp) => {
-  // Modify your Vue Query global settings here
   const queryClient = new QueryClient({
-    defaultOptions: { queries: { staleTime: Infinity } },
+    defaultOptions: {
+      queries: {
+        // refetch data every 2 minutes
+        refetchInterval: 120000,
+      },
+    },
   });
   const options = { queryClient };
 

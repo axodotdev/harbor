@@ -3,15 +3,15 @@ import { createToast } from "mosha-vue-toastify";
 import { useSingleReport } from "./useSingleReport";
 import axios from "axios";
 
-export const useToggleApproval = ({ eula }) => {
+export const useToggleApproval = ({ eula, pkg }) => {
   const queryClient = useQueryClient();
   const { report } = useSingleReport();
   const route = useRoute();
 
   const createBody = (value) => ({
     ...report.value.state,
-    [route.query.name]: {
-      ...report.value.state?.[route.query.name],
+    [pkg]: {
+      ...report.value.state?.[pkg],
       [eula]: value,
     },
   });
