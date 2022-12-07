@@ -66,7 +66,10 @@ const getMarkdownContent = (content) => {
               :name="props.report.name"
               :labels="createLabelsFromCriteria(currentCriteria)"
             />
-            <div v-html="getMarkdownContent(criteria[currentCriteria])" />
+            <div
+              class="sm:max-w-prose-lg"
+              v-html="getMarkdownContent(criteria[currentCriteria])"
+            />
           </div>
         </div>
       </div>
