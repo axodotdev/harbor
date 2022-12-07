@@ -42,7 +42,7 @@ describe("ReportList component", () => {
     options[0].trigger("click");
     await nextTick();
 
-    expect(window.navigateTo).toHaveBeenNthCalledWith(3, {
+    expect(window.navigateTo).toHaveBeenNthCalledWith(2, {
       query: {
         name: "clap",
       },

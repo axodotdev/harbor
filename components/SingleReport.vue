@@ -34,12 +34,12 @@ const createLabelsFromCriteria = (currentCriterion) => {
     <div class="py-6 px-4 sm:px-6 lg:px-8">
       <div>
         <div class="flex justify-between items-center gap-6">
-          <h1 class="mb-0 break-all">{{ report?.name }}</h1>
+          <h1 class="mb-0 break-all">{{ report.name }}</h1>
           <axo-link target="_blank" :href="sourcegraphUrl"
             ><business-button> Review diff in Sourcegraph</business-button>
           </axo-link>
         </div>
-        <small>{{ getVersionChangeText(report?.suggested_diff) }}</small>
+        <small>{{ getVersionChangeText(report.suggested_diff) }}</small>
         <add-a-note :name="report.name" />
         <div
           v-for="currentCriteria in report.suggested_criteria"
