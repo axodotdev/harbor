@@ -11,7 +11,7 @@ export const useCurrentEula = ({ report, criteria: APICriteria }) => {
       if (defaultCriteria.description_url) {
         const data = await axios
           .get(defaultCriteria["description-url"])
-          .then((rsp) => rsp.data);
+          .then(({ data }) => data);
 
         criteria.value[currentCriteria] = data;
         return;
@@ -22,7 +22,7 @@ export const useCurrentEula = ({ report, criteria: APICriteria }) => {
       } else {
         const data = await axios
           .get(APICriteria[currentCriteria]["description-url"])
-          .then((rsp) => rsp.data);
+          .then(({ data }) => data);
         criteria.value[currentCriteria] = data;
       }
     });

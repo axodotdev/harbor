@@ -6,7 +6,7 @@ const fetcher = (url) =>
     .get(url, {
       headers: useRequestHeaders(["cookie"]),
     })
-    .then((rsp) => rsp.data);
+    .then(({ data }) => data);
 
 export const useSingleReport = () => {
   const route = useRoute();
