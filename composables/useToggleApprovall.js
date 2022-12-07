@@ -33,7 +33,7 @@ export const useToggleApproval = ({ eula }) => {
     onError: ({ response: error }, __, context) => {
       queryClient.setQueryData(queryKey, context.previousState);
       createToast(
-        error.statusText || "There has been an issue toggling approval",
+        error.statusText || "There has been an issue updating approval",
         {
           type: "danger",
           hideProgressBar: true,
