@@ -11,7 +11,7 @@ export const useToggleApproval = ({ eula }) => {
   const createBody = (value) => ({
     ...report.value.state,
     [route.query.name]: {
-      ...report.value?.state?.[route.query.name],
+      ...report.value.state?.[route.query.name],
       [eula]: value,
     },
   });

@@ -18,6 +18,7 @@ export const useSingleReport = () => {
     queryKey: [`report`, route.params.id],
     queryFn: () => fetcher(`/api/reports/${route.params.id}`),
     retry: 0,
+    placeholderData: {},
   });
 
   return {

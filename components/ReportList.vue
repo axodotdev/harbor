@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watchEffect } from "vue";
+import { watchEffect, computed } from "vue";
 import {
   RadioGroup,
   RadioGroupLabel,
@@ -13,13 +13,11 @@ import { getVersionChangeText } from "../utils/versions";
 const { report } = useSingleReport();
 const { query } = useRoute();
 const { commit, isLoading } = useCommit();
-
-const selected = ref(
+const suggestions = computed(() => report.value.suggestions || []);
+const selected = computed(() =>
   query.name
-    ? report.value?.suggestions.find(
-        (suggestion) => suggestion.name === query.name
-      )
-    : report.value?.suggestions[0]
+    ? suggestions.value.find((suggestion) => suggestion.name === query.name)
+    : suggestions.value[0]
 );
 
 watchEffect(async () => {
@@ -37,7 +35,7 @@ const isAllApproved = (dep) => {
   );
 
   return currentReport.suggested_criteria.every(
-    (criteria) => report.value?.state?.[currentReport.name]?.[criteria]
+    (criteria) => report.value.state?.[currentReport.name]?.[criteria]
   );
 };
 
@@ -53,13 +51,13 @@ const getClasses = (dep) => {
 </script>
 
 <template>
-  <div class="relative h-full">
+  <div v-if="suggestions.length" class="relative h-full">
     <div class="mt-4 h-full overflow-y-auto">
       <RadioGroup v-model="selected">
         <RadioGroupLabel class="sr-only"> Dependencies </RadioGroupLabel>
         <div class="space-y-0 border-t-slate-800 border-t">
           <RadioGroupOption
-            v-for="dep in report?.suggestions"
+            v-for="dep in suggestions"
             :key="dep.name"
             v-slot="{ checked, active }"
             as="template"

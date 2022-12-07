@@ -23,7 +23,7 @@ const { toggleEulaPackageApproval } = useToggleApproval({
   eula: props.criterion,
 });
 const { report } = useSingleReport();
-const currentPackage = computed(() => report.value?.state?.[props.name] || {});
+const currentPackage = computed(() => report.value.state?.[props.name] || {});
 const checked = ref(currentPackage.value[props.criterion]);
 
 watchEffect(() => {

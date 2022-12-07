@@ -13,7 +13,7 @@ export const useNote = () => {
       axios.put(`/api/reports/${route.params.id}`, {
         ...report.value.state,
         [pkg]: {
-          ...report.value?.state?.[pkg],
+          ...report.value.state?.[pkg],
           note,
         },
       }),

@@ -13,7 +13,7 @@ const props = defineProps({
 const tempFormValue = ref({});
 const { mutateNote, isLoadingNote } = useNote();
 const { report } = useSingleReport();
-const currentPackage = computed(() => report.value?.state?.[props.name] || {});
+const currentPackage = computed(() => report.value.state?.[props.name] || {});
 
 const updateFormText = (evt) => {
   tempFormValue.value[props.name] = evt.target.value;
