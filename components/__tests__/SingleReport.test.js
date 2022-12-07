@@ -35,8 +35,8 @@ describe("SingleReport component", () => {
   });
 
   it("mounts and shows package correctly", async () => {
-    expect(wrapper.text()).toContain(currentPkg.name);
-    expect(wrapper.text()).toContain(
+    expect(wrapper.find("h1").text()).toContain(currentPkg.name);
+    expect(wrapper.find("small").text()).toContain(
       `changed from v${currentPkg.suggested_diff.from} to v${currentPkg.suggested_diff.to}`
     );
   });
@@ -50,6 +50,18 @@ describe("SingleReport component", () => {
   it("sourcegraph button has correct link", async () => {
     expect(wrapper.find("a").attributes("href")).toBe(
       `https://sourcegraph.com/crates/${currentPkg.name}/-/compare/v${currentPkg.suggested_diff.from}...v${currentPkg.suggested_diff.to}`
+    );
+  });
+
+  it("changes report and updates text & link", async () => {
+    const newReport = SINGLE_REPORT_MOCK.suggestions[1];
+    await wrapper.setProps({
+      report: newReport,
+    });
+    expect(wrapper.find("h1").text()).toContain(newReport.name);
+    expect(wrapper.find("small").text()).toContain(`full audit recommended`);
+    expect(wrapper.find("a").attributes("href")).toBe(
+      `https://sourcegraph.com/crates/${newReport.name}@v${newReport.suggested_diff.to}`
     );
   });
 });

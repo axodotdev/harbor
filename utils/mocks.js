@@ -19,11 +19,11 @@ export const SINGLE_REPORT_MOCK = {
       notable_parents: "reqwest, cargo-vet-school",
       suggested_criteria: ["safe-to-deploy"],
       suggested_diff: {
-        from: "1.0.86",
-        to: "1.0.87",
+        from: null,
+        to: "0.2.8",
         diffstat: {
-          raw: " 11 files changed, 248 insertions(+), 380 deletions(-)\n",
-          count: 628,
+          raw: " 15 files changed, 804 insertions(+)\n",
+          count: 804,
         },
       },
       confident: true,
