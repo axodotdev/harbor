@@ -18,7 +18,7 @@ export const useToggleApproval = ({ eula }) => {
   const queryKey = ["report", route.params.id];
   const { mutateAsync } = useMutation({
     mutationFn: (value) =>
-      axios.put(`/api/reports/2-${route.params.id}`, createBody(value)),
+      axios.put(`/api/reports/${route.params.id}`, createBody(value)),
     onMutate: async (value) => {
       await queryClient.cancelQueries({ queryKey });
       const previousState = queryClient.getQueryData(queryKey);
