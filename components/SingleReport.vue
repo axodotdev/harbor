@@ -5,6 +5,7 @@ import { toRef } from "vue";
 import AddANote from "./AddANote.vue";
 import ReportSwitch from "./ReportSwitch";
 import { BusinessButton, AxoLink } from "@axodotdev/fringe/lib";
+import DOMPurify from "dompurify";
 import { marked } from "marked";
 
 const props = defineProps({
@@ -33,7 +34,7 @@ const createLabelsFromCriteria = (currentCriterion) => {
 
 const getMarkdownContent = (content) => {
   try {
-    return marked.parse(content);
+    return DOMPurify.sanitize(marked.parse(content));
   } catch {
     return content;
   }
