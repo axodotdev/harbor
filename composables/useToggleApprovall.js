@@ -18,7 +18,7 @@ export const useToggleApproval = ({ eula }) => {
   const queryKey = ["report", route.params.id];
   const { mutateAsync } = useMutation({
     mutationFn: (value) =>
-      axios.put(`/api/reports/${route.params.id}`, createBody(value)),
+      axios.put(`/api/reports/2-${route.params.id}`, createBody(value)),
     onMutate: async (value) => {
       await queryClient.cancelQueries({ queryKey });
       const previousState = queryClient.getQueryData(queryKey);
@@ -30,10 +30,10 @@ export const useToggleApproval = ({ eula }) => {
 
       return { previousState };
     },
-    onError: ({ data: error }, __, context) => {
+    onError: ({ response: error }, __, context) => {
       queryClient.setQueryData(queryKey, context.previousState);
-      return createToast(
-        error.data.message || "There has been an issue toggling approval",
+      createToast(
+        error.statusText || "There has been an issue toggling approval",
         {
           type: "danger",
           hideProgressBar: true,

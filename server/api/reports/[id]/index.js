@@ -13,13 +13,11 @@ export default defineEventHandler(async (event) => {
   const data = await client.get(reportId);
   const parsedData = JSON.parse(data);
 
-  if (!parsedData.repo) {
+  if (!parsedData?.repo) {
     return sendError(event, {
       statusCode: 500,
       fatal: true,
-      data: {
-        message: "Invalid report ID",
-      },
+      statusMessage: "Invalid report ID",
     });
   }
 
@@ -39,9 +37,7 @@ export default defineEventHandler(async (event) => {
       return sendError(event, {
         statusCode: 401,
         fatal: true,
-        data: {
-          message: "You do not have access to this repo",
-        },
+        statusMessage: "You do not have access to this repo",
       });
     }
   }
