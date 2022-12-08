@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, watchEffect } from "vue";
-import AxoSwitch from "./Switch.vue";
+import { AxoSwitch } from "@axodotdev/fringe/lib";
 import { useSingleReport } from "../composables";
 import { useToggleApproval } from "../composables/useToggleApprovall";
 

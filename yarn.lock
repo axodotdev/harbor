@@ -22,10 +22,10 @@
     eslint-plugin-prettier "^4.2.1"
     eslint-plugin-vue "^9.5.1"
 
-"@axodotdev/fringe@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@axodotdev/fringe/-/fringe-0.0.4.tgz#fdd12c038f821446b0cbe64079f1768720ed8639"
-  integrity sha512-JFfRwyDmOXZN95sbRtP8Bvp+R/mnW2Qz80OmO+4dGHAtCcAuh+u+1RM9niReRkj6ZGhV62IbXkD2yEvTsckapQ==
+"@axodotdev/fringe@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@axodotdev/fringe/-/fringe-0.0.5.tgz#09fdea7aa8c1058a2d7b442ff1302814d20306b5"
+  integrity sha512-5Qgf7i33TY3weQhH4kYlkZAeEQoiEFlDWz6QxHAJGXUeyM6a7ijANF3DYFGOznxRrLhl+zHVi/bGO0IUAwwXUA==
   dependencies:
     "@headlessui/vue" "^1.7.2"
     "@tailwindcss/forms" "^0.5.3"
@@ -875,18 +875,18 @@
   dependencies:
     remove-accents "0.4.2"
 
-"@tanstack/query-core@4.18.0":
-  version "4.18.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.18.0.tgz#3e166ce319fd869c668536384ae94d174ea46a59"
-  integrity sha512-PP4mG8MD08sq64RZCqMfXMYfaj7+Oulwg7xZ/fJoEOdTZNcPIgaOkHajZvUBsNLbi/0ViMvJB4cFkL2Jg2WPbw==
+"@tanstack/query-core@4.19.1":
+  version "4.19.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.19.1.tgz#2e92d9e8a50884eb231c5beb4386e131ebe34306"
+  integrity sha512-Zp0aIose5C8skBzqbVFGk9HJsPtUhRVDVNWIqVzFbGQQgYSeLZMd3Sdb4+EnA5wl1J7X+bre2PJGnQg9x/zHOA==
 
-"@tanstack/vue-query@^4.18.1":
-  version "4.18.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/vue-query/-/vue-query-4.18.1.tgz#0912f0668c0e2ccdb6f5c89c2681a46c04af5888"
-  integrity sha512-vBPLBUoHXmq4pbBz9atE6jiBaLV9Pqhonpg9B9PWpBNEUqTrLVPM4E34cu7gjOSiY9CMHWz2RjsITUk6bZLrCQ==
+"@tanstack/vue-query@^4.19.1":
+  version "4.19.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/vue-query/-/vue-query-4.19.1.tgz#c162c6fac852e3c8cfaf566b3cfdf336a476f16f"
+  integrity sha512-ChZu3CiD+tQ7NS9M2OQYbHEbnhbGamrpcOdG/d5LpW7+HkVj9tOWkEsR+jzxk012tTEgd4sKj23md4MPlvjSBQ==
   dependencies:
     "@tanstack/match-sorter-utils" "^8.1.1"
-    "@tanstack/query-core" "4.18.0"
+    "@tanstack/query-core" "4.19.1"
     "@vue/devtools-api" "^6.4.2"
     vue-demi "^0.13.11"
 
