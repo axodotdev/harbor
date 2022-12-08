@@ -34,8 +34,8 @@ const isAllApproved = (dep) => {
     (suggestion) => suggestion.name === dep.name
   );
 
-  return currentReport.suggested_criteria.every(
-    (criteria) => report.value.state?.[currentReport.name]?.[criteria]
+  return currentReport.suggested_criteria.every((criteria) =>
+    Boolean(report.value.state?.[currentReport.name]?.[criteria])
   );
 };
 

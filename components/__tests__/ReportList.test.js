@@ -4,6 +4,7 @@ import { expect } from "vitest";
 import { VueQueryPlugin } from "@tanstack/vue-query";
 import { nextTick } from "vue";
 import { ShieldIcon } from "@axodotdev/fringe/lib";
+import { SINGLE_REPORT_MOCK } from "../../utils/mocks";
 
 let wrapper;
 
@@ -31,8 +32,9 @@ describe("ReportList component", () => {
   const getOptions = () => wrapper.findAll('[data-test="dependency-option"]');
 
   it("Shows correct list", async () => {
-    expect(wrapper.text()).toContain("clap");
-    expect(wrapper.text()).toContain("serde_json");
+    SINGLE_REPORT_MOCK.suggestions.map(({ name }) => {
+      expect(wrapper.text()).toContain(name);
+    });
 
     expect(wrapper.findAll('[data-test="dependency-option"]')).toHaveLength(2);
   });
@@ -44,7 +46,7 @@ describe("ReportList component", () => {
 
     expect(window.navigateTo).toHaveBeenNthCalledWith(2, {
       query: {
-        name: "clap",
+        name: SINGLE_REPORT_MOCK.suggestions[0].name,
       },
       replace: true,
     });
