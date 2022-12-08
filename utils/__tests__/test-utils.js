@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+import { AxoSwitch } from "@axodotdev/fringe/lib";
 
 export function withSetup(composable) {
   let result;
@@ -14,3 +15,6 @@ export function withSetup(composable) {
   // for testing provide / unmount
   return [result, app];
 }
+export const findSwitch = (wrapper) => wrapper.find('[role="switch"]');
+export const findAxoSwitchToggledProp = (wrapper) =>
+  wrapper.findComponent(AxoSwitch).props("toggled");

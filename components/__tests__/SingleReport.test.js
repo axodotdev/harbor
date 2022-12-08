@@ -3,6 +3,10 @@ import SingleReport from "../SingleReport.vue";
 import { expect } from "vitest";
 import { SINGLE_REPORT_MOCK } from "../../utils/mocks";
 import { VueQueryPlugin } from "@tanstack/vue-query";
+import {
+  findAxoSwitchToggledProp,
+  findSwitch,
+} from "../../utils/__tests__/test-utils";
 
 let wrapper;
 
@@ -41,6 +45,12 @@ describe("SingleReport component", () => {
     );
   });
 
+  it("shows correct switch state and toggles it", async () => {
+    expect(findAxoSwitchToggledProp(wrapper)).toBe(true);
+    await findSwitch(wrapper).trigger("click");
+    expect(findAxoSwitchToggledProp(wrapper)).toBe(false);
+  });
+
   it("shows correct criteria", async () => {
     expect(wrapper.text()).toContain(
       SINGLE_REPORT_MOCK.criteria["safe-to-deploy"].description
@@ -53,7 +63,7 @@ describe("SingleReport component", () => {
     );
   });
 
-  it("changes report and updates text & link", async () => {
+  it("changes report and updates all info", async () => {
     const newReport = SINGLE_REPORT_MOCK.suggestions[1];
     await wrapper.setProps({
       report: newReport,
@@ -63,5 +73,6 @@ describe("SingleReport component", () => {
     expect(wrapper.find("a").attributes("href")).toBe(
       `https://sourcegraph.com/crates/${newReport.name}@v${newReport.suggested_diff.to}`
     );
+    expect(findAxoSwitchToggledProp(wrapper)).toBe(false);
   });
 });

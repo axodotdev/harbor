@@ -1,8 +1,12 @@
 import { VueQueryPlugin } from "@tanstack/vue-query";
 import { mount, flushPromises } from "@vue/test-utils";
 import ReportSwitch from "../ReportSwitch.vue";
-import { AxoSwitch } from "@axodotdev/fringe/lib";
+
 import { expect } from "vitest";
+import {
+  findAxoSwitchToggledProp,
+  findSwitch,
+} from "../../utils/__tests__/test-utils";
 
 let wrapper;
 
@@ -35,19 +39,15 @@ describe("ReportSwitch component", () => {
     wrapper = null;
   });
 
-  const findSwitch = () => wrapper.find('[role="switch"]');
-  const findAxoSwitchToggledProp = () =>
-    wrapper.findComponent(AxoSwitch).props("toggled");
-
   it("toggles the label on click", async () => {
-    expect(findAxoSwitchToggledProp()).toBe(false);
-    await findSwitch().trigger("click");
-    expect(findAxoSwitchToggledProp()).toBe(true);
+    expect(findAxoSwitchToggledProp(wrapper)).toBe(false);
+    await findSwitch(wrapper).trigger("click");
+    expect(findAxoSwitchToggledProp(wrapper)).toBe(true);
   });
 
   it("defaults label to true", async () => {
     await wrapper.setProps({ name: "clap" });
 
-    expect(findAxoSwitchToggledProp()).toBe(true);
+    expect(findAxoSwitchToggledProp(wrapper)).toBe(true);
   });
 });
