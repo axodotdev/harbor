@@ -10,7 +10,5 @@ export function withSetup(composable) {
     },
   });
   app.mount(document.createElement("div"));
-  // return the result and the app instance
-  // for testing provide / unmount
   return [result, app];
 }

@@ -1,5 +1,5 @@
 <script setup>
-import { watchEffect, computed, ref } from "vue";
+import { watchEffect, computed } from "vue";
 import {
   RadioGroup,
   RadioGroupLabel,
@@ -14,20 +14,19 @@ const { report } = useSingleReport();
 const { query } = useRoute();
 const { commit, isLoading } = useCommit();
 const suggestions = computed(() => report.value.suggestions || []);
-const urlPkg = query.name
-  ? suggestions.value.find((suggestion) => suggestion.name === query.name)
-  : suggestions.value[0];
-const selected = ref(urlPkg);
+const selected = computed(() =>
+  query.name
+    ? suggestions.value.find((suggestion) => suggestion.name === query.name)
+    : suggestions.value[0]
+);
 
 watchEffect(async () => {
-  if (selected.value) {
-    await navigateTo({
-      replace: true,
-      query: {
-        name: selected.value?.name,
-      },
-    });
-  }
+  await navigateTo({
+    replace: true,
+    query: {
+      name: selected.value?.name,
+    },
+  });
 });
 
 const isAllApproved = (dep) => {
