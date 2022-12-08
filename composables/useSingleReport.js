@@ -1,12 +1,9 @@
 import { useQuery } from "@tanstack/vue-query";
-import axios from "axios";
 
 const fetcher = (url) =>
-  axios
-    .get(url, {
-      headers: useRequestHeaders(["cookie"]),
-    })
-    .then(({ data }) => data);
+  $fetch(url, {
+    headers: useRequestHeaders(["cookie"]),
+  });
 
 export const useSingleReport = () => {
   const route = useRoute();
