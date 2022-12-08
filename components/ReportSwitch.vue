@@ -2,7 +2,7 @@
 import { computed, ref, watchEffect } from "vue";
 import { AxoSwitch } from "@axodotdev/fringe/lib";
 import { useSingleReport } from "../composables";
-import { useToggleApproval } from "../composables/useToggleApprovall";
+import { useToggleApproval } from "../composables/useToggleApproval";
 
 const props = defineProps({
   criterion: {
