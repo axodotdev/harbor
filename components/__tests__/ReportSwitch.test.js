@@ -27,11 +27,11 @@ describe("ReportSwitch component", () => {
   beforeEach(async () => {
     createComponent({ props: switchProps });
     await flushPromises();
+  });
 
-    return () => {
-      wrapper.unmount();
-      wrapper = null;
-    };
+  afterEach(() => {
+    wrapper.unmount();
+    wrapper = null;
   });
 
   const findSwitch = () => wrapper.find('[role="switch"]');

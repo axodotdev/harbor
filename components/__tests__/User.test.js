@@ -19,11 +19,11 @@ describe("User component", () => {
 
   beforeEach(() => {
     createComponent({ props: { user } });
+  });
 
-    return () => {
-      wrapper.unmount();
-      wrapper = null;
-    };
+  afterEach(() => {
+    wrapper.unmount();
+    wrapper = null;
   });
 
   it("renders the user's name", () => {

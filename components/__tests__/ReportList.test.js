@@ -1,6 +1,6 @@
 import { mount, flushPromises } from "@vue/test-utils";
 import ReportList from "../ReportList.vue";
-import { expect } from "vitest";
+import { afterEach, expect } from "vitest";
 import { VueQueryPlugin } from "@tanstack/vue-query";
 import { nextTick } from "vue";
 import { ShieldIcon } from "@axodotdev/fringe/lib";
@@ -22,11 +22,11 @@ describe("ReportList component", () => {
   beforeEach(async () => {
     createComponent();
     await flushPromises();
+  });
 
-    return () => {
-      wrapper.unmount();
-      wrapper = null;
-    };
+  afterEach(() => {
+    wrapper.unmount();
+    wrapper = null;
   });
 
   const getOptions = () => wrapper.findAll('[data-test="dependency-option"]');

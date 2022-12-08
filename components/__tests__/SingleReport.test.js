@@ -27,11 +27,11 @@ describe("SingleReport component", () => {
       },
     });
     await flushPromises();
+  });
 
-    return () => {
-      wrapper.unmount();
-      wrapper = null;
-    };
+  afterEach(() => {
+    wrapper.unmount();
+    wrapper = null;
   });
 
   it("mounts and shows package correctly", async () => {
