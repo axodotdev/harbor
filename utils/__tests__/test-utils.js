@@ -1,4 +1,6 @@
-import { createApp } from "vue";
+// test-utils.js
+import { createApp, ref } from "vue";
+import { vi } from "vitest";
 
 export function withSetup(composable) {
   let result;
@@ -14,3 +16,17 @@ export function withSetup(composable) {
   // for testing provide / unmount
   return [result, app];
 }
+
+export const mocks = () => {
+  const $fetch = vi.fn(() => {});
+
+  vi.stubGlobal("$fetch", $fetch);
+
+  const useRoute = vi.fn(() => ({ params: { id: "678-s" } }));
+
+  vi.stubGlobal("useRoute", useRoute);
+
+  const useState = vi.fn((_, value) => ref(value()));
+
+  vi.stubGlobal("useState", useState);
+};
