@@ -1,6 +1,7 @@
 import { VueQueryPlugin } from "@tanstack/vue-query";
 import { mount, flushPromises } from "@vue/test-utils";
 import ReportSwitch from "../ReportSwitch.vue";
+import { AxoSwitch } from "@axodotdev/fringe/lib";
 import { expect } from "vitest";
 
 let wrapper;
@@ -21,7 +22,7 @@ describe("ReportSwitch component", () => {
     inversionColor: "bg-violet-600",
     criterion: "safe-to-deploy",
     name: "serde_json",
-    labels: ["one", "two"],
+    labels: ["safe-to-deploy", "safe-to-deploy"],
   };
 
   beforeEach(async () => {
@@ -35,18 +36,18 @@ describe("ReportSwitch component", () => {
   });
 
   const findSwitch = () => wrapper.find('[role="switch"]');
+  const findAxoSwitchToggledProp = () =>
+    wrapper.findComponent(AxoSwitch).props("toggled");
 
   it("toggles the label on click", async () => {
-    expect(wrapper.text()).toBe("one");
-    expect(findSwitch().classes()).not.toContain(switchProps.inversionColor);
+    expect(findAxoSwitchToggledProp()).toBe(false);
     await findSwitch().trigger("click");
-    expect(wrapper.text()).toBe("two");
-    expect(findSwitch().classes()).toContain(switchProps.inversionColor);
+    expect(findAxoSwitchToggledProp()).toBe(true);
   });
 
   it("defaults label to true", async () => {
     await wrapper.setProps({ name: "clap" });
-    expect(wrapper.text()).toBe("two");
-    expect(findSwitch().classes()).toContain(switchProps.inversionColor);
+
+    expect(findAxoSwitchToggledProp()).toBe(true);
   });
 });

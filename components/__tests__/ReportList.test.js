@@ -46,7 +46,7 @@ describe("ReportList component", () => {
     options[0].trigger("click");
     await nextTick();
 
-    expect(window.navigateTo).toHaveBeenNthCalledWith(2, {
+    expect(window.navigateTo).toHaveBeenCalledWith({
       query: {
         name: SINGLE_REPORT_MOCK.suggestions[0].name,
       },
