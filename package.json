@@ -30,7 +30,7 @@
     "vitest": "^0.25.3"
   },
   "dependencies": {
-    "@axodotdev/fringe": "^0.0.4",
+    "@axodotdev/fringe": "^0.0.5",
     "@headlessui/vue": "^1.7.4",
     "@heroicons/vue": "^2.0.13",
     "@nuxtjs/google-fonts": "^2.0.0",
