@@ -33,10 +33,12 @@ describe("ReportList component", () => {
 
   it("Shows correct list", async () => {
     SINGLE_REPORT_MOCK.suggestions.map(({ name }) => {
-      expect(wrapper.text()).toContain(name);
+      expect(wrapper.find('[data-test="dependency-options"]').text()).toContain(
+        name
+      );
     });
 
-    expect(wrapper.findAll('[data-test="dependency-option"]')).toHaveLength(2);
+    expect(getOptions()).toHaveLength(2);
   });
 
   it("clicking on an option calls the navigation", async () => {

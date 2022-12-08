@@ -55,7 +55,10 @@ const getClasses = (dep) => {
     <div class="mt-4 h-full overflow-y-auto">
       <RadioGroup v-model="selected">
         <RadioGroupLabel class="sr-only"> Dependencies </RadioGroupLabel>
-        <div class="space-y-0 border-t-slate-800 border-t">
+        <div
+          class="space-y-0 border-t-slate-800 border-t"
+          data-test="dependency-options"
+        >
           <RadioGroupOption
             v-for="dep in suggestions"
             :key="dep.name"
