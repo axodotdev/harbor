@@ -17,3 +17,8 @@ export const MISSING_CRITERIA_KEYS = {
       "https://raw.githubusercontent.com/mozilla/cargo-vet/main/src/criteria/safe-to-run.txt",
   },
 };
+
+export const NOTE_MESSAGES = {
+  empty: "add a note for this library",
+  filled: "update note for this library",
+};

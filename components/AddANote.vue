@@ -2,6 +2,7 @@
 import { computed, ref } from "vue";
 import { useSingleReport } from "../composables";
 import { useNote } from "../composables/useNote";
+import { NOTE_MESSAGES } from "../utils/constants";
 
 const props = defineProps({
   name: {
@@ -24,9 +25,7 @@ const noteInnerText = computed(() => {
 });
 
 const noteText = computed(() =>
-  currentPackage.value.note
-    ? "update note for this library"
-    : "add a note for this library"
+  currentPackage.value.note ? NOTE_MESSAGES.filled : NOTE_MESSAGES.empty
 );
 
 const notePlaceholder = "add note";
