@@ -9,8 +9,10 @@ const user = await useGithubUser();
         class="flex min-h-0 flex-1 flex-col border-r border-slate-800 bg-gray-100"
       >
         <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
-          <div class="flex flex-shrink-0 items-center px-4 justify-center">
-            C
+          <div
+            class="flex flex-shrink-0 items-center px-4 justify-center axo-gradient-text font-bold text-lg"
+          >
+            H
           </div>
         </div>
 
