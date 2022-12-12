@@ -3,7 +3,7 @@ import { getVersionChangeText } from "../utils/versions";
 import { useSourceGraphURL, useCurrentEula } from "../composables";
 import { toRef } from "vue";
 import AddANote from "./AddANote.vue";
-import ReportSwitch from "./ReportSwitch";
+import ReportSwitch from "./ReportSwitch.vue";
 import { BusinessButton, AxoLink } from "@axodotdev/fringe/lib";
 import DOMPurify from "dompurify";
 import { marked } from "marked";
@@ -12,7 +12,6 @@ const props = defineProps({
   report: {
     required: true,
     type: Object,
-    default: () => {},
   },
   criteria: {
     type: Object,
@@ -26,7 +25,6 @@ const criteria = useCurrentEula({
   report: report.value,
   criteria: props.criteria,
 });
-
 const createLabelsFromCriteria = (currentCriterion) => {
   const criterion = props.criteria[currentCriterion]?.name || currentCriterion;
   return [criterion, criterion];
@@ -48,22 +46,22 @@ const getMarkdownContent = (content) => {
         <div
           class="flex xl:flex-row flex-col-reverse justify-between xl:items-center xl:gap-6 gap-4"
         >
-          <h1 class="mb-0 break-all">{{ props.report.name }}</h1>
-          <AxoLink target="_blank" :href="sourcegraphUrl"
+          <h1 class="mb-0 break-all">{{ report.name }}</h1>
+          <axo-link target="_blank" :href="sourcegraphUrl"
             ><business-button> Review diff in Sourcegraph</business-button>
-          </AxoLink>
+          </axo-link>
         </div>
-        <small>{{ getVersionChangeText(props.report?.suggested_diff) }}</small>
-        <AddANote :name="report.name" />
+        <small>{{ getVersionChangeText(report.suggested_diff) }}</small>
+        <add-a-note :name="report.name" />
         <div
-          v-for="currentCriteria in props.report.suggested_criteria"
+          v-for="currentCriteria in report.suggested_criteria"
           :key="currentCriteria"
           class="gap-4 mt-12"
         >
           <div>
-            <ReportSwitch
+            <report-switch
               :criterion="currentCriteria"
-              :name="props.report.name"
+              :name="report.name"
               :labels="createLabelsFromCriteria(currentCriteria)"
             />
             <div

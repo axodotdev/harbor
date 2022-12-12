@@ -57,6 +57,7 @@ export default defineEventHandler(async (event) => {
 
         return returnedData;
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.log(e);
         return sendError(event, {
           statusCode: 401,

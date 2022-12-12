@@ -16,7 +16,7 @@ const selected = usePackageInUrl({ report });
 
 const criteria = computed(() => ({
   ...MISSING_CRITERIA_KEYS,
-  ...report?.value?.criteria,
+  ...(report.value.criteria || {}),
 }));
 </script>
 

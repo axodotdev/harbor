@@ -1,5 +1,5 @@
 <script setup>
-import { watchEffect } from "vue";
+import { watchEffect, computed, ref } from "vue";
 import {
   RadioGroup,
   RadioGroupLabel,
@@ -10,31 +10,35 @@ import { useSingleReport, useCommit } from "../composables";
 import { BusinessButton, ShieldIcon } from "@axodotdev/fringe/lib";
 import { getVersionChangeText } from "../utils/versions";
 
-const { areAllEulasApproved, report } = useSingleReport();
+const { report } = useSingleReport();
 const { query } = useRoute();
 const { commit, isLoading } = useCommit();
-
-const selected = useState(() =>
-  query.name
-    ? report.value.suggestions.find(
-        (suggestion) => suggestion.name === query.name
-      )
-    : report.value.suggestions[0]
-);
+const suggestions = computed(() => report.value.suggestions || []);
+const urlPkg = query.name
+  ? suggestions.value.find((suggestion) => suggestion.name === query.name)
+  : suggestions.value[0];
+const selected = ref(urlPkg);
 
 watchEffect(async () => {
-  await navigateTo({
-    replace: true,
-    query: {
-      name: selected.value.name,
-    },
-  });
+  if (selected.value) {
+    await navigateTo({
+      replace: true,
+      query: {
+        name: selected.value?.name,
+      },
+    });
+  }
 });
 
-const isAllApproved = (dep) =>
-  areAllEulasApproved(
-    report.value.suggestions.find((suggestion) => suggestion.name === dep.name)
+const isAllApproved = (dep) => {
+  const currentReport = report.value.suggestions.find(
+    (suggestion) => suggestion.name === dep.name
   );
+
+  return currentReport.suggested_criteria.every((criteria) =>
+    Boolean(report.value.state?.[currentReport.name]?.[criteria])
+  );
+};
 
 const getClasses = (dep) => {
   if (isAllApproved(dep)) return "text-green-300";
@@ -48,19 +52,23 @@ const getClasses = (dep) => {
 </script>
 
 <template>
-  <div class="relative h-full">
+  <div v-if="suggestions.length" class="relative h-full">
     <div class="mt-4 h-full overflow-y-auto">
       <RadioGroup v-model="selected">
-        <RadioGroupLabel class="sr-only"> Server size </RadioGroupLabel>
-        <div class="space-y-0 border-t-slate-800 border-t">
+        <RadioGroupLabel class="sr-only"> Dependencies </RadioGroupLabel>
+        <div
+          class="space-y-0 border-t-slate-800 border-t"
+          data-test="dependency-options"
+        >
           <RadioGroupOption
-            v-for="dep in report.suggestions"
+            v-for="dep in suggestions"
             :key="dep.name"
             v-slot="{ checked, active }"
             as="template"
             :value="dep"
           >
             <div
+              data-test="dependency-option"
               :class="[
                 checked || active
                   ? 'bg-slate-800 border-t !border-t-slate-600 !border-b-slate-600 '

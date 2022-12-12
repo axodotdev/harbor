@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Unauthorized",
       });
     }
-    // check where call comes from
+
     if (body && isPost) {
       const client = await useRedis();
       const id = uuidv4();
@@ -31,6 +31,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: "No data received",
     });
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
     return sendError(event, {
       statusCode: 500,

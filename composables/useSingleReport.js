@@ -15,18 +15,12 @@ export const useSingleReport = () => {
     queryKey: [`report`, route.params.id],
     queryFn: () => fetcher(`/api/reports/${route.params.id}`),
     retry: 0,
+    placeholderData: {},
   });
-
-  const areAllEulasApproved = ({ name, suggested_criteria }) => {
-    return suggested_criteria.every(
-      (criteria) => report.value?.state?.[name]?.[criteria]
-    );
-  };
 
   return {
     report,
     isLoading,
     fetchError: isError,
-    areAllEulasApproved,
   };
 };
