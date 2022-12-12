@@ -18,10 +18,7 @@ const props = defineProps({
     required: true,
   },
 });
-const { toggleEulaPackageApproval } = useToggleApproval({
-  pkg: props.name,
-  eula: props.criterion,
-});
+const { toggleEulaPackageApproval } = useToggleApproval();
 const { report } = useSingleReport();
 const currentPackage = computed(() => report.value.state?.[props.name] || {});
 const checked = ref(currentPackage.value[props.criterion]);
@@ -29,6 +26,13 @@ const checked = ref(currentPackage.value[props.criterion]);
 watchEffect(() => {
   checked.value = currentPackage.value[props.criterion];
 });
+
+const onToggle = (value) =>
+  toggleEulaPackageApproval({
+    value,
+    pkg: props.name,
+    eula: props.criterion,
+  });
 </script>
 
 <template>
@@ -39,6 +43,6 @@ watchEffect(() => {
     :labels="labels"
     :name="name"
     inversion-color="bg-violet-600"
-    @update:toggled="toggleEulaPackageApproval"
+    @update:toggled="onToggle"
   />
 </template>

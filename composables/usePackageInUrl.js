@@ -1,4 +1,4 @@
-import { computed, onMounted, watch } from "vue";
+import { computed, watchEffect } from "vue";
 
 export const usePackageInUrl = ({ report }) => {
   const selected = useState(() => null);
@@ -9,10 +9,9 @@ export const usePackageInUrl = ({ report }) => {
       (suggestion) => suggestion.name === route.query.name
     );
 
-  onMounted(() => {
-    if (report) selected.value = getPkgByName();
+  watchEffect(() => {
+    selected.value = getPkgByName();
   });
-  watch([route, report], () => (selected.value = getPkgByName()));
 
   return selected;
 };
