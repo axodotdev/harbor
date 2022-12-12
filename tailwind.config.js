@@ -11,6 +11,7 @@ module.exports = {
       red: defaultColors.red,
     },
   },
+
   content: [
     ...tailwindConfigs.content,
     "./node_modules/@axodotdev/fringe/lib/*.vue",

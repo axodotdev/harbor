@@ -107,7 +107,7 @@ const getClasses = (dep) => {
     </div>
     <business-button
       :disabled="isLoading"
-      class="inline-flex items-center rounded-none text-slate-50 sticky bottom-0 w-full justify-center bg-green-600 hover:bg-green-700"
+      class="inline-flex items-center rounded-none text-slate-50 fixed md:sticky bottom-0 w-full justify-center bg-green-600 hover:bg-green-700 z-10"
       @click="commit"
     >
       {{ isLoading ? "Committing" : "Commit all changes" }}
