@@ -5,6 +5,8 @@ import { toRef } from "vue";
 import AddANote from "./AddANote.vue";
 import ReportSwitch from "./ReportSwitch";
 import { BusinessButton, AxoLink } from "@axodotdev/fringe/lib";
+import DOMPurify from "dompurify";
+import { marked } from "marked";
 
 const props = defineProps({
   report: {
@@ -29,13 +31,23 @@ const createLabelsFromCriteria = (currentCriterion) => {
   const criterion = props.criteria[currentCriterion]?.name || currentCriterion;
   return [criterion, criterion];
 };
+
+const getMarkdownContent = (content) => {
+  try {
+    return DOMPurify.sanitize(marked.parse(content));
+  } catch {
+    return content;
+  }
+};
 </script>
 
 <template>
   <div class="flex flex-col justify-between h-full mt-12">
-    <div class="py-6 px-4 sm:px-6 lg:px-8">
+    <div class="py-6 px-4 xl:px-6 xl:px-8">
       <div>
-        <div class="flex justify-between items-center gap-6">
+        <div
+          class="flex xl:flex-row flex-col-reverse justify-between xl:items-center xl:gap-6 gap-4"
+        >
           <h1 class="mb-0 break-all">{{ props.report.name }}</h1>
           <AxoLink target="_blank" :href="sourcegraphUrl"
             ><business-button> Review diff in Sourcegraph</business-button>
@@ -54,9 +66,10 @@ const createLabelsFromCriteria = (currentCriterion) => {
               :name="props.report.name"
               :labels="createLabelsFromCriteria(currentCriteria)"
             />
-            <p class="whitespace-pre-wrap">
-              {{ criteria[currentCriteria] }}
-            </p>
+            <div
+              class="sm:max-w-prose-lg"
+              v-html="getMarkdownContent(criteria[currentCriteria])"
+            />
           </div>
         </div>
       </div>
