@@ -1,10 +1,10 @@
 import { mount, flushPromises } from "@vue/test-utils";
-import AddANote from "../AddANote.vue";
+import { VueQueryPlugin } from "@tanstack/vue-query";
 import { expect } from "vitest";
 import axios from "axios";
+import AddANote from "../AddANote.vue";
 import { SINGLE_REPORT_MOCK } from "../../utils/mocks";
 import { NOTE_MESSAGES } from "../../utils/constants";
-import { VueQueryPlugin } from "@tanstack/vue-query";
 
 let wrapper;
 
