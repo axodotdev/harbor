@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/vue-query";
 import { createToast } from "mosha-vue-toastify";
 import { useSingleReport } from "./useSingleReport";
-import axios from "axios";
+import { http } from "../utils/http";
 
 export const useNote = () => {
   const queryClient = useQueryClient();
@@ -10,7 +10,7 @@ export const useNote = () => {
 
   const { mutateAsync: mutateNote, isLoading: isLoadingNote } = useMutation({
     mutationFn: ({ pkg, note }) =>
-      axios.put(`/api/reports/${route.params.id}`, {
+      http.put(`/api/reports/${route.params.id}`, {
         ...report.value.state,
         [pkg]: {
           ...report.value.state?.[pkg],

@@ -1,10 +1,10 @@
 import { mount, flushPromises } from "@vue/test-utils";
 import { VueQueryPlugin } from "@tanstack/vue-query";
 import { expect } from "vitest";
-import axios from "axios";
 import AddANote from "../AddANote.vue";
 import { SINGLE_REPORT_MOCK } from "../../utils/mocks";
 import { NOTE_MESSAGES } from "../../utils/constants";
+import { http } from "../../utils/http";
 
 let wrapper;
 
@@ -23,7 +23,7 @@ const getSummary = () => wrapper.find("summary");
 const getTextarea = () => wrapper.find("textarea");
 
 describe("AddANote component", () => {
-  const axiosPut = vi.spyOn(axios, "put");
+  const httpPut = vi.spyOn(http, "put");
   beforeEach(async () => {
     createComponent({
       props: {
@@ -48,7 +48,7 @@ describe("AddANote component", () => {
 
     await getTextarea().setValue("a comment");
     await wrapper.find("button").trigger("click");
-    expect(axiosPut).toHaveBeenCalledWith("/api/reports/678", {
+    expect(httpPut).toHaveBeenCalledWith("/api/reports/678", {
       ...SINGLE_REPORT_MOCK.state,
       [currentPkg.name]: {
         ...SINGLE_REPORT_MOCK.state[currentPkg.name],
