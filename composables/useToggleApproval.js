@@ -2,12 +2,12 @@ import { useMutation, useQueryClient } from "@tanstack/vue-query";
 import { createToast } from "mosha-vue-toastify";
 import { useSingleReport } from "./useSingleReport";
 
-export const useToggleApproval = ({ eula, pkg }) => {
+export const useToggleApproval = () => {
   const queryClient = useQueryClient();
   const { report } = useSingleReport();
   const route = useRoute();
 
-  const createBody = (value) => ({
+  const createBody = ({ value, pkg, eula }) => ({
     ...report.value.state,
     [pkg]: {
       ...report.value.state?.[pkg],
