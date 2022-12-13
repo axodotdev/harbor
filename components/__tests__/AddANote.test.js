@@ -19,8 +19,8 @@ const createComponent = ({ props = {}, shallow = false } = {}) => {
 };
 
 const currentPkg = SINGLE_REPORT_MOCK.suggestions[1];
-const getSummary = (wrapper) => wrapper.find("summary");
-const getTextarea = (wrapper) => wrapper.find("textarea");
+const getSummary = () => wrapper.find("summary");
+const getTextarea = () => wrapper.find("textarea");
 
 describe("AddANote component", () => {
   const axiosPut = vi.spyOn(axios, "put");
@@ -40,13 +40,13 @@ describe("AddANote component", () => {
   });
 
   it("mounts and shows empty textarea", async () => {
-    expect(getSummary(wrapper).text()).toContain(NOTE_MESSAGES.empty);
+    expect(getSummary().text()).toContain(NOTE_MESSAGES.empty);
 
-    await getSummary(wrapper).trigger("click");
+    await getSummary().trigger("click");
 
-    expect(getTextarea(wrapper).value).toBeUndefined();
+    expect(getTextarea().value).toBeUndefined();
 
-    await getTextarea(wrapper).setValue("a comment");
+    await getTextarea().setValue("a comment");
     await wrapper.find("button").trigger("click");
     expect(axiosPut).toHaveBeenCalledWith("/api/reports/678", {
       ...SINGLE_REPORT_MOCK.state,
@@ -61,15 +61,15 @@ describe("AddANote component", () => {
     await wrapper.setProps({
       name: SINGLE_REPORT_MOCK.suggestions[0].name,
     });
-    expect(getSummary(wrapper).text()).toContain(NOTE_MESSAGES.filled);
+    expect(getSummary().text()).toBe(NOTE_MESSAGES.filled);
   });
 
   it("triggers re render on pkg change", async () => {
-    expect(getSummary(wrapper).text()).toContain(NOTE_MESSAGES.empty);
+    expect(getSummary().text()).toBe(NOTE_MESSAGES.empty);
 
     await wrapper.setProps({
       name: SINGLE_REPORT_MOCK.suggestions[0].name,
     });
-    expect(getSummary(wrapper).text()).toContain(NOTE_MESSAGES.filled);
+    expect(getSummary().text()).toBe(NOTE_MESSAGES.filled);
   });
 });
