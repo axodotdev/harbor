@@ -1,13 +1,11 @@
 import { useMutation } from "@tanstack/vue-query";
 import { createToast } from "mosha-vue-toastify";
+import { http } from "../utils/http";
 
 export const useCommit = () => {
   const { params } = useRoute();
   const { mutateAsync: commit, isLoading } = useMutation({
-    mutationFn: () =>
-      $fetch(`/api/reports/${params.id}/commit`, {
-        method: "POST",
-      }),
+    mutationFn: () => http.post(`/api/reports/${params.id}/commit`),
     onSuccess: () =>
       createToast("Commit triggered!", {
         type: "success",

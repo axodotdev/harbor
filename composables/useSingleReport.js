@@ -1,9 +1,5 @@
 import { useQuery } from "@tanstack/vue-query";
-
-const fetcher = (url) =>
-  $fetch(url, {
-    headers: useRequestHeaders(["cookie"]),
-  });
+import { http } from "../utils/http";
 
 export const useSingleReport = () => {
   const route = useRoute();
@@ -13,7 +9,7 @@ export const useSingleReport = () => {
     isError,
   } = useQuery({
     queryKey: [`report`, route.params.id],
-    queryFn: () => fetcher(`/api/reports/${route.params.id}`),
+    queryFn: () => http.get(`/api/reports/${route.params.id}`),
     retry: 0,
     placeholderData: {},
   });

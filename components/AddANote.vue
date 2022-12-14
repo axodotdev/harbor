@@ -2,6 +2,7 @@
 import { computed, ref } from "vue";
 import { useSingleReport } from "../composables";
 import { useNote } from "../composables/useNote";
+import { NOTE_MESSAGES } from "../utils/constants";
 
 const props = defineProps({
   name: {
@@ -24,12 +25,9 @@ const noteInnerText = computed(() => {
 });
 
 const noteText = computed(() =>
-  currentPackage.value.note
-    ? "update note for this library"
-    : "add a note for this library"
+  currentPackage.value.note ? NOTE_MESSAGES.filled : NOTE_MESSAGES.empty
 );
 
-const notePlaceholder = "add note";
 const buttonText = computed(() => (isLoadingNote.value ? "..." : "+"));
 </script>
 
@@ -45,7 +43,7 @@ const buttonText = computed(() => (isLoadingNote.value ? "..." : "+"));
           <textarea
             id="comment"
             :value="noteInnerText"
-            :placeholder="notePlaceholder"
+            :placeholder="NOTE_MESSAGES.placeholder"
             rows="1"
             name="comment"
             class="bg-transparent outline-none border-0 w-full p-4 border-b-axo-orange border-b active:border-b-axo-pink focus:border-b-axo-pink focus:border-b-2 focus:outline-none focus:ring-0 placeholder:text-slate-400"

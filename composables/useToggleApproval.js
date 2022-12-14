@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/vue-query";
 import { createToast } from "mosha-vue-toastify";
 import { useSingleReport } from "./useSingleReport";
+import { http } from "../utils/http";
 
 export const useToggleApproval = () => {
   const queryClient = useQueryClient();
@@ -17,10 +18,7 @@ export const useToggleApproval = () => {
   const queryKey = ["report", route.params.id];
   const { mutateAsync } = useMutation({
     mutationFn: (value) =>
-      $fetch(`/api/reports/${route.params.id}`, {
-        method: "PUT",
-        body: createBody(value),
-      }),
+      http.put(`/api/reports/${route.params.id}`, createBody(value)),
     onMutate: async (value) => {
       await queryClient.cancelQueries({ queryKey });
       const previousState = queryClient.getQueryData(queryKey);
