@@ -3,6 +3,7 @@ import SingleReport from "../SingleReport.vue";
 import { expect } from "vitest";
 import { SINGLE_REPORT_MOCK } from "../../utils/mocks";
 import { VueQueryPlugin } from "@tanstack/vue-query";
+import { AxoSwitch } from "@axodotdev/fringe/lib";
 
 let wrapper;
 
@@ -17,10 +18,6 @@ const createComponent = ({ props = {}, shallow = false } = {}) => {
 };
 
 const currentPkg = SINGLE_REPORT_MOCK.suggestions[0];
-
-export const findSwitch = () => wrapper.find('[role="switch"]');
-export const findAxoSwitchToggledProp = () =>
-  wrapper.findComponent(findAxoSwitchToggledProp).props("toggled");
 
 describe("SingleReport component", () => {
   beforeEach(async () => {
@@ -37,6 +34,10 @@ describe("SingleReport component", () => {
     wrapper.unmount();
     wrapper = null;
   });
+
+  const findSwitch = () => wrapper.find('[role="switch"]');
+  const findAxoSwitchToggledProp = () =>
+    wrapper.findComponent(AxoSwitch).props("toggled");
 
   it("mounts and shows package correctly", async () => {
     expect(wrapper.find("h1").text()).toBe(currentPkg.name);
