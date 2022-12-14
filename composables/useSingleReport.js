@@ -15,7 +15,7 @@ export const useSingleReport = () => {
   });
 
   return {
-    report: report,
+    report,
     isFetched: isFetchedAfterMount,
     fetchError: isError,
   };
