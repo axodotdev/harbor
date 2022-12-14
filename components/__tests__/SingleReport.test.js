@@ -3,10 +3,6 @@ import SingleReport from "../SingleReport.vue";
 import { expect } from "vitest";
 import { SINGLE_REPORT_MOCK } from "../../utils/mocks";
 import { VueQueryPlugin } from "@tanstack/vue-query";
-import {
-  findAxoSwitchToggledProp,
-  findSwitch,
-} from "../../utils/__tests__/test-utils";
 
 let wrapper;
 
@@ -21,6 +17,10 @@ const createComponent = ({ props = {}, shallow = false } = {}) => {
 };
 
 const currentPkg = SINGLE_REPORT_MOCK.suggestions[0];
+
+export const findSwitch = () => wrapper.find('[role="switch"]');
+export const findAxoSwitchToggledProp = () =>
+  wrapper.findComponent(findAxoSwitchToggledProp).props("toggled");
 
 describe("SingleReport component", () => {
   beforeEach(async () => {
@@ -46,9 +46,9 @@ describe("SingleReport component", () => {
   });
 
   it("shows correct switch state and toggles it", async () => {
-    expect(findAxoSwitchToggledProp(wrapper)).toBe(true);
-    await findSwitch(wrapper).trigger("click");
-    expect(findAxoSwitchToggledProp(wrapper)).toBe(false);
+    expect(findAxoSwitchToggledProp()).toBe(true);
+    await findSwitch().trigger("click");
+    expect(findAxoSwitchToggledProp()).toBe(false);
   });
 
   it("shows correct criteria", async () => {
@@ -73,6 +73,6 @@ describe("SingleReport component", () => {
     expect(wrapper.find("a").attributes("href")).toBe(
       `https://sourcegraph.com/crates/${newReport.name}@v${newReport.suggested_diff.to}`
     );
-    expect(findAxoSwitchToggledProp(wrapper)).toBe(false);
+    expect(findAxoSwitchToggledProp()).toBe(false);
   });
 });
