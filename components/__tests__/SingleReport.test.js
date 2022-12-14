@@ -39,8 +39,8 @@ describe("SingleReport component", () => {
   });
 
   it("mounts and shows package correctly", async () => {
-    expect(wrapper.find("h1").text()).toContain(currentPkg.name);
-    expect(wrapper.find("small").text()).toContain(
+    expect(wrapper.find("h1").text()).toBe(currentPkg.name);
+    expect(wrapper.find("small").text()).toBe(
       `changed from v${currentPkg.suggested_diff.from} to v${currentPkg.suggested_diff.to}`
     );
   });
@@ -68,8 +68,8 @@ describe("SingleReport component", () => {
     await wrapper.setProps({
       report: newReport,
     });
-    expect(wrapper.find("h1").text()).toContain(newReport.name);
-    expect(wrapper.find("small").text()).toContain(`full audit recommended`);
+    expect(wrapper.find("h1").text()).toBe(newReport.name);
+    expect(wrapper.find("small").text()).toBe(`full audit recommended`);
     expect(wrapper.find("a").attributes("href")).toBe(
       `https://sourcegraph.com/crates/${newReport.name}@v${newReport.suggested_diff.to}`
     );
