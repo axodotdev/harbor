@@ -9,10 +9,12 @@ import {
 import { useSingleReport, useCommit } from "../composables";
 import { BusinessButton, ShieldIcon } from "@axodotdev/fringe/lib";
 import { getVersionChangeText } from "../utils/versions";
+import { AxoModal } from "@axodotdev/fringe/lib";
 
 const { report } = useSingleReport();
 const { query } = useRoute();
 const { commit, isLoading } = useCommit();
+const modalOpen = ref(false);
 const suggestions = computed(() => report.value.suggestions || []);
 const urlPkg = query.name
   ? suggestions.value.find((suggestion) => suggestion.name === query.name)
@@ -49,10 +51,24 @@ const getClasses = (dep) => {
     return "text-slate-500";
   }
 };
+
+const onSubmit = () => {
+  commit();
+  modalOpen.value = false;
+};
 </script>
 
 <template>
   <div v-if="suggestions.length" class="relative h-full">
+    <AxoModal
+      :open="modalOpen"
+      title="Commit changes"
+      submit-button-text="Commit"
+      @on-close="() => (modalOpen = false)"
+      @on-submit="onSubmit"
+      >This will make a commit on github with the changes you made here. Are you
+      sure you want to commit the changes?</AxoModal
+    >
     <div class="mt-4 h-full overflow-y-auto">
       <RadioGroup v-model="selected">
         <RadioGroupLabel class="sr-only"> Dependencies </RadioGroupLabel>
@@ -108,7 +124,7 @@ const getClasses = (dep) => {
     <business-button
       :disabled="isLoading"
       class="inline-flex items-center rounded-none text-slate-50 fixed md:sticky bottom-0 w-full justify-center bg-green-600 hover:bg-green-700 z-10"
-      @click="commit"
+      @click="modalOpen = true"
     >
       {{ isLoading ? "Committing" : "Commit all changes" }}
     </business-button>
