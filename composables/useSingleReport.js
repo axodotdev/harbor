@@ -4,9 +4,9 @@ import { http } from "../utils/http";
 export const useSingleReport = () => {
   const route = useRoute();
   const {
-    isLoading,
     data: report,
     isError,
+    isFetchedAfterMount,
   } = useQuery({
     queryKey: [`report`, route.params.id],
     queryFn: () => http.get(`/api/reports/${route.params.id}`),
@@ -16,7 +16,7 @@ export const useSingleReport = () => {
 
   return {
     report,
-    isLoading,
+    isFetched: isFetchedAfterMount,
     fetchError: isError,
   };
 };

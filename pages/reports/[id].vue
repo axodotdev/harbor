@@ -6,12 +6,13 @@ import {
 } from "@/composables";
 import { MISSING_CRITERIA_KEYS } from "@/utils/constants";
 import { computed } from "vue";
+import Loading from "../../components/Loading.vue";
 
 definePageMeta({
   layout: false,
 });
 useProtectedPage();
-const { report, isLoading, fetchError } = useSingleReport();
+const { report, isFetched, fetchError } = useSingleReport();
 const selected = usePackageInUrl({ report });
 
 const criteria = computed(() => ({
@@ -22,13 +23,15 @@ const criteria = computed(() => ({
 
 <template>
   <div class="h-full w-full">
+    <loading v-if="!isFetched" />
+
     <h2
       v-if="fetchError"
       class="text-center flex items-center h-screen w-screen justify-center"
     >
       You do not have access to this report
     </h2>
-    <NuxtLayout v-if="!fetchError && !isLoading" name="single">
+    <NuxtLayout v-else name="single">
       <template v-if="report" #list>
         <report-list />
       </template>

@@ -9,7 +9,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="relative flex items-center justify-center sm:mb-6">
+  <div class="relative flex items-center justify-center lg:mb-8">
     <Menu>
       <MenuButton>
         <img
