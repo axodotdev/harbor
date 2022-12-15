@@ -60,14 +60,14 @@ const onSubmit = () => {
 
 <template>
   <div v-if="suggestions.length" class="relative h-full">
-    <AxoModal
+    <axo-modal
       :open="modalOpen"
       title="Commit changes"
       submit-button-text="Commit"
       @on-close="() => (modalOpen = false)"
       @on-submit="onSubmit"
       >This will make a commit on github with the changes you made here. Are you
-      sure you want to commit the changes?</AxoModal
+      sure you want to commit the changes?</axo-modal
     >
     <div class="mt-4 h-full overflow-y-auto">
       <RadioGroup v-model="selected">
