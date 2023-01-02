@@ -7,9 +7,8 @@ import {
   RadioGroupDescription,
 } from "@headlessui/vue";
 import { useSingleReport, useCommit } from "../composables";
-import { BusinessButton, ShieldIcon } from "@axodotdev/fringe/lib";
+import { BusinessButton, ShieldIcon, AxoModal } from "@axodotdev/fringe/lib";
 import { getVersionChangeText } from "../utils/versions";
-import { AxoModal } from "@axodotdev/fringe/lib";
 
 const { report } = useSingleReport();
 const { query } = useRoute();
@@ -56,6 +55,11 @@ const onSubmit = () => {
   commit();
   modalOpen.value = false;
 };
+
+const onClose = () => (modalOpen.value = false);
+
+const modalText = `This will make a commit on github with the changes you made here. 
+Are you sure you want to commit the changes?`;
 </script>
 
 <template>
@@ -64,10 +68,9 @@ const onSubmit = () => {
       :open="modalOpen"
       title="Commit changes"
       submit-button-text="Commit"
-      @on-close="() => (modalOpen = false)"
+      @on-close="onClose"
       @on-submit="onSubmit"
-      >This will make a commit on github with the changes you made here. Are you
-      sure you want to commit the changes?</axo-modal
+      >{{ modalText }}</axo-modal
     >
     <div class="mt-4 h-full overflow-y-auto">
       <RadioGroup v-model="selected">
