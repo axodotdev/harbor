@@ -31,7 +31,7 @@
     "vitest": "^0.25.3"
   },
   "dependencies": {
-    "@axodotdev/fringe": "^0.0.5",
+    "@axodotdev/fringe": "^0.0.6",
     "@headlessui/vue": "^1.7.4",
     "@nuxtjs/google-fonts": "^2.0.0",
     "@nuxtjs/tailwindcss": "^6.1.3",
