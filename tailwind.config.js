@@ -15,7 +15,6 @@ module.exports = {
   content: [
     ...tailwindConfigs.content,
     "./node_modules/@axodotdev/fringe/lib/*.vue",
-    "../turbo-axo/packages/fringe/lib/*.vue",
     "nuxt.config.js",
   ],
 };

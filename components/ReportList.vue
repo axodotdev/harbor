@@ -7,7 +7,7 @@ import {
   RadioGroupDescription,
 } from "@headlessui/vue";
 import { useSingleReport, useCommit } from "../composables";
-import { BusinessButton, ShieldIcon, AxoModal } from "@axodotdev/fringe/lib";
+import { AxoModal, BusinessButton, ShieldIcon } from "@axodotdev/fringe/lib";
 import { getVersionChangeText } from "../utils/versions";
 
 const { report } = useSingleReport();
@@ -51,14 +51,16 @@ const getClasses = (dep) => {
   }
 };
 
-const onSubmit = () => {
-  commit();
-  modalOpen.value = false;
+const toggleModal = () => {
+  modalOpen.value = !modalOpen.value;
 };
 
-const onClose = () => (modalOpen.value = false);
+const onSubmit = () => {
+  commit();
+  toggleModal();
+};
 
-const modalText = `This will make a commit on github with the changes you made here. 
+const modalText = `This will make a commit on github with the changes you made here.
 Are you sure you want to commit the changes?`;
 </script>
 
@@ -68,7 +70,7 @@ Are you sure you want to commit the changes?`;
       :open="modalOpen"
       title="Commit changes"
       submit-button-text="Commit"
-      @on-close="onClose"
+      @on-close="toggleModal"
       @on-submit="onSubmit"
       >{{ modalText }}</axo-modal
     >
@@ -127,7 +129,7 @@ Are you sure you want to commit the changes?`;
     <business-button
       :disabled="isLoading"
       class="inline-flex items-center rounded-none text-slate-50 fixed md:sticky bottom-0 w-full justify-center bg-green-600 hover:bg-green-700 z-10"
-      @click="modalOpen = true"
+      @click="toggleModal"
     >
       {{ isLoading ? "Committing" : "Commit all changes" }}
     </business-button>
